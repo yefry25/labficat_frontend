@@ -1,8 +1,8 @@
 <template>
-  <v-container>
-    <v-footer padless absolute>
+  <v-container >
+    <v-footer padless >
       <v-col class="text-center primary" cols="12">
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+        {{ new Date().getFullYear() }} — <strong>SENA</strong>
       </v-col>
     </v-footer>
   </v-container>
