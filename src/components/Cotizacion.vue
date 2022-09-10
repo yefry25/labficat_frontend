@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid style="height: 100%;">
-    <v-row style="border: 1px solid black">
+  <v-container fluid style="height: 100%">
+    <v-row>
       <v-col cols="2">
         <v-img width="164" height="162"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png">
@@ -8,159 +8,357 @@
       </v-col>
       <v-col cols="6" class="texto">
         <h2 class="mt-0 text-decoration-underline">Oferta de servicios</h2>
-        <p class="parrafo font-weight-black">Laboratorio de Caracterización Fisicoquímica de Alimentos del Centro
-          Agroturístico <br> “LABFICAT” de San Gil, Santander <br> 899.999.034 <br>
-          Dirección: Calle 22 No. 09 – 82, San Gil, Santander <br> Teléfono: (607)
-          7248113 <br> Correo electrónico: labficat@sena.edu.co
-          Agroturístico</p>
-
+        <p class="parrafo font-weight-black">
+          Laboratorio de Caracterización Fisicoquímica de Alimentos del Centro
+          Agroturístico <br />
+          “LABFICAT” de San Gil, Santander <br />
+          899.999.034 <br />
+          Dirección: Calle 22 No. 09 – 82, San Gil, Santander <br />
+          Teléfono: (607) 7248113 <br />
+          Correo electrónico: labficat@sena.edu.co Agroturístico
+        </p>
       </v-col>
       <v-col cols="2" class="text-center">
         <h3 class="mt-0 font-weight-black">cotización No.</h3>
-        <h2 class="mt-2 red--text"> xxxxx </h2>
+        <h2 class="mt-2 red--text">xxxxx</h2>
         <h3 class="mt-2 font-weight-black">fecha de emisión:</h3>
-        <h2 class="mt-2 red--text"> xxxx-xx-xx</h2>
+        <h2 class="mt-2 red--text">xxxx-xx-xx</h2>
       </v-col>
       <v-col cols="2" class="codigo font-weight-black">
         <p>
-          Código <br>
+          Código <br />
           CAT–ST–OC–F–002
         </p>
-        <p>Aprobación <br>
+        <p>
+          Aprobación <br />
           2021-08-30
         </p>
         <p>
-          Versión <br>
+          Versión <br />
           1
         </p>
       </v-col>
     </v-row>
     <v-row>
-      <h5 class="primary text-center white--text" style="width: 100%">1. Datos del cliente</h5>
+      <h5 class="primary text-center white--text" style="width: 100%">
+        1. Datos del cliente
+      </h5>
     </v-row>
-    <v-row id="border">
-      <v-col cols="6" class="py-0 pl-0">
-        <label for="Name" class="label ">Cliente</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Dirección</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Departamento</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Contacto</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Celular</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Validez de la oferta</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Elaborado por</label>
-        <input type="text" id="Name" name="Name" /> <br>
+    <v-row>
+      <v-col cols="6" class="py-0 px-0">
+        <v-row>
+          <v-col cols="4" class=" text-center px-0">
+            <p for="Name" class="label mb-0 ">Cliente</p>
+            <p for="Name" class="label mb-0 ">Dirección</p>
+            <p for="Name" class="label mb-0 ">Departamento</p>
+            <p for="Name" class="label mb-0 ">Contacto</p>
+            <p for="Name" class="label mb-0 ">Celular</p>
+            <p for="Name" class="label mb-0 ">Validez de la oferta</p>
+            <p for="Name" class="label mb-0 ">Elaborado por</p>
+          </v-col>
+          <v-col cols="8" class="pl-0">
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+          </v-col>
+        </v-row>
       </v-col>
-      <v-col cols="6" id="border" class="py-0 pl-0">
-        <label for="Name" class="label ">NIT / C.C.</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Ciudad</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Teléfono</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Cargo</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Correo electrónico</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Entrega de resultados</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Cargo</label>
-        <input type="text" id="Name" name="Name" /> <br>
+      <v-col cols="6" class="py-0 px-0">
+        <v-row>
+          <v-col cols="4" class="text-center pr-0">
+            <p for="Name" class="label mb-0 ">NIT / C.C.</p>
+            <p for="Name" class="label mb-0 ">Ciudad</p>
+            <p for="Name" class="label mb-0 ">Teléfono</p>
+            <p for="Name" class="label mb-0 ">Cargo</p>
+            <p for="Name" class="label mb-0 ">Correo electrónico</p>
+            <p for="Name" class="label mb-0 ">Entrega de resultados</p>
+            <p for="Name" class="label mb-0 ">Cargo</p>
+          </v-col>
+          <v-col cols="8" class="pl-0">
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <v-row>
-      <h5 class="primary text-center white--text" style="width: 100%">2. Propuesta técnica y económica</h5>
+      <h5 class="primary text-center white--text" style="width: 100%">
+        2. Propuesta técnica y económica
+      </h5>
     </v-row>
     <v-row id="border">
-      <h5 class="primary text-center white--text" style="width: 100%">Item 1</h5>
+      <h5 class="primary text-center white--text" style="width: 100%">
+        Item 1
+      </h5>
     </v-row>
     <v-row>
       <v-col class="px-0 py-0">
-        <v-card >
+        <v-card>
           <v-card-title>
             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
             </v-text-field>
           </v-card-title>
           <v-data-table :headers="headers" :items="desserts" :search="search">
+
+            <template v-slot:footer>
+              <v-card class="d-flex justify-end">
+              <tr>
+                <td>
+                  <v-text-field type="number" label="Costo del ítem 1"></v-text-field>
+                </td>
+              </tr>
+            </v-card>
+            </template>
           </v-data-table>
         </v-card>
       </v-col>
     </v-row>
-    <v-row id="border">
-      <v-col cols="8" id="border" class="py-0 px-0">
-        <h5 class="primary text-center white--text px-0 py-0" style="width: 100%">Observaciones de la propuesta técnica y económica</h5>
+    <v-row>
+      <v-col cols="8" class="py-0 px-0">
+        <h5 class=" primary text-center white--text px-0 py-0" style="width: 100%">
+          Observaciones de la propuesta técnica y económica
+        </h5>
       </v-col>
-      <v-col cols="4" class="px-0 py-0">
-        <label for="Name" class="label">Subtotal</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Iva</label>
-        <input type="text" id="Name" name="Name" /> <br>
-        <label for="Name" class="label">Total</label>
-        <input type="text" id="Name" name="Name" /> <br>
+      <v-col cols="4" class="px-0 py-0 mb-6">
+        <v-row>
+          <v-col cols="6" class="pr-0">
+            <p for="Name" class="label mb-0 ">Subtotal</p>
+            <p for="Name" class="label mb-0 ">Iva</p>
+            <p for="Name" class="label mb-0 ">Total</p>
+          </v-col>
+          <v-col cols="6" class="pl-0">
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
+    <!-- <v-row class="py-0 px-0">
+      <h5 class="primary text-center" style="width: 100%">
+        Observaciones del servicio
+      </h5>
+      <v-col id="border" class="py-0 px-0">
+        <p id="border">
+          1. Para el ingreso de las muestras al proceso analítico es necesario
+          cumplir con el anexo de aceptación del servicio, enviar propuesta
+          aceptada y copia de la consignación vía correo electrónico a
+          labficat@sena.edu.co.
+          <br />
+          2. En caso de solicitar alguna modificación o inclusión al servicio se
+          debe solicitar al correo electrónico institucional
+          labficat@sena.edu.co. <br />
+          3. Las muestras deben ser recolectadas por el cliente. Se entregará
+          copia No controlada del Instructivo de toma de muestras
+          CAT–ST–MU–F–001 vigente como apoyo para el proceso de muestreo. <br />
+          4. Los ensayos que no cuenten con símbolo de referencia indica: Ensayo
+          sin acreditación y sin habilitación.
+          <br />
+          5. Los ensayos referenciados con (°) se encuentran habilitados por
+          estandares de calidad ante la Secretaria de Salud Departamental (SSD).
+          <br />
+          6. Los ensayos referenciados con (*) se encuentran acreditados ante el
+          Organismo Nacional de Acreditación (ONAC). <br />
+          7. El laboratorio se abstiene de emitir declaraciones de conformidad,
+          opiniones e interpretaciones. <br />
+        </p>
+      </v-col>
+    </v-row>
+    <v-row>
+      <h5 class="primary text-center" style="width: 100%">
+        Acepto las condiciones del servicio descritas en la presente oferta
+        incluidos sus anexos
+      </h5>
+      <v-col class="py-0 px-0">
+        <label for="Name" class="label">Nombre</label>
+        <input type="text" id="Name" name="Name" /> <br />
+        <label for="Name" class="label">Cargo</label>
+        <input type="text" id="Name" name="Name" /> <br />
+        <label for="Name" class="label">Firma de aceptación</label>
+        <input type="text" id="Name" name="Name" /> <br />
+        <label for="Name" class="label">C.C.</label>
+        <input type="text" id="Name" name="Name" /> <br />
+      </v-col>
+    </v-row>
+    <v-row>
+      <h5 class="primary text-center" style="width: 100%">
+        3. Anexo de cotizaciones
+      </h5>
+      <h5 class="primary text-center" style="width: 100%">
+        Aceptación del servicio
+      </h5>
+      <v-col class="py-0 px-0">
+        <p>
+          - El cliente es responsable de suministrar la información de los
+          parámetros a analizar de acuerdo a sus requerimientos normativos.
+          <br />
+          - Si el cliente acepta la presente oferta deberá enviar la propuesta
+          técnica y económica diligenciada y firmada, orden de servicio,
+          contrato o carta de aceptación al correo electrónico institucional
+          labficat@sena.edu.co en el cual se referencie el código y versión de
+          oferta aceptada. <br />
+          - Si el cliente presenta alguna inconformidad con los términos de la
+          cotización deberá manifestarlo antes de iniciar los análisis, con el
+          fin de realizar las modificaciones necesarias y actualizar la versión
+          de la cotización, para proceder a la aceptación de la misma. <br />
+          - La aceptación de la propuesta implica que el cliente esta de acuerdo
+          con todas las condiciones aquí descritas, incluyendo que las muestras
+          se analicen por las técnicas, métodos y limites de cuantificación
+          indicados para cada uno de los ensayos. <br />
+          - El cliente se compromete a no ejercer presiones indebidas sobre el
+          laboratorio y su personal con la intención de acelerar el proceso de
+          análisis o modificar los resultados del servicio. <br />
+        </p>
+      </v-col>
+      <h5 class="primary text-center" style="width: 100%">
+        Condiciones comerciales
+      </h5>
+      <v-col class="py-0 px-0">
+        <p>
+          - Forma de Pago: se debe realizar la totalidad del pago de la presente
+          oferta antes de iniciar los análisis de las muestras recepcionadas en
+          el laboratorio. <br />
+          - El pago podrá efectuarse en efectivo en las oficinas del Centro
+          Agroturístico o mediante consignación a la siguiente cuenta bancaria a
+          nombre de SENA: BANCO No. XXXXXXXXX. <br />
+          - Únicamente se dará por cancelado el servicio una vez se envíe la
+          copia de consignación al correo electrónico institucional
+          labficat@sena.edu.co <br />
+          - La recepción y procesamiento de las muestras se realizara dentro de
+          los días hábiles Lunes a Viernes de 08:00 am - 12:00 pm y 02:00 pm -
+          05:00 pm. <br />
+          - La fecha de entrega de resultados mencionada en la presente oferta
+          está contemplada desde la fecha de recepción de las muestras al
+          laboratorio, teniendo en cuenta que solo cuentan días hábiles. <br />
+          - El informe de resultados se entregara de acuerdo a las condiciones
+          pactadas en la cotización, una vez sean analizadas las muestras.
+          <br />
+        </p>
+      </v-col>
+      <h5 class="primary text-center" style="width: 100%">
+        Condiciones tecnicas
+      </h5>
+      <v-col class="py-0 px-0">
+        <p>
+          - LABFICAT no es responsable de la recolección ni del transporte de
+          las muestras ya que el servicio de muestreo es realizado por el
+          cliente. <br />
+          - Solo se guardaran remanentes de las muestras cuando el cliente lo
+          solicite por escrito y deberá quedar constancia en la orden de
+          servicio, contrato o aceptación del servicio. <br />
+        </p>
+      </v-col>
+      <h5 class="primary text-center" style="width: 100%">
+        Garantía del servicio
+      </h5>
+      <v-col class="py-0 px-0">
+        <p>
+          - Se entregará copia No controlada del Instructivo de toma de muestras
+          CAT–ST–MU–F–001 vigente como apoyo para el proceso de muestreo que es
+          responsabilidad del cliente, donde se especifican las condiciones y
+          recomendaciones a tener en cuenta cuando se efectué el muestreo,
+          LABFICAT solo se hace responsable del ítem de ensayo desde el momento
+          de la recepción de la muestra y no garantiza los criterios de calidad
+          considerados durante la recolección. <br />
+          - Aquellos resultados cuestionados por el cliente serán tratatos de
+          acuerdo al procedimiento de Quejas CAT-ST-QJ-P-001. De requerir
+          re-análisis se realizará de la muestra que el cliente haya traído
+          inicialmente y que se encuentra bajo la custodia del laboratorio si
+          los resultados del re-análisis confirman los datos originales, el
+          cliente asumirá los costos asociados al re-análisis. <br />
+          - LABFICAT garantiza la protección de la confidencialidad de la
+          información y de los derechos de propiedad que los clientes tienen
+          sobre sus resultados, asimismo, garantiza la imparcialidad e
+          integridad operativa en las actividades de la Organización. <br />
+          - LABFICAT reconoce que la información del cliente es confidencial y
+          solo será revelada si la ley o el mismo lo disponen. Cuando la
+          información sea solicitada por la ley, se notifica mediante correo
+          electrónico institucional al cliente que la información será divulgada
+          siempre y cuando la ley no lo prohíba. <br />
+        </p>
+      </v-col>
+      <h5 class="primary text-center" style="width: 100%">
+        Calidad del servicio
+      </h5>
+      <v-col class="py-0 px-0">
+        <p>
+          - LABFICAT se encuentra en proceso de acreditación ante el Organismo
+          Nacional de Acreditación (ONAC) bajo la norma NTC ISO/IEC 17025:2017
+          en la matriz de Alimentos. <br />
+          - LABFICAT se encuentra en proceso de habilitación de estandares de
+          calidad ante la Secretaría de Salud Departamental (SSD). <br />
+          - LABFICAT participa en Pruebas de Desempeño anualmente conforme a lo
+          establecido en el inciso a) del numeral 7.7.2. Aseguramiento de la
+          validez de los resultados de la norma NTC ISO/IEC 17025:2017. <br />
+        </p>
+      </v-col>
+    </v-row> -->
   </v-container>
 </template>
 <script>
 export default {
   name: "PageCotizacion",
   data: () => ({
-    search: '',
+    search: "",
     headers: [
       {
-        text: 'Código de referencia',
-        align: 'start',
+        text: "Código de referencia",
+        align: "start",
         sortable: false,
-        value: 'name',
+        value: "name",
       },
-      { text: 'Descripción del ensayo', value: 'calories' },
-      { text: 'unidades', value: 'fat' },
-      { text: 'Técnica analítica', value: 'carbs' },
-      { text: 'Método analítico', value: 'protein' },
-      { text: 'Límite de cuantificación', value: 'iron' },
-      { text: 'Costo del ensayo' }
+      { text: "Descripción del ensayo", value: "calories" },
+      { text: "unidades", value: "fat" },
+      { text: "Técnica analítica", value: "carbs" },
+      { text: "Método analítico", value: "protein" },
+      { text: "Límite de cuantificación", value: "iron" },
+      { text: "Costo del ensayo" },
     ],
     desserts: [
       {
-        name: 'Frozen Yogurt',
+        name: "Frozen Yogurt",
         calories: 159,
         fat: 6.0,
         carbs: 24,
         protein: 4.0,
-        iron: '1%',
+        iron: "1%",
       },
       {
-        name: 'Ice cream sandwich',
+        name: "Ice cream sandwich",
         calories: 237,
         fat: 9.0,
         carbs: 37,
         protein: 4.3,
-        iron: '1%',
+        iron: "1%",
       },
       {
-        name: 'Eclair',
+        name: "Eclair",
         calories: 262,
         fat: 16.0,
         carbs: 23,
         protein: 6.0,
-        iron: '7%',
+        iron: "7%",
       },
     ],
   }),
 };
 </script>
-<style>
+<style scoped>
 #border {
   border: 1px solid black;
 }
 
 .texto {
   text-align: center;
-
 }
 
 .parrafo {
@@ -175,12 +373,20 @@ export default {
 
 .cuadros {
   border: solid 3px rgb(247, 113, 4);
-
 }
 
 .label {
-  background-color: #ED7D31;
+  background-color: #ed7d31;
   color: white;
-  padding: 2px 66px;
+  border: solid 1px black;
+}
+
+.field {
+  max-height: 26px;
+}
+
+#bordo {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
 }
 </style>

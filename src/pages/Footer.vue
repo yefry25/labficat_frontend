@@ -1,6 +1,6 @@
 <template>
-  <v-container >
-    <v-footer padless >
+  <v-container fluid>
+    <v-footer padless app>
       <v-col class="text-center primary" cols="12">
         {{ new Date().getFullYear() }} — <strong>SENA</strong>
       </v-col>
