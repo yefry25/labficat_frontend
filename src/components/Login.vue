@@ -1,73 +1,76 @@
 <template>
   <v-container>
-    <v-row
-      class="my-12 justify-center text-center white--text pa-4 text-center text-no-wrap rounded-xl"
-    >
+    <v-row class="my-12 justify-center text-center white--text pa-4 text-center">
       <v-col cols="8">
-        <v-card class="formulario">
-          <br />
-          <br />
-          <font-awesome-icon icon="fa-regular fa-circle-user" />
-          <v-toolbar-title class="font-weight-black black--text">
-            Iniciar Sesión
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
-
-          <v-form ref="form" v-model="valid" lazy-validation class="px-7">
-            <v-text-field
-              v-model="correo"
-              :rules="correoRules"
-              label="Correo"
-              required
-            ></v-text-field>
-
-            <v-text-field
-              v-model="password"
-              :rules="passwordRules"
-              label="contraseña"
-              required
-              type="password"
-            >
-            </v-text-field>
-            <v-btn class="mr-4" @click="iniciar" :disabled="invalid">
-              Ingresar
-            </v-btn>
-            <br />
-            <br />
-          </v-form>
+        <v-card class="rounded-xl rounded-bl-0" outlined>
+          <v-card-title class="primary" id="" style="text-align: center; justify-content: center;">
+            <font-awesome-icon style="font-size: 36px" icon="fa-solid fa-user" />
+          </v-card-title>
+            <h2 class="pt-4">Inicia sesión</h2>
+          <validation-observer ref="observer" v-slot="{ invalid }">
+            <form @submit.prevent="iniciar" class="py-7 px-7">
+              <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
+                <v-text-field v-model="email" :error-messages="errors" label="E-mail" prepend-icon='mdi-email' outlined
+                  required></v-text-field>
+              </validation-provider>
+              <validation-provider v-slot="{ errors }" name="contraseña" rules="required|min:8">
+                <v-text-field v-model="password" :error-messages="errors" label="Contraseña" type="password" outlined
+                  prepend-icon='mdi-lock' required></v-text-field>
+              </validation-provider>
+              <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block>
+                ingresar
+              </v-btn>
+            </form>
+          </validation-observer>
         </v-card>
       </v-col>
-
       <v-overlay :value="overlay">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
-    </v-overlay>
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
     </v-row>
   </v-container>
 </template>
 
 <script>
+
+import { required, email, min } from 'vee-validate/dist/rules'
+import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+setInteractionMode('eager')
+extend('required', {
+  ...required,
+  message: '{_field_} no puede estar vacio',
+})
+extend('email', {
+  ...email,
+  message: 'Email must be valid',
+})
+extend('min', {
+  ...min,
+  message: 'El campo {_field_} debe tener {length} caracteres o más'
+})
 import axios from "axios";
 export default {
   name: "pageLogin",
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   data: () => ({
-    valid: true,
-    correo: "",
-    correoRules: [(v) => !!v || "Correo es requerido"],
-    password: "",
-    passwordRules: [(v) => !!v || "Contraseña es requerida"],
-    overlay:false
+    name: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+    select: null,
+    overlay: false
   }),
 
   methods: {
     iniciar() {
-
-      this.overlay=true
+      this.$refs.observer.validate()
+      this.overlay = true
       axios
         .post("https://labficat.herokuapp.com/api/usuario/login", {
-          correo: this.correo,
+          correo: this.email,
           password: this.password,
         })
         .then((response) => {
@@ -78,26 +81,31 @@ export default {
             title: "Inicio de sesión exitoso",
             text: ` Bienvenido ${response.data.usuario.nombre}`,
           });
-          this.overlay=false
+          this.overlay = false
         })
         .catch((error) => {
+          this.overlay = false
           console.log(error);
           this.$swal({
             icon: "error",
             title: "Error al iniciar sesión",
-            text: `${error.response.data.errors[0].msg}`,
+            text: `${error.response.data.msg}`
           });
-          console.log(error.response.data.errors);
-          console.log(error.response.data.errors[0].msg);
         });
     },
   },
 };
 </script>
 <style scoped>
+
+#border {
+  border: 1px solid black;
+}
+
 .formulario {
   border: solid 3px rgb(247, 113, 4);
 }
+
 .mr-4 {
   color: rgb(247, 113, 4);
 }
