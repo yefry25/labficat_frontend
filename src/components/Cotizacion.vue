@@ -131,9 +131,9 @@
       <v-col cols="4" class="px-0 py-0 mb-6">
         <v-row>
           <v-col cols="6" class="pr-0">
-            <p for="Name" class="label mb-0 ">Subtotal</p>
-            <p for="Name" class="label mb-0 ">Iva</p>
-            <p for="Name" class="label mb-0 ">Total</p>
+            <p  class="label mb-0 ">Subtotal</p>
+            <p  class="label mb-0 ">Iva</p>
+            <p  class="label mb-0 ">Total</p>
           </v-col>
           <v-col cols="6" class="pl-0">
             <v-text-field class="field py-0 my-0" height="26"></v-text-field>

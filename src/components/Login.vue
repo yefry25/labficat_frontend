@@ -82,6 +82,8 @@ export default {
             text: ` Bienvenido ${response.data.usuario.nombre}`,
           });
           this.overlay = false
+          this.$store.dispatch("setToken", response.data.token);
+          console.log(this.$store.state.token);
         })
         .catch((error) => {
           this.overlay = false

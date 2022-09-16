@@ -82,7 +82,7 @@
             
           </v-list-item>
           <v-card-actions class="boton">
-            <v-btn class="primary" to="cotizacion" outlined rounded text> INGRESAR </v-btn>
+            <v-btn class="primary" to="setup" outlined rounded text> INGRESAR </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

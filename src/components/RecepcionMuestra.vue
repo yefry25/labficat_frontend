@@ -1,43 +1,43 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="2">
+      <v-col cols="2" class="py-1" align="center" >
         <v-img
-          width="164"
-          height="162"
+          width="130"
+          height="120"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png"
         >
         </v-img>
       </v-col>
-      <v-col cols="10" class="mt-5">
+      <v-col cols="10" class="mx-0 my-0 py-0 px-0">
         <v-row class="texto">
           <h3>Recepcion Muestras</h3>
         </v-row>
         <v-row class="texto">
-          <p class="font-weight-black">
+          <p class="font-weight-black mb-0">
             CENTRO AGROTURÍSTICO – SAN GIL, SANTANDER <br />
             LABORATORIO LABFICAT
           </p>
         </v-row>
-        <v-row>
-          <v-col cols="5" class="justificar">
-            <p class="font-weight-black" style="border: 1px solid black">
+        <v-row class="mx-0 my-0 px-0 py-0">
+          <v-col cols="5" class="justificar px-0 py-0">
+            <p class="font-weight-black mb-0" style="border: 1px solid black">
               CÓDIGO <br />
               CAT–ST–MI–F–002
             </p>
           </v-col>
-          <v-col cols="5">
+          <v-col cols="5 px-0 py-0">
             <p
-              class="justificar font-weight-black"
+              class="justificar font-weight-black mb-0"
               style="border: 1px solid black"
             >
               APROBACIÓN <br />
               2022-04-01
             </p>
           </v-col>
-          <v-col cols="2">
+          <v-col cols="2 px-0 py-0">
             <p
-              class="justificar font-weight-black"
+              class="justificar font-weight-black mb-0"
               style="border: 1px solid black"
             >
               VERSIÓN: <br />
@@ -118,6 +118,91 @@
           Condiciones del servicio</h5>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="1" class="px-0 py-0">
+        <p class="texto font-weight-black">
+          1
+        </p>
+        <p class="texto font-weight-black">
+          2
+        </p>
+        <p class="texto font-weight-black">
+          3
+        </p>
+        <p class="texto font-weight-black">
+          4
+        </p>
+        <p class="texto font-weight-black">
+          5
+        </p>
+        <p class="texto font-weight-black">
+          6
+        </p>
+        <p class="texto font-weight-black">
+          7
+        </p>
+      </v-col>
+      <v-col cols="6" class="px-0 py-0">
+        <p class="texto">
+          Recipientes de recolección inadecuados.
+        </p>
+        <p class="texto">
+          Envase roto, abierto o agujereado.
+        </p>
+        <p class="texto">
+          Evidencias visibles de microrganismos.
+        </p>
+        <p class="texto">
+          Evidencias de fermentación.
+        </p>
+        <p class="texto">
+          Cantidad de muestra sea insuficiente.
+        </p>
+        <p class="texto">
+          Falta de información o incongruencias en la identificación de los recipientes.
+        </p>
+        <p class="texto">
+          Otro (explique la situación presentada):
+        </p>
+      </v-col>
+      <v-col cols="5" class="texto py-0 px-0 ">
+        <p class="servicio mb-0">
+          El solicitante al firmar la presente acta de recepción de muestras acepta lo siguiente: <br>
+          1. Que a las muestras se le realicen todos los ensayos de acuerdo al ítem de la <br>
+          cotización indicado en el presente formato y los mismos sean reportados en el <br>
+          respectivo informe de resultados. <br>
+          2. Que la totalidad de la información registrada a las muestras sea reportada en el <br>
+          respectivo informe de resultados. <br>
+          3. Todas las observaciones y anexos descritos en el formato Oferta de servicios CAT– <br>
+          ST–OC–F–002 correspondiente a la versión de la cotización aceptada.
+        </p>
+      </v-col>
+    </v-row>
+        <v-row class="my-0">
+          <v-col cols="2" class=" text-center px-0">
+            <p for="Name" class="label mb-0 ">Quien entrega las muestras</p>
+            <p for="Name" class="label mb-0 ">C.C.</p>
+            <p for="Name" class="label mb-0 ">Firma</p>
+          </v-col>
+          <v-col cols="5" class="px-0">
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+          </v-col>
+
+          <v-col cols="3" class=" text-center px-0">
+            <p for="Name" class="label mb-0 ">Fecha y hora de recepción de muestras</p>
+            <p for="Name" class="label mb-0 ">Quien recibe las muestras</p>
+            <p for="Name" class="label mb-0 ">Firma</p>
+          </v-col>
+          <v-col cols="2" class="px-0">
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+          </v-col>
+        </v-row>
+      
+   
   </v-container>
 </template>
 <script>
@@ -174,10 +259,12 @@ export default {
 };
 </script>
 <style scoped>
+ 
 .texto {
-  border: 2px solid black;
+  border: 1px solid black;
   text-align: center;
   justify-content: center;
+  margin: 0 0;
 }
 
 .justificar {
@@ -193,5 +280,13 @@ export default {
 
 .field {
   max-height: 26px;
+}
+
+.servicio {
+  text-align: left;
+}
+
+.imagen {
+  text-align: center;
 }
 </style>
