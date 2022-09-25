@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="2" class="py-1" align="center" >
+      <v-col cols="2" class="py-1 " align="center" >
         <v-img
           width="130"
           height="120"

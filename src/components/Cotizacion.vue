@@ -48,7 +48,51 @@
       <v-col cols="6" class="py-0 px-0">
         <v-row>
           <v-col cols="4" class=" text-center px-0">
-            <p for="Name" class="label mb-0 ">Cliente</p>
+            <p for="Name" class="label mb-0 ">
+              Clientes
+
+              <v-dialog v-model="dialogo" persistent max-width="600px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn class="field" v-bind="attrs" v-on="on">
+                    <font-awesome-icon icon="fa-solid fa-user" />
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="text-h5 text-center">Usuarios</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col class="px-0 py-0" cols="12" v-for="(usuario,i) of usuarios" :key="i">
+                          <p class="primary" id="border">{{usuario.nombre}}
+                            <v-btn class="pl-5" @click="llenarInfo(usuario)">
+                              agregar cliente
+                            </v-btn>
+                            <v-btn class="pl-5" @click="llenarInfoContacto(usuario)">
+                              agregar contacto
+                            </v-btn>
+                            <v-btn class="pl-5" @click="llenarInfoElaborador(usuario)">
+                              elaborador
+                            </v-btn>
+                          </p>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="dialogo = false">
+                      Close
+                    </v-btn>
+                    <v-btn color="blue darken-1" text @click="dialogo = false">
+                      Save
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+
+            </p>
             <p for="Name" class="label mb-0 ">Dirección</p>
             <p for="Name" class="label mb-0 ">Departamento</p>
             <p for="Name" class="label mb-0 ">Contacto</p>
@@ -57,13 +101,13 @@
             <p for="Name" class="label mb-0 ">Elaborado por</p>
           </v-col>
           <v-col cols="8" class="pl-0">
+            <v-text-field v-model="nombre" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="direccion" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="departamento" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="contacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="celularContacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
             <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="elaborador" class="field px-0 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -79,13 +123,13 @@
             <p for="Name" class="label mb-0 ">Cargo</p>
           </v-col>
           <v-col cols="8" class="pl-0">
+            <v-text-field v-model="cc" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="ciudad" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="telefono" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="cargo" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="correoContacto" class="field py-0 my-0" height="26"></v-text-field>
             <v-text-field class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="cargoElaborador" class="field py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -107,16 +151,16 @@
             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
             </v-text-field>
           </v-card-title>
-          <v-data-table :headers="headers" :items="desserts" :search="search">
+          <v-data-table :headers="cabeza" :items="desierto" :search="search">
 
             <template v-slot:footer>
               <v-card class="d-flex justify-end">
-              <tr>
-                <td>
-                  <v-text-field type="number" label="Costo del ítem 1"></v-text-field>
-                </td>
-              </tr>
-            </v-card>
+                <tr>
+                  <td>
+                    <v-text-field type="number" label="Costo del ítem 1"></v-text-field>
+                  </td>
+                </tr>
+              </v-card>
             </template>
           </v-data-table>
         </v-card>
@@ -131,9 +175,9 @@
       <v-col cols="4" class="px-0 py-0 mb-6">
         <v-row>
           <v-col cols="6" class="pr-0">
-            <p  class="label mb-0 ">Subtotal</p>
-            <p  class="label mb-0 ">Iva</p>
-            <p  class="label mb-0 ">Total</p>
+            <p class="label mb-0 ">Subtotal</p>
+            <p class="label mb-0 ">Iva</p>
+            <p class="label mb-0 ">Total</p>
           </v-col>
           <v-col cols="6" class="pl-0">
             <v-text-field class="field py-0 my-0" height="26"></v-text-field>
@@ -143,6 +187,90 @@
         </v-row>
       </v-col>
     </v-row>
+
+    <v-row>
+      <v-col>
+        <v-data-table :headers="headers" :items="usuarios" sort-by="calories" class="elevation-1">
+          <template v-slot:top>
+            <v-toolbar flat>
+              <v-toolbar-title>Usuarios</v-toolbar-title>
+              <v-divider class="mx-4" inset vertical></v-divider>
+              <v-spacer></v-spacer>
+              <v-dialog v-model="dialog" max-width="500px">
+                <!-- insertar usuarios nuevos -->
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                    Registre usuario
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="text-h5">{{ formTitle }}</span>
+                  </v-card-title>
+
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="close">
+                      Cancel
+                    </v-btn>
+                    <v-btn color="blue darken-1" text @click="save">
+                      Save
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <v-dialog v-model="dialogDelete" max-width="500px">
+                <v-card>
+                  <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-toolbar>
+          </template>
+          <template v-slot:[`item.actions`]="{ item }">
+            <v-icon small class="mr-2" @click="editItem(item)">
+              mdi-pencil
+            </v-icon>
+            <v-icon small @click="deleteItem(item)">
+              mdi-delete
+            </v-icon>
+          </template>
+          <template v-slot:no-data>
+            <v-btn color="primary" @click="initialize">
+              Reset
+            </v-btn>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+
     <!-- <v-row class="py-0 px-0">
       <h5 class="primary text-center" style="width: 100%">
         Observaciones del servicio
@@ -304,12 +432,15 @@
     </v-row> -->
   </v-container>
 </template>
+
 <script>
+import axios from 'axios'
 export default {
   name: "PageCotizacion",
   data: () => ({
     search: "",
-    headers: [
+    dialogo: false,
+    cabeza: [
       {
         text: "Código de referencia",
         align: "start",
@@ -323,7 +454,7 @@ export default {
       { text: "Límite de cuantificación", value: "iron" },
       { text: "Costo del ensayo" },
     ],
-    desserts: [
+    desierto: [
       {
         name: "Frozen Yogurt",
         calories: 159,
@@ -349,7 +480,163 @@ export default {
         iron: "7%",
       },
     ],
+    usuarios: [],
+    nombre: '',
+    cc: '',
+    direccion: '',
+    ciudad: '',
+    departamento: '',
+    telefono: '',
+    contacto: '',
+    cargo: '',
+    celularContacto: '',
+    correoContacto: '',
+    validezOrferta: '',
+    entregaResultados: '',
+    elaborador: '',
+    cargoElaborador: '',
+
+
+
+    dialog: false,
+    dialogDelete: false,
+    headers: [
+      {
+        text: 'Dessert (100g serving)',
+        align: 'start',
+        sortable: false,
+        value: 'nombre',
+      },
+      { text: 'Calories', value: 'calories' },
+      { text: 'Actions', value: 'actions', sortable: false },
+    ],
+    desserts: [],
+    editedIndex: -1,
+    editedItem: {
+      name: '',
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
+    defaultItem: {
+      name: '',
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
+
   }),
+
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+    },
+  },
+
+  watch: {
+    dialog(val) {
+      val || this.close()
+    },
+    dialogDelete(val) {
+      val || this.closeDelete()
+    },
+  },
+
+  methods: {
+    traerClientes() {
+      axios.get('https://labficat.herokuapp.com/api/usuario')
+        .then((res) => {
+          this.usuarios = res.data.usuario
+          console.log(this.usuarios);
+            
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
+
+    llenarInfo(user) {
+      console.log(user);
+      this.nombre = user.nombre
+      this.cc = user.documento
+      this.direccion = user.direccion
+      this.ciudad = user.ciudad.Ciudad
+      this.departamento = user.ciudad.departamento
+      this.telefono = user.telefono
+    },
+    llenarInfoContacto(user) {
+      this.contacto = user.nombre;
+      this.cargo = user.rol;
+      this.celularContacto = user.telefono;
+      this.correoContacto = user.correo
+    },
+    llenarInfoElaborador(user) {
+      this.elaborador = user.nombre;
+      this.cargoElaborador = user.rol
+    },
+
+
+
+
+    initialize() {
+      this.desserts = [
+        {
+          name: 'Frozen Yogurt',
+          calories: 159,
+        },
+
+      ]
+    },
+
+    editItem(item) {
+      this.editedIndex = this.desserts.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialog = true
+    },
+
+    deleteItem(item) {
+      this.editedIndex = this.desserts.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialogDelete = true
+    },
+
+    deleteItemConfirm() {
+      this.desserts.splice(this.editedIndex, 1)
+      this.closeDelete()
+    },
+
+    close() {
+      this.dialog = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+
+    closeDelete() {
+      this.dialogDelete = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+      } else {
+        this.desserts.push(this.editedItem)
+      }
+      this.close()
+    },
+
+  },
+  created() {
+    this.traerClientes();
+    this.initialize()
+  }
 };
 </script>
 <style scoped>

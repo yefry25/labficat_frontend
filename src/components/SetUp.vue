@@ -14,15 +14,17 @@
         </v-row>
         <v-row>
             <v-col cols="4" class=" text-center px-0 py-0" id="border">
-            <p id="border" class="mb-0 ">Cotización</p>
-            <p id="border" class="mb-0 ">Muestra</p>
-            <p id="border" class="mb-0 ">Iva</p>
-          </v-col>
-          <v-col cols="2" class="px-0 py-0 " id="border">
-            <v-text-field id="border" v-model="cotizacion" class="maximo px-0 py-0 mx-0 my-0" height="26"></v-text-field>
-            <v-text-field id="border" v-model="muestra" class="maximo px-0 py-0 mx-0 my-0" height="26"></v-text-field>
-            <v-text-field id="border" v-model="iva" class="maximo px-0 py-0 mx-0 my-0" height="26"></v-text-field>
-          </v-col>
+                <p id="border" class="mb-0 ">Cotización</p>
+                <p id="border" class="mb-0 ">Muestra</p>
+                <p id="border" class="mb-0 ">Iva</p>
+            </v-col>
+            <v-col cols="2" class="px-0 py-0 " id="border">
+                <v-text-field id="border" v-model="cotizacion" class="maximo px-0 py-0 mx-0 my-0" height="26">
+                </v-text-field>
+                <v-text-field id="border" v-model="muestra" class="maximo px-0 py-0 mx-0 my-0" height="26">
+                </v-text-field>
+                <v-text-field id="border" v-model="iva" class="maximo px-0 py-0 mx-0 my-0" height="26"></v-text-field>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -44,9 +46,9 @@ export default {
                 .then((response) => {
                     console.log(response);
                     this.consecutivos = response.data.consecutivos
-                    this.cotizacion=response.data.consecutivos[0].consecutivoOferta
-                    this.muestra=response.data.consecutivos[0].consecutivoMuestra
-                    this.iva=response.data.consecutivos[0].iva
+                    this.cotizacion = response.data.consecutivos[0].consecutivoOferta
+                    this.muestra = response.data.consecutivos[0].consecutivoMuestra
+                    this.iva = response.data.consecutivos[0].iva
                     console.log(this.consecutivos);
                     console.log(this.cotizacion);
                 })
@@ -65,11 +67,11 @@ export default {
 </script>
 
 <style scoped>
-    #border {
-        border: 1px solid black;
-    }
+#border {
+    border: 1px solid black;
+}
 
-    .maximo {
-        max-height: 26px;
-    }
+.maximo {
+    max-height: 26px;
+}
 </style>
