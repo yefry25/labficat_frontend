@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="4">
+      <v-col cols="6">
         <v-card
           class="borde mx-auto rounded-xl rounded-tr-0"
           max-width="344"
@@ -11,23 +11,23 @@
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
               <v-list-item-title class="text-h5 mb-1">
-                COTIZACION
+                SETUP
               </v-list-item-title>
               <font-awesome-icon
                 class="mt-2"
-                icon="fa-solid fa-hand-holding-dollar"
+                icon="fa-solid fa-list-ol"
                 style="font-size: 25px"
               />
             </v-list-item-content>
           </v-list-item>
           <v-card-actions class="boton">
-            <v-btn class="primary" to="cotizacion" outlined rounded text>
+            <v-btn class="primary" to="setup" outlined rounded text>
               INGRESAR
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="6">
         <v-card
           class="borde mx-auto rounded-xl rounded-tr-0"
           max-width="344"
@@ -37,23 +37,23 @@
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
               <v-list-item-title class="text-h5 mb-1">
-                RECEPCION MUESTRA
+                ENSAYOS
               </v-list-item-title>
               <font-awesome-icon
                 class="mt-2"
-                icon="fa-solid fa-tablet"
+                icon="fa-solid fa-flask-vial"
                 style="font-size: 25px"
               />
             </v-list-item-content>
           </v-list-item>
           <v-card-actions class="boton">
-            <v-btn class="primary" to="recepcionMuestra" outlined rounded text>
+            <v-btn class="primary" to="ensayo" outlined rounded text>
               INGRESAR
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="6">
         <v-card
           class="borde mx-auto rounded-xl rounded-tr-0"
           max-width="344"
@@ -63,23 +63,23 @@
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
               <v-list-item-title class="text-h5 mb-1">
-                REPORTES
+                BITACORA
               </v-list-item-title>
               <font-awesome-icon
                 class="mt-2"
-                icon="fa-solid fa-check-to-slot"
+                icon="fa-solid fa-book-open"
                 style="font-size: 25px"
               />
             </v-list-item-content>
           </v-list-item>
           <v-card-actions class="boton">
-            <v-btn class="primary" to="cotizacion" outlined rounded text>
+            <v-btn class="primary" to="bitacora" outlined rounded text>
               INGRESAR
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="6">
         <v-card
           class="borde mx-auto rounded-xl rounded-tr-0"
           max-width="344"
@@ -89,77 +89,17 @@
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
               <v-list-item-title class="text-h5 mb-1">
-                INFORME DE RESULTADOS
+                CALIDAD
               </v-list-item-title>
               <font-awesome-icon
                 class="mt-2"
-                icon="fa-solid fa-check-to-slot"
+                icon="fa-solid fa-pen-to-square"
                 style="font-size: 25px"
               />
             </v-list-item-content>
           </v-list-item>
           <v-card-actions class="boton">
-            <v-btn
-              class="primary"
-              to="informeDeResultados"
-              outlined
-              rounded
-              text
-            >
-              INGRESAR
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    
-    
-      <v-col cols="4">
-        <v-card
-          class="borde mx-auto rounded-xl rounded-tr-0"
-          max-width="344"
-          outlined
-        >
-          <v-list-item three-line class="text-center">
-            <v-list-item-content>
-              <div class="text-overline mb-4">labficat</div>
-              <v-list-item-title class="text-h5 mb-1">
-                REGISTRO DE USUARIO
-              </v-list-item-title>
-              <font-awesome-icon
-                class="mt-2"
-                icon="fa-solid fa-user-pen"
-                style="font-size: 25px"
-              />
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions class="boton">
-            <v-btn class="primary" to="registro" outlined rounded text>
-              INGRESAR
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="4">
-        <v-card
-          class="borde mx-auto rounded-xl rounded-tr-0"
-          max-width="344"
-          outlined
-        >
-          <v-list-item three-line class="text-center">
-            <v-list-item-content>
-              <div class="text-overline mb-4">labficat</div>
-              <v-list-item-title class="text-h5 mb-1">
-                CONFIGURACIÓN
-              </v-list-item-title>
-              <font-awesome-icon
-                class="mt-2"
-                icon="fa-solid fa-wrench"
-                style="font-size: 25px"
-              />
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions class="boton">
-            <v-btn class="primary" to="configuracion" outlined rounded text>
+            <v-btn class="primary" to="calidad" outlined rounded text>
               INGRESAR
             </v-btn>
           </v-card-actions>
@@ -170,33 +110,19 @@
 </template>
 
 <script>
-import axios from "axios";
-export default {
-  name: "pageInicio",
-  data: () => ({}),
+// import axios from 'axios'
 
+export default {
+  name: "pageConfiguracion",
+  data: () => ({}),
   methods: {
-    ingreso() {
-      axios
-        .post("https://labficat.herokuapp.com/api/cotizacion")
-        .then((response) => {
-          console.log(response);
-          this.$router.push("/cotizacion");
-          this.$swal({
-            icon: "success",
-            title: "Ingreso exitoso",
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+
   },
 };
 </script>
 
 <style scoped>
-.boton {
+    .boton {
   text-align: center;
   justify-content: center;
 }
@@ -205,4 +131,3 @@ export default {
   /* background-color: #ED7D31; */
 }
 </style>
-

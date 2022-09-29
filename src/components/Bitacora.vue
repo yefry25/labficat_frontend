@@ -2,14 +2,14 @@
   <v-container fluid>
     <v-row>
       <v-col> 
-        <h1>holis</h1>
+        <h1>holo</h1>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
 export default {
-  name: "pageSetup",
+  name: "pageBitacora",
   data: () => ({}),
   methods: {},
 };

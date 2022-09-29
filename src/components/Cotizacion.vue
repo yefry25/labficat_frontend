@@ -58,7 +58,7 @@
                   </v-btn>
                 </template>
                 <v-card>
-                  <v-card-title>
+                  <!-- <v-card-title>
                     <span class="text-h5 text-center">Usuarios</span>
                   </v-card-title>
                   <v-card-text>
@@ -79,7 +79,27 @@
                         </v-col>
                       </v-row>
                     </v-container>
-                  </v-card-text>
+                  </v-card-text> -->
+
+                  <v-row>
+                    <v-col>
+                      <v-card>
+                        <v-card-title>
+                          Usuarios
+                          <v-divider class="mx-4" inset vertical></v-divider>
+                          <v-spacer></v-spacer>
+                          <v-text-field label="buscador" v-model="busqueda" single-line hide-details></v-text-field>
+                        </v-card-title>
+                        <v-data-table :headers="headers" :items="buscar" item-text="nombre" item-key="usuarios">
+                          <template v-slot:[`item.actions`]="{ item }">
+                            <v-btn @click="llenarInfo(item)">
+                              agregar cliente
+                            </v-btn>
+                          </template>
+                        </v-data-table>
+                      </v-card>
+                    </v-col>
+                  </v-row>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="dialogo = false">
@@ -90,6 +110,7 @@
                     </v-btn>
                   </v-card-actions>
                 </v-card>
+
               </v-dialog>
 
             </p>
@@ -101,13 +122,13 @@
             <p for="Name" class="label mb-0 ">Elaborado por</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field v-model="nombre" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="direccion" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="departamento" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="contacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="celularContacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="elaborador" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.nombre" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.direccion" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.departamento" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.contacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.celularContacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            
+            <v-text-field v-model="person.elaborador" class="field px-0 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -123,13 +144,13 @@
             <p for="Name" class="label mb-0 ">Cargo</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field v-model="cc" class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="ciudad" class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="telefono" class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="cargo" class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="correoContacto" class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="cargoElaborador" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.cc" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.ciudad" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.telefono" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.cargo" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.correoContacto" class="field py-0 my-0" height="26"></v-text-field>
+            
+            <v-text-field v-model="person.cargoElaborador" class="field py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -152,7 +173,6 @@
             </v-text-field>
           </v-card-title>
           <v-data-table :headers="cabeza" :items="desierto" :search="search">
-
             <template v-slot:footer>
               <v-card class="d-flex justify-end">
                 <tr>
@@ -187,90 +207,6 @@
         </v-row>
       </v-col>
     </v-row>
-
-    <v-row>
-      <v-col>
-        <v-data-table :headers="headers" :items="usuarios" sort-by="calories" class="elevation-1">
-          <template v-slot:top>
-            <v-toolbar flat>
-              <v-toolbar-title>Usuarios</v-toolbar-title>
-              <v-divider class="mx-4" inset vertical></v-divider>
-              <v-spacer></v-spacer>
-              <v-dialog v-model="dialog" max-width="500px">
-                <!-- insertar usuarios nuevos -->
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                    Registre usuario
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>
-                    <span class="text-h5">{{ formTitle }}</span>
-                  </v-card-title>
-
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">
-                      Cancel
-                    </v-btn>
-                    <v-btn color="blue darken-1" text @click="save">
-                      Save
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-              <v-dialog v-model="dialogDelete" max-width="500px">
-                <v-card>
-                  <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                    <v-spacer></v-spacer>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-toolbar>
-          </template>
-          <template v-slot:[`item.actions`]="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)">
-              mdi-pencil
-            </v-icon>
-            <v-icon small @click="deleteItem(item)">
-              mdi-delete
-            </v-icon>
-          </template>
-          <template v-slot:no-data>
-            <v-btn color="primary" @click="initialize">
-              Reset
-            </v-btn>
-          </template>
-        </v-data-table>
-      </v-col>
-    </v-row>
-
     <!-- <v-row class="py-0 px-0">
       <h5 class="primary text-center" style="width: 100%">
         Observaciones del servicio
@@ -480,77 +416,73 @@ export default {
         iron: "7%",
       },
     ],
+    items:[
+      {
+        ensayo:'',
+        metodo:'',
+        tecnica:'',
+        costo:null,
+        descripcion:'',
+        limiteCuantificacion:'',
+        responsables:{
+          titular:'',
+          suplente:''
+        }
+      }
+    ],
     usuarios: [],
-    nombre: '',
-    cc: '',
-    direccion: '',
-    ciudad: '',
-    departamento: '',
-    telefono: '',
-    contacto: '',
-    cargo: '',
-    celularContacto: '',
-    correoContacto: '',
-    validezOrferta: '',
-    entregaResultados: '',
-    elaborador: '',
-    cargoElaborador: '',
+    person: {
+      nombre: '',
+      cc: '',
+      direccion: '',
+      ciudad: '',
+      departamento: '',
+      telefono: '',
+      contacto: '',
+      cargo: '',
+      celularContacto: '',
+      correoContacto: '',
+      validezOrferta: '',
+      entregaResultados: '',
+      elaborador: '',
+      cargoElaborador: '',
+    },
 
-
-
-    dialog: false,
+    rol: ['administrador', 'cliente', 'director'],
+    busqueda: '',
+    Roles: '',
     dialogDelete: false,
     headers: [
       {
-        text: 'Dessert (100g serving)',
+        text: 'Nombre',
         align: 'start',
         sortable: false,
         value: 'nombre',
+
       },
-      { text: 'Calories', value: 'calories' },
-      { text: 'Actions', value: 'actions', sortable: false },
-    ],
-    desserts: [],
-    editedIndex: -1,
-    editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
-    defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
-
+      { text: 'Rol', value: 'rol', sortable: false },
+      { text: 'Acciones', value: 'actions', sortable: false },
+    ]
   }),
-
   computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    },
-  },
+    buscar() {
+      return this.usuarios.filter(user => {
+        const nombre = user.nombre.toLowerCase();
+        const documento = user.documento.toLowerCase();
+        const busqueda = this.busqueda.toLowerCase();
 
-  watch: {
-    dialog(val) {
-      val || this.close()
-    },
-    dialogDelete(val) {
-      val || this.closeDelete()
-    },
+        return nombre.includes(busqueda) ||
+          documento.includes(busqueda);
+      });
+    }
   },
-
   methods: {
     traerClientes() {
       axios.get('https://labficat.herokuapp.com/api/usuario')
         .then((res) => {
           this.usuarios = res.data.usuario
           console.log(this.usuarios);
-            
+
         })
         .catch((err) => {
           console.log(err);
@@ -559,83 +491,29 @@ export default {
 
     llenarInfo(user) {
       console.log(user);
-      this.nombre = user.nombre
-      this.cc = user.documento
-      this.direccion = user.direccion
-      this.ciudad = user.ciudad.Ciudad
-      this.departamento = user.ciudad.departamento
-      this.telefono = user.telefono
+      this.person.nombre = user.nombre
+      this.person.cc = user.documento
+      this.person.direccion = user.direccion
+      this.person.ciudad = user.ciudad.Ciudad
+      this.person.departamento = user.ciudad.departamento
+      this.person.telefono = user.telefono
+      this.person.contacto = user.contacto
+      this.person.cargo = user.rol
+      this.person.correoContacto = user.correo
     },
-    llenarInfoContacto(user) {
-      this.contacto = user.nombre;
-      this.cargo = user.rol;
-      this.celularContacto = user.telefono;
-      this.correoContacto = user.correo
-    },
-    llenarInfoElaborador(user) {
-      this.elaborador = user.nombre;
-      this.cargoElaborador = user.rol
-    },
-
-
-
-
-    initialize() {
-      this.desserts = [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-        },
-
-      ]
-    },
-
-    editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
-    },
-
-    deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogDelete = true
-    },
-
-    deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1)
-      this.closeDelete()
-    },
-
-    close() {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
+    traerEnsayos(){
+      axios.get('https://labficat.herokuapp.com/api/ensayo')
+      .then((res) =>{
+        console.log(res.data.ensayos);
+      })
+      .catch((err) =>{
+        console.log(err);
       })
     },
-
-    closeDelete() {
-      this.dialogDelete = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
-
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      } else {
-        this.desserts.push(this.editedItem)
-      }
-      this.close()
-    },
-
   },
   created() {
     this.traerClientes();
-    this.initialize()
+    this.traerEnsayos()
   }
 };
 </script>

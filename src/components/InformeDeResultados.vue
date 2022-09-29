@@ -26,26 +26,26 @@
         <h2 class="mt-2 red--text">XXXX-AAAA</h2>
         <v-row>
           <v-col cols="6">
-            <p>Fecha y hora de recepción de la muestra:</p>
+            <p class="parrafo font-weight-black">Fecha y hora de recepción de la muestra:</p>
           </v-col>
           <v-col cols="6">
-            <p>Fecha y hora de emisión del informe de resultados:</p>
+            <p class="parrafo font-weight-black">Fecha y hora de emisión del informe de resultados:</p>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="6">
+        <v-row class="mx-0 my-0 px-0 py-0">
+          <v-col class="px-0 py-0" cols="6">
             <p class="mt-2 red--text">AAAA-MM-DD; hh:mm</p>
           </v-col>
-          <v-col cols="6">
+          <v-col class="px-0 py-0" cols="6">
             <p class="mt-2 red--text">AAAA-MM-DD; hh:mm</p>
           </v-col>
         </v-row>
       </v-col>
       <v-col cols="2" class="text-center">
-        <p>
+        <p class="parrafo font-weight-black">
           Código <br />
-          CAT–ST–OC–F–002 <br />
-          Aprobación <br />2022-04-01 <br />
+          CAT–ST–OC–F–002 <br> <br />
+          Aprobación <br />2022-04-01 <br> <br />
           Versión <br />
           2
         </p>

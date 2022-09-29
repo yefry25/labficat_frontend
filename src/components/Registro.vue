@@ -23,10 +23,10 @@
                             </validation-provider>
                             <validation-provider v-slot="{ errors }" name="departamento" rules="required">
                                 <v-select v-model="departamento" :items="departa" item-text="departamento" item-key="departa" item-value="_id" :error-messages="errors" outlined
-                                    label="Departamento" data-vv-name="departamento" required></v-select>
+                                    label="Departamento" data-vv-name="departamento" @change="traerCiudades(departa)" required></v-select>
                             </validation-provider>
                             <validation-provider v-slot="{ errors }" name="ciudad" rules="required">
-                                <v-select v-model="ciudad" :items="items" :error-messages="errors" outlined
+                                <v-select v-model="ciudad" :items="ciudades" item-text="Ciudad" item-key="ciudades" item-value="_id" :error-messages="errors" outlined
                                     label="Cuidad" data-vv-name="ciudad" required></v-select>
                             </validation-provider>
                             <validation-provider v-slot="{ errors }" name="contacto" rules="required">
@@ -116,16 +116,31 @@ export default {
             'Natural',
             'Jurídica'
         ],
-        departa:[]
+        departa:[],
+        ciudades:[]
 
     }),
     methods: {
         traerDepartamentos(){
-            axios.get('https://labficat.herokuapp.com/api/ciudad')
+            axios.get('https://labficat.herokuapp.com/api/ciudad/departamentos')
+            .then((response)=>{
+                console.log(response.data.departamentos);
+                this.departa=response.data.departamentos
+                console.log(this.departa);
+                
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
+        },
+
+        traerCiudades(ciudad){
+            console.log(ciudad);
+            axios.post('https://labficat.herokuapp.com/api/ciudad/nombreDepartamento',{departamento:this.departamento})
             .then((response)=>{
                 console.log(response.data.ciudades);
-                this.departa=response.data.ciudades
-                console.log(this.departa);
+                this.ciudades=response.data.ciudades
+                console.log(this.ciudades);
             })
             .catch((error)=>{
                 console.log(error);
@@ -133,6 +148,7 @@ export default {
         },
 
         registrar() {
+            console.log(this.ciudad);
             axios.post('https://labficat.herokuapp.com/api/usuario', {
                 tipoPersona: this.select,
                 nombre: this.nombre,
@@ -143,12 +159,18 @@ export default {
                 telefono: this.telefono,
                 email: this.email,
                 password: this.password,
+                rol: this.rol
 
             })
+
+            
         }
     },
     created() {
         this.traerDepartamentos()
+    },
+    mounted() {
+        
     }
 }
 </script>
