@@ -22,16 +22,23 @@
                                     required></v-text-field>
                             </validation-provider>
                             <validation-provider v-slot="{ errors }" name="departamento" rules="required">
-                                <v-select v-model="departamento" :items="departa" item-text="departamento" item-key="departa" item-value="_id" :error-messages="errors" outlined
-                                    label="Departamento" data-vv-name="departamento" @change="traerCiudades(departa)" required></v-select>
+                                <v-select v-model="departamento" :items="departa" item-text="departamento"
+                                    item-key="departa" item-value="_id" :error-messages="errors" outlined
+                                    label="Departamento" data-vv-name="departamento" @change="traerCiudades(departa)"
+                                    required></v-select>
                             </validation-provider>
                             <validation-provider v-slot="{ errors }" name="ciudad" rules="required">
-                                <v-select v-model="ciudad" :items="ciudades" item-text="Ciudad" item-key="ciudades" item-value="_id" :error-messages="errors" outlined
-                                    label="Cuidad" data-vv-name="ciudad" required></v-select>
+                                <v-select v-model="ciudad" :items="ciudades" item-text="Ciudad" item-key="ciudades"
+                                    item-value="_id" :error-messages="errors" outlined label="Cuidad"
+                                    data-vv-name="ciudad" required></v-select>
                             </validation-provider>
                             <validation-provider v-slot="{ errors }" name="contacto" rules="required">
                                 <v-text-field v-model="contacto" :error-messages="errors" label="Contacto" outlined
                                     required></v-text-field>
+                            </validation-provider>
+                            <validation-provider v-slot="{ errors }" name="teléfono del contacto" rules="required">
+                                <v-text-field v-model="celularContacto" :error-messages="errors"
+                                    label="Telefono contacto" outlined required></v-text-field>
                             </validation-provider>
                             <validation-provider v-slot="{ errors }" name="teléfono" rules="required">
                                 <v-text-field v-model="telefono" :error-messages="errors" label="Teléfono" outlined
@@ -52,8 +59,8 @@
                                     label="confirmar contraseña" outlined type="password" required></v-text-field>
                             </validation-provider>
                             <validation-provider v-slot="{ errors }" name="rol" rules="required">
-                                <v-text-field v-model="rol" :error-messages="errors" label="Rol" outlined required>
-                                </v-text-field>
+                                <v-select v-model="rol" :items="roles" :error-messages="errors" outlined label="Roles"
+                                    data-vv-name="roles" required></v-select>
                             </validation-provider>
                             <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block
                                 @click="registrar">
@@ -104,9 +111,10 @@ export default {
         nombre: '',
         documento: '',
         direccion: '',
-        departamento:"",
+        departamento: "",
         ciudad: "",
         contacto: '',
+        celularContacto: '',
         telefono: '',
         email: '',
         password: '',
@@ -116,61 +124,79 @@ export default {
             'Natural',
             'Jurídica'
         ],
-        departa:[],
-        ciudades:[]
+        roles: [
+            'cliente',
+            'secretario',
+            'administrador',
+            'director',
+            'especialista',
+            'supervisor'
+        ],
+        departa: [],
+        ciudades: []
 
     }),
     methods: {
-        traerDepartamentos(){
+        traerDepartamentos() {
             axios.get('https://labficat.herokuapp.com/api/ciudad/departamentos')
-            .then((response)=>{
-                console.log(response.data.departamentos);
-                this.departa=response.data.departamentos
-                console.log(this.departa);
-                
-            })
-            .catch((error)=>{
-                console.log(error);
-            })
-        },
+                .then((response) => {
+                    console.log(response.data.departamentos);
+                    this.departa = response.data.departamentos
+                    console.log(this.departa);
 
-        traerCiudades(ciudad){
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        },
+        traerCiudades(ciudad) {
             console.log(ciudad);
-            axios.post('https://labficat.herokuapp.com/api/ciudad/nombreDepartamento',{departamento:this.departamento})
-            .then((response)=>{
-                console.log(response.data.ciudades);
-                this.ciudades=response.data.ciudades
-                console.log(this.ciudades);
-            })
-            .catch((error)=>{
-                console.log(error);
-            })
+            axios.post('https://labficat.herokuapp.com/api/ciudad/nombreDepartamento', { departamento: this.departamento })
+                .then((response) => {
+                    console.log(response.data.ciudades);
+                    this.ciudades = response.data.ciudades
+                    console.log(this.ciudades);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
-
         registrar() {
-            console.log(this.ciudad);
             axios.post('https://labficat.herokuapp.com/api/usuario', {
                 tipoPersona: this.select,
                 nombre: this.nombre,
                 documento: this.documento,
                 direccion: this.direccion,
-                ciudad:this.ciudad,
+                ciudad: this.ciudad,
                 contacto: this.contacto,
+                celularContacto: this.celularContacto,
                 telefono: this.telefono,
-                email: this.email,
+                correo: this.email,
                 password: this.password,
                 rol: this.rol
-
             })
-
-            
+                .then((res) => {
+                    console.log(res.data);
+                    this.$swal({
+                        icon: "success",
+                        title: "Registro exitoso",
+                        text: `${res.data.usuario.nombre} registrado exitosamente`,
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    this.$swal({
+                        icon: "error",
+                        title: "Error al registrar el usuario",
+                    });
+                })
         }
     },
     created() {
         this.traerDepartamentos()
     },
     mounted() {
-        
+
     }
 }
 </script>

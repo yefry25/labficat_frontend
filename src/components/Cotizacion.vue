@@ -22,7 +22,7 @@
         <h3 class="mt-0 font-weight-black">cotización No.</h3>
         <h2 class="mt-2 red--text">xxxxx</h2>
         <h3 class="mt-2 font-weight-black">fecha de emisión:</h3>
-        <h2 class="mt-2 red--text">xxxx-xx-xx</h2>
+        <h2 class="mt-2 red--text">{{this.fechaEmision}}</h2>
       </v-col>
       <v-col cols="2" class="codigo font-weight-black">
         <p>
@@ -47,8 +47,8 @@
     <v-row>
       <v-col cols="6" class="py-0 px-0">
         <v-row>
-          <v-col cols="4" class=" text-center px-0">
-            <p for="Name" class="label mb-0 ">
+          <v-col cols="4" class="text-center px-0">
+            <p for="Name" class="label mb-0">
               Clientes
 
               <v-dialog v-model="dialogo" persistent max-width="600px">
@@ -58,29 +58,6 @@
                   </v-btn>
                 </template>
                 <v-card>
-                  <!-- <v-card-title>
-                    <span class="text-h5 text-center">Usuarios</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col class="px-0 py-0" cols="12" v-for="(usuario,i) of usuarios" :key="i">
-                          <p class="primary" id="border">{{usuario.nombre}}
-                            <v-btn class="pl-5" @click="llenarInfo(usuario)">
-                              agregar cliente
-                            </v-btn>
-                            <v-btn class="pl-5" @click="llenarInfoContacto(usuario)">
-                              agregar contacto
-                            </v-btn>
-                            <v-btn class="pl-5" @click="llenarInfoElaborador(usuario)">
-                              elaborador
-                            </v-btn>
-                          </p>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card-text> -->
-
                   <v-row>
                     <v-col>
                       <v-card>
@@ -110,16 +87,14 @@
                     </v-btn>
                   </v-card-actions>
                 </v-card>
-
               </v-dialog>
-
             </p>
-            <p for="Name" class="label mb-0 ">Dirección</p>
-            <p for="Name" class="label mb-0 ">Departamento</p>
-            <p for="Name" class="label mb-0 ">Contacto</p>
-            <p for="Name" class="label mb-0 ">Celular</p>
-            <p for="Name" class="label mb-0 ">Validez de la oferta</p>
-            <p for="Name" class="label mb-0 ">Elaborado por</p>
+            <p for="Name" class="label mb-0">Dirección</p>
+            <p for="Name" class="label mb-0">Departamento</p>
+            <p for="Name" class="label mb-0">Contacto</p>
+            <p for="Name" class="label mb-0">Celular</p>
+            <p for="Name" class="label mb-0">Validez de la oferta</p>
+            <p for="Name" class="label mb-0">Elaborado por</p>
           </v-col>
           <v-col cols="8" class="pl-0">
             <v-text-field v-model="person.nombre" class="field px-0 py-0 my-0" height="26"></v-text-field>
@@ -127,7 +102,15 @@
             <v-text-field v-model="person.departamento" class="field px-0 py-0 my-0" height="26"></v-text-field>
             <v-text-field v-model="person.contacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
             <v-text-field v-model="person.celularContacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            
+            <!-- <v-text-field v-model="person.validezOferta" class="field py-0 my-0" height="26"></v-text-field> -->
+            <v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
+              offset-y min-width="auto">
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field v-model="validezOferta" prepend-icon="mdi-calendar" readonly class="field px-0 py-0 my-0"
+                  height="26" v-bind="attrs" v-on="on"></v-text-field>
+              </template>
+              <v-date-picker v-model="validezOferta" @input="menu1 = false"></v-date-picker>
+            </v-menu>
             <v-text-field v-model="person.elaborador" class="field px-0 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
@@ -135,13 +118,13 @@
       <v-col cols="6" class="py-0 px-0">
         <v-row>
           <v-col cols="4" class="text-center pr-0">
-            <p for="Name" class="label mb-0 ">NIT / C.C.</p>
-            <p for="Name" class="label mb-0 ">Ciudad</p>
-            <p for="Name" class="label mb-0 ">Teléfono</p>
-            <p for="Name" class="label mb-0 ">Cargo</p>
-            <p for="Name" class="label mb-0 ">Correo electrónico</p>
-            <p for="Name" class="label mb-0 ">Entrega de resultados</p>
-            <p for="Name" class="label mb-0 ">Cargo</p>
+            <p for="Name" class="label mb-0">NIT / C.C.</p>
+            <p for="Name" class="label mb-0">Ciudad</p>
+            <p for="Name" class="label mb-0">Teléfono</p>
+            <p for="Name" class="label mb-0">Cargo</p>
+            <p for="Name" class="label mb-0">Correo electrónico</p>
+            <p for="Name" class="label mb-0">Entrega de resultados</p>
+            <p for="Name" class="label mb-0">Cargo</p>
           </v-col>
           <v-col cols="8" class="pl-0">
             <v-text-field v-model="person.cc" class="field py-0 my-0" height="26"></v-text-field>
@@ -149,7 +132,15 @@
             <v-text-field v-model="person.telefono" class="field py-0 my-0" height="26"></v-text-field>
             <v-text-field v-model="person.cargo" class="field py-0 my-0" height="26"></v-text-field>
             <v-text-field v-model="person.correoContacto" class="field py-0 my-0" height="26"></v-text-field>
-            
+            <!-- <v-text-field v-model="person.entregaResultados" class="field py-0 my-0" height="26"></v-text-field> -->
+            <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
+              offset-y min-width="auto">
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field v-model="entregaResultados" prepend-icon="mdi-calendar" readonly
+                  class="field px-0 py-0 my-0" height="26" v-bind="attrs" v-on="on"></v-text-field>
+              </template>
+              <v-date-picker v-model="entregaResultados" @input="menu2 = false"></v-date-picker>
+            </v-menu>
             <v-text-field v-model="person.cargoElaborador" class="field py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
@@ -169,12 +160,57 @@
       <v-col class="px-0 py-0">
         <v-card>
           <v-card-title>
-            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
-            </v-text-field>
+            Ensayos
+            <v-divider class="mx-4" inset vertical></v-divider>
+            <v-spacer></v-spacer>
+            <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
+            <v-spacer></v-spacer>
+            <v-dialog v-model="dialog" max-width="1000px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                  New Item
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  ENSAYOS
+                  <v-spacer></v-spacer>
+                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
+                  </v-text-field>
+                </v-card-title>
+                <v-data-table :headers="encabezadoEnsayo" :items="ensayos" :search="search" item-key="ensayos">
+                  <template v-slot:[`item.actions`]="{ item }">
+                    <v-icon @click="ensayoCotizacion(item)"> mdi-plus </v-icon>
+                  </template>
+                  <template v-slot:footer>
+                    <v-card class="d-flex justify-end">
+                      <tr>
+                        <td>
+                          <v-text-field class=" mr-2" v-model="limiteCuantificacion" type="number"
+                            label="Limite cuantificación"></v-text-field>
+                        </td>
+                      </tr>
+                    </v-card>
+                  </template>
+                </v-data-table>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="close">
+                    Cancel
+                  </v-btn>
+                  <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-card-title>
-          <v-data-table :headers="cabeza" :items="desierto" :search="search">
+          <v-data-table :headers="encabezado" :items="primerItem">
             <template v-slot:footer>
               <v-card class="d-flex justify-end">
+                <tr>
+                  <td>
+                    <v-text-field v-model="descuento" class="pr-2" type="number" label="Descuento"></v-text-field>
+                  </td>
+                </tr>
                 <tr>
                   <td>
                     <v-text-field type="number" label="Costo del ítem 1"></v-text-field>
@@ -186,18 +222,161 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row id="border">
+      <h5 class="primary text-center white--text" style="width: 100%">
+        Item 2
+      </h5>
+    </v-row>
+    <v-row>
+      <v-col class="px-0 py-0">
+        <v-card>
+          <v-card-title>
+            Ensayos
+            <v-divider class="mx-4" inset vertical></v-divider>
+            <v-spacer></v-spacer>
+            <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
+            <v-spacer></v-spacer>
+            <v-dialog v-model="dialogItem2" max-width="1000px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                  New Item
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  ENSAYOS
+                  <v-spacer></v-spacer>
+                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
+                  </v-text-field>
+                </v-card-title>
+                <v-data-table :headers="encabezadoEnsayo" :items="ensayos" :search="search" item-key="ensayos">
+                  <template v-slot:[`item.actions`]="{ item }">
+                    <v-icon @click="ensayoCotizacion2(item)"> mdi-plus </v-icon>
+                  </template>
+                </v-data-table>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="close">
+                    Cancel
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-card-title>
+          <v-data-table :headers="encabezado" :items="segundoItem">
+            <template v-slot:footer>
+              <v-card class="d-flex justify-end">
+                <tr>
+                  <td>
+                    <v-text-field type="number" label="Costo del ítem 2"></v-text-field>
+                  </td>
+                </tr>
+              </v-card>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row id="border">
+      <h5 class="primary text-center white--text" style="width: 100%">
+        Item 3
+      </h5>
+    </v-row>
+    <v-row>
+      <v-col class="px-0 py-0">
+        <v-card>
+          <v-card-title>
+            Ensayos
+            <v-divider class="mx-4" inset vertical></v-divider>
+            <v-spacer></v-spacer>
+            <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
+            <v-spacer></v-spacer>
+            <v-dialog v-model="dialogItem3" max-width="1000px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                  New Item
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  ENSAYOS
+                  <v-spacer></v-spacer>
+                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
+                  </v-text-field>
+                </v-card-title>
+                <v-data-table :headers="encabezadoEnsayo" :items="ensayos" :search="search" item-key="ensayos">
+                  <template v-slot:[`item.actions`]="{ item }">
+                    <v-icon @click="ensayoCotizacion3(item)"> mdi-plus </v-icon>
+                  </template>
+                </v-data-table>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="close">
+                    Cancel
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-card-title>
+          <v-data-table :headers="encabezado" :items="tercerItem">
+            <template v-slot:footer>
+              <v-card class="d-flex justify-end">
+                <tr>
+                  <td>
+                    <v-text-field type="number" label="Costo del ítem 3"></v-text-field>
+                  </td>
+                </tr>
+              </v-card>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-btn class="mr-6" @click="cotizacion">
+          subir cotización
+        </v-btn>
+        <v-dialog v-model="dialogCotizacion" max-width="1800px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+              editar cotizacion
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title>
+              COTIZACIONES
+              <v-spacer></v-spacer>
+              <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
+              </v-text-field>
+            </v-card-title>
+            <v-data-table :headers="encabezadoCotizacion" :items="cotizaciones" :search="search" item-key="ensayos">
+              <template v-slot:[`item.actions`]="{ item }">
+                <v-icon @click="ensayoCotizacion(item)"> mdi-plus </v-icon>
+              </template>
+            </v-data-table>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close">
+                Cancel
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col cols="8" class="py-0 px-0">
-        <h5 class=" primary text-center white--text px-0 py-0" style="width: 100%">
+        <h5 class="primary text-center white--text px-0 py-0" style="width: 100%">
           Observaciones de la propuesta técnica y económica
         </h5>
       </v-col>
       <v-col cols="4" class="px-0 py-0 mb-6">
         <v-row>
           <v-col cols="6" class="pr-0">
-            <p class="label mb-0 ">Subtotal</p>
-            <p class="label mb-0 ">Iva</p>
-            <p class="label mb-0 ">Total</p>
+            <p class="label mb-0">Subtotal</p>
+            <p class="label mb-0">Iva</p>
+            <p class="label mb-0">Total</p>
           </v-col>
           <v-col cols="6" class="pl-0">
             <v-text-field class="field py-0 my-0" height="26"></v-text-field>
@@ -370,152 +549,287 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   name: "PageCotizacion",
-  data: () => ({
-    search: "",
-    dialogo: false,
-    cabeza: [
-      {
-        text: "Código de referencia",
-        align: "start",
-        sortable: false,
-        value: "name",
+  data() {
+    return {
+      search: "",
+      dialogo: false,
+      encabezado: [
+        {
+          text: "Código de referencia",
+          align: "start",
+          sortable: false,
+          value: "",
+        },
+        { text: "Descripción del ensayo", value: "descripcion", sortable: false },
+        { text: "unidades", value: "unidades", sortable: false },
+        { text: "Técnica analítica", value: "tecnica", sortable: false },
+        { text: "Método analítico", value: "metodo", sortable: false },
+        { text: "Límite de cuantificación", value: "limiteCuantificacion", sortable: false },
+        { text: "Costo del ensayo", value: "costo", sortable: false },
+        { text: "Acciones", sortable: false },
+      ],
+      primerItem: [],
+      usuarios: [],
+      person: {
+        nombre: "",
+        cc: "",
+        direccion: "",
+        ciudad: "",
+        departamento: "",
+        telefono: "",
+        contacto: "",
+        cargo: "",
+        celularContacto: "",
+        correoContacto: "",
+        validezOferta: "",
+        entregaResultados: "",
+        elaborador: this.$store.state.elaborador.nombre,
+        cargoElaborador: this.$store.state.elaborador.rol,
       },
-      { text: "Descripción del ensayo", value: "calories" },
-      { text: "unidades", value: "fat" },
-      { text: "Técnica analítica", value: "carbs" },
-      { text: "Método analítico", value: "protein" },
-      { text: "Límite de cuantificación", value: "iron" },
-      { text: "Costo del ensayo" },
-    ],
-    desierto: [
-      {
-        name: "Frozen Yogurt",
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: "1%",
+      rol: ["administrador", "cliente", "director"],
+      busqueda: "",
+      Roles: "",
+      dialog: false,
+      headers: [
+        {
+          text: "Nombre",
+          align: "start",
+          sortable: false,
+          value: "nombre",
+        },
+        { text: "Rol", value: "rol", sortable: false },
+        { text: "Acciones", value: "actions", sortable: false },
+      ],
+      ensayos: [],
+      encabezadoEnsayo: [
+        {
+          text: "Fecha de Analisis",
+          align: "start",
+          sortable: false,
+          value: "name",
+        },
+        { text: "ensayo", value: "ensayo", sortable: false },
+        { text: "metodo", value: "metodo", sortable: false },
+        { text: "tecnica", value: "tecnica", sortable: false },
+        { text: "resultado", value: "resultado", sortable: false },
+        {
+          text: "insertidumbre expandida",
+          value: "insertidumbre expandida",
+          sortable: false,
+        },
+        {
+          text: "insertidumbre expandida",
+          value: "insertidumbre expandida",
+          sortable: false,
+        },
+        { text: "valor maximo", value: "valorMaximo", sortable: false },
+        { text: "valor minimo", value: "valorMinimo", sortable: false },
+        { text: "unidades", value: "unidades", sortable: false },
+        { text: "Acciones", value: "actions", sortable: false },
+      ],
+      id: '',
+      ensa: '',
+      descuento: '',
+      limiteCuantificacion: null,
+      item1: {
+        itemsEnsayo: []
       },
-      {
-        name: "Ice cream sandwich",
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: "1%",
-      },
-      {
-        name: "Eclair",
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        iron: "7%",
-      },
-    ],
-    items:[
-      {
-        ensayo:'',
-        metodo:'',
-        tecnica:'',
-        costo:null,
-        descripcion:'',
-        limiteCuantificacion:'',
-        responsables:{
-          titular:'',
-          suplente:''
-        }
-      }
-    ],
-    usuarios: [],
-    person: {
-      nombre: '',
-      cc: '',
-      direccion: '',
-      ciudad: '',
-      departamento: '',
-      telefono: '',
-      contacto: '',
-      cargo: '',
-      celularContacto: '',
-      correoContacto: '',
-      validezOrferta: '',
-      entregaResultados: '',
-      elaborador: '',
-      cargoElaborador: '',
-    },
+      fechaEmision: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      validezOferta: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      entregaResultados: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      menu2: false,
+      menu1: false,
 
-    rol: ['administrador', 'cliente', 'director'],
-    busqueda: '',
-    Roles: '',
-    dialogDelete: false,
-    headers: [
-      {
-        text: 'Nombre',
-        align: 'start',
-        sortable: false,
-        value: 'nombre',
-
+      dialogItem2: false,
+      segundoItem: [],
+      item2: {
+        itemsEnsayo: []
       },
-      { text: 'Rol', value: 'rol', sortable: false },
-      { text: 'Acciones', value: 'actions', sortable: false },
-    ]
-  }),
+
+      dialogItem3: false,
+      tercerItem: [],
+      item3: {
+        itemsEnsayo: []
+      },
+      encabezadoCotizacion:[
+        {
+          text: "Numero de cotización",
+          align: "start",
+          sortable: false,
+          value: "numCotizacion",
+        },
+        { text: "Fecha de emision", value: "fechaEmision", sortable: false },
+        { text: "Cliente", value: "idCliente", sortable: false },
+        { text: "Validez de la oferta", value: "validezOferta", sortable: false },
+        { text: "Entrega de resultados", value: "entregaResultados", sortable: false },
+        { text: "Elaborador", value: "idElaboradoPor", sortable: false },
+        { text: "Items", value: "items", sortable: false },
+        { text: "Observaciones", value: "observaciones", sortable: false },
+        { text: "Sub Total", value: "subTotal", sortable: false },
+        { text: "Descuento", value: "descuento", sortable: false },
+        { text: "Iva", value: "iva", sortable: false },
+        { text: "Total", value: "total", sortable: false },
+        { text: "Estado", value: "estado", sortable: false },
+        { text: "Acciones", value:"actions", sortable: false },
+      ],
+      cotizaciones:[],
+      dialogCotizacion:false,
+
+    }
+  },
   computed: {
     buscar() {
-      return this.usuarios.filter(user => {
+      return this.usuarios.filter((user) => {
         const nombre = user.nombre.toLowerCase();
         const documento = user.documento.toLowerCase();
         const busqueda = this.busqueda.toLowerCase();
 
-        return nombre.includes(busqueda) ||
-          documento.includes(busqueda);
+        return nombre.includes(busqueda) || documento.includes(busqueda);
       });
-    }
+    },
   },
   methods: {
     traerClientes() {
-      axios.get('https://labficat.herokuapp.com/api/usuario')
+      axios
+        .get("https://labficat.herokuapp.com/api/usuario")
         .then((res) => {
-          this.usuarios = res.data.usuario
+          this.usuarios = res.data.usuario;
           console.log(this.usuarios);
-
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    traerCotizaciones() {
+      axios.get('https://labficat.herokuapp.com/api/cotizacion')
+        .then((res) => {
+          console.log(res.data.cotizacion);
+          this.cotizaciones = res.data.cotizacion
         })
         .catch((err) => {
           console.log(err);
         })
     },
-
     llenarInfo(user) {
       console.log(user);
-      this.person.nombre = user.nombre
-      this.person.cc = user.documento
-      this.person.direccion = user.direccion
-      this.person.ciudad = user.ciudad.Ciudad
-      this.person.departamento = user.ciudad.departamento
-      this.person.telefono = user.telefono
-      this.person.contacto = user.contacto
-      this.person.cargo = user.rol
-      this.person.correoContacto = user.correo
+      this.id = user._id
+      this.person.nombre = user.nombre;
+      this.person.cc = user.documento;
+      this.person.direccion = user.direccion;
+      this.person.ciudad = user.ciudad.Ciudad;
+      this.person.departamento = user.ciudad.departamento;
+      this.person.telefono = user.telefono;
+      this.person.contacto = user.contacto;
+      this.person.celularContacto = user.celularContacto;
+      this.person.cargo = user.rol;
+      this.person.correoContacto = user.correo;
     },
-    traerEnsayos(){
-      axios.get('https://labficat.herokuapp.com/api/ensayo')
-      .then((res) =>{
-        console.log(res.data.ensayos);
+    ensayoCotizacion(ensayo) {
+      axios.put(`https://labficat.herokuapp.com/api/cotizacion/modificar/${ensayo._id}`,{
+        fechaEmision: this.fechaEmision,
+        idCliente: this.id,
+        validezOferta: this.validezOferta,
+        entregaResultados: this.entregaResultados,
+        idElaboradoPor: this.$store.state.elaborador.id,
+        items: {
+          item1: this.item1,
+          item2: this.item2,
+          item3: this.item3
+        },
+        descuento: this.descuento
       })
-      .catch((err) =>{
+      .then((res)=>{
+        console.log(res)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+    },
+    ensayoCotizacion2(ensayo) {
+      this.segundoItem.push(ensayo);
+      this.item2.itemsEnsayo.push({
+        ensayo: ensayo._id,
+        limiteCuantificacion: ensayo.limiteCuantificacion,
+        costoEnsayo: ensayo.costo
+      })
+    },
+    ensayoCotizacion3(ensayo) {
+      this.tercerItem.push(ensayo);
+      this.item3.itemsEnsayo.push({
+        ensayo: ensayo._id,
+        limiteCuantificacion: ensayo.limiteCuantificacion,
+        costoEnsayo: ensayo.costo
+      })
+    },
+    cotizacion() {
+      axios.post('https://labficat.herokuapp.com/api/cotizacion', {
+        fechaEmision: this.fechaEmision,
+        idCliente: this.id,
+        validezOferta: this.validezOferta,
+        entregaResultados: this.entregaResultados,
+        idElaboradoPor: this.$store.state.elaborador.id,
+        items: {
+          item1: this.item1,
+          item2: this.item2,
+          item3: this.item3
+        },
+        descuento: this.descuento
+      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
+    /* modificarCotizacion (){
+      axios.put(`https://labficat.herokuapp.com/api/cotizacion/modificar/${}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
         console.log(err);
       })
+    }, */
+    traerEnsayos() {
+      axios
+        .get("https://labficat.herokuapp.com/api/ensayo")
+        .then((res) => {
+          console.log(res.data.ensayos);
+          this.ensayos = res.data.ensayos;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    close() {
+      this.dialog = false;
+      this.dialogItem2 = false;
+      this.dialogItem3 = false;
+      this.dialogCotizacion= false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+      } else {
+        this.desserts.push(this.editedItem);
+      }
+      this.close();
     },
   },
   created() {
     this.traerClientes();
-    this.traerEnsayos()
+    this.traerEnsayos();
+    this.traerCotizaciones()
   }
-};
+}
 </script>
 <style scoped>
 #border {

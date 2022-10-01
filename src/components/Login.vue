@@ -61,7 +61,8 @@ export default {
     email: '',
     password: '',
     select: null,
-    overlay: false
+    overlay: false,
+    elaborado:{}
   }),
 
   methods: {
@@ -74,7 +75,7 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          console.log(response);
+          console.log(response.data.usuario);
           this.$router.push("/inicio");
           this.$swal({
             icon: "success",
@@ -82,8 +83,15 @@ export default {
             text: ` Bienvenido ${response.data.usuario.nombre}`,
           });
           this.overlay = false
+
+          this.elaborado={
+            nombre:response.data.usuario.nombre,
+            rol:response.data.usuario.rol,
+            id:response.data.usuario._id
+          }
           this.$store.dispatch("setToken", response.data.token);
-          console.log(this.$store.state.token);
+          this.$store.dispatch('setElaborador',this.elaborado)
+          console.log(this.$store.state.elaborador);
         })
         .catch((error) => {
           this.overlay = false
