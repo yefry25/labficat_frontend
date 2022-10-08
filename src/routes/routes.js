@@ -9,6 +9,8 @@ import setup from '../components/SetUp.vue'
 import ensayo from '../components/Ensayo.vue'
 import bitacora from '../components/Bitacora.vue'
 import calidad from '../components/Calidad.vue'
+import mostrarCotizacion from '../components/MostrarCotizacion.vue'
+import mostrarMuestra from '../components/MostrarMuestra.vue'
 
 
 export const routes = [
@@ -23,4 +25,6 @@ export const routes = [
     {path: '/ensayo', component: ensayo},
     {path: '/bitacora', component: bitacora},
     {path: '/calidad', component: calidad},
+    {path: '/mostrarCotizacion', component: mostrarCotizacion},
+    {path: '/mostrarMuestra', component: mostrarMuestra},
 ]

@@ -208,12 +208,7 @@
               <v-card class="d-flex justify-end">
                 <tr>
                   <td>
-                    <v-text-field v-model="descuento" class="pr-2" type="number" label="Descuento"></v-text-field>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <v-text-field type="number" label="Costo del ítem 1"></v-text-field>
+                    <v-text-field v-model="descuento" class="pr-2" type="number" label="Descuento Global"></v-text-field>
                   </td>
                 </tr>
               </v-card>
@@ -264,15 +259,6 @@
             </v-dialog>
           </v-card-title>
           <v-data-table :headers="encabezado" :items="segundoItem">
-            <template v-slot:footer>
-              <v-card class="d-flex justify-end">
-                <tr>
-                  <td>
-                    <v-text-field type="number" label="Costo del ítem 2"></v-text-field>
-                  </td>
-                </tr>
-              </v-card>
-            </template>
           </v-data-table>
         </v-card>
       </v-col>
@@ -319,15 +305,6 @@
             </v-dialog>
           </v-card-title>
           <v-data-table :headers="encabezado" :items="tercerItem">
-            <template v-slot:footer>
-              <v-card class="d-flex justify-end">
-                <tr>
-                  <td>
-                    <v-text-field type="number" label="Costo del ítem 3"></v-text-field>
-                  </td>
-                </tr>
-              </v-card>
-            </template>
           </v-data-table>
         </v-card>
       </v-col>
@@ -338,11 +315,11 @@
           subir cotización
         </v-btn>
         <v-dialog v-model="dialogCotizacion" max-width="1800px">
-          <template v-slot:activator="{ on, attrs }">
+          <!-- <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
               editar cotizacion
             </v-btn>
-          </template>
+          </template> -->
           <v-card>
             <v-card-title>
               COTIZACIONES
@@ -352,7 +329,7 @@
             </v-card-title>
             <v-data-table :headers="encabezadoCotizacion" :items="cotizaciones" :search="search" item-key="ensayos">
               <template v-slot:[`item.actions`]="{ item }">
-                <v-icon @click="ensayoCotizacion(item)"> mdi-plus </v-icon>
+                <v-icon @click="modificarCotizacion(item)"> mdi-plus </v-icon>
               </template>
             </v-data-table>
             <v-card-actions>
@@ -365,7 +342,7 @@
         </v-dialog>
       </v-col>
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col cols="8" class="py-0 px-0">
         <h5 class="primary text-center white--text px-0 py-0" style="width: 100%">
           Observaciones de la propuesta técnica y económica
@@ -385,7 +362,8 @@
           </v-col>
         </v-row>
       </v-col>
-    </v-row>
+    </v-row> -->
+
     <!-- <v-row class="py-0 px-0">
       <h5 class="primary text-center" style="width: 100%">
         Observaciones del servicio
@@ -569,7 +547,7 @@ export default {
         { text: "Método analítico", value: "metodo", sortable: false },
         { text: "Límite de cuantificación", value: "limiteCuantificacion", sortable: false },
         { text: "Costo del ensayo", value: "costo", sortable: false },
-        { text: "Acciones", sortable: false },
+        // { text: "Acciones", sortable: false },
       ],
       primerItem: [],
       usuarios: [],
@@ -642,7 +620,6 @@ export default {
       entregaResultados: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       menu2: false,
       menu1: false,
-
       dialogItem2: false,
       segundoItem: [],
       item2: {
@@ -727,7 +704,7 @@ export default {
       this.person.cargo = user.rol;
       this.person.correoContacto = user.correo;
     },
-    ensayoCotizacion(ensayo) {
+    modificarCotizacion(ensayo) {
       axios.put(`https://labficat.herokuapp.com/api/cotizacion/modificar/${ensayo._id}`,{
         fechaEmision: this.fechaEmision,
         idCliente: this.id,
@@ -746,6 +723,14 @@ export default {
       })
       .catch((err)=>{
         console.log(err)
+      })
+    },
+    ensayoCotizacion(ensayo) {
+      this.primerItem.push(ensayo);
+      this.item2.itemsEnsayo.push({
+        ensayo: ensayo._id,
+        limiteCuantificacion: ensayo.limiteCuantificacion,
+        costoEnsayo: ensayo.costo
       })
     },
     ensayoCotizacion2(ensayo) {

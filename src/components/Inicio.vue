@@ -21,7 +21,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-card-actions class="boton">
-            <v-btn class="primary" to="cotizacion" outlined rounded text>
+            <v-btn class="primary" to="mostrarCotizacion" outlined rounded text>
               INGRESAR
             </v-btn>
           </v-card-actions>
@@ -47,7 +47,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-card-actions class="boton">
-            <v-btn class="primary" to="recepcionMuestra" outlined rounded text>
+            <v-btn class="primary" to="mostrarMuestra" outlined rounded text>
               INGRESAR
             </v-btn>
           </v-card-actions>

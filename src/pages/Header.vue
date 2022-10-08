@@ -4,10 +4,10 @@
       <v-app-bar-nav-icon v-if="this.$store.state.token!=''" @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title class="font-weight-black black--text">LABFICAT</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="font-weight-black" icon>
+      <v-btn to="/" class="font-weight-black" icon>
       
-      <v-list-item-title class="black--text">Salir</v-list-item-title>
-       <v-icon class="black--text">mdi-logout</v-icon>
+      <v-list-item-title  class="black--text">Salir</v-list-item-title>
+       <v-icon  class="black--text">mdi-logout</v-icon>
      </v-btn>
     </v-app-bar>
     <v-navigation-drawer   v-model="drawer"  absolute temporary bottom dark expand-on-hover >
@@ -16,8 +16,8 @@
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item>
-            <v-list-item-icon to="cotizacion">
+          <v-list-item to="inicio">
+            <v-list-item-icon>
               <v-icon >mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Home</v-list-item-title>

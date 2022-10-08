@@ -105,7 +105,7 @@
             <p for="Name" class="label mb-0 ">Correo Electrónico</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field v-model ="person.departamento" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.departamento" class="field px-0 py-0 my-0" height="26"></v-text-field>
             <v-text-field v-model="person.contacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
             <v-text-field v-model="person.telefono" class="field px-0 py-0 my-0" height="26"></v-text-field>
             <v-text-field v-model="person.correo" class="field px-0 py-0 my-0" height="26"></v-text-field>
@@ -124,8 +124,117 @@
           <v-card-title>
             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
             </v-text-field>
+            <v-spacer></v-spacer>
+            <v-dialog v-model="dialogEnsayo" max-width="1000px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                  Nuevo Ensayo
+                </v-btn>
+              </template>
+              <v-card>
+                <validationObserver ref="observer" v-slot="{ invalid }">
+                  <form @submit.prevent="submit" class="py-7 px-7">
+                    <validation-provider v-slot="{ errors }" name="departamento" rules="required">
+                      <v-select v-model="departamento" :items="departa" item-text="departamento" item-key="departa"
+                        item-value="_id" :error-messages="errors" outlined label="Departamento"
+                        data-vv-name="departamento" @change="traerCiudades(departa)" required></v-select>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="ciudad" rules="required">
+                      <v-select v-model="muestra.ciudad" :items="ciudades" item-text="Ciudad" item-key="ciudades"
+                        item-value="_id" :error-messages="errors" outlined label="Ciudad" data-vv-name="ciudad"
+                        required></v-select>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="direccion toma de la muestra" rules="required">
+                      <v-text-field v-model="muestra.direccionTomaMuestra" :error-messages="errors"
+                        label="Direccion toma de la muestra" outlined required>
+                      </v-text-field>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="lugar toma de la muestra" rules="required">
+                      <v-text-field v-model="muestra.lugarTomaMuestra" :error-messages="errors"
+                        label="lugar toma de la muestra" outlined required>
+                      </v-text-field>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="recolectador" rules="required">
+                      <v-text-field v-model="muestra.muestraRecolectadaPor" :error-messages="errors"
+                        label="recolectador" outlined required>
+                      </v-text-field>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="procedimiento de muestreo" rules="required">
+                      <v-text-field v-model="muestra.procedimientoMuestreo" :error-messages="errors"
+                        label="procedimiento de muestreo" outlined required>
+                      </v-text-field>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="tipo de muestra" rules="required">
+                      <v-select v-model="muestra.tipoMuestra" :items="tipoMuestras" item-text="tipos"
+                        item-key="tipoMuestras" item-value="_id" :error-messages="errors" outlined
+                        label="tipo de muestra" data-vv-name="departamento" required>
+                      </v-select>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="matriz de la muestra" rules="required">
+                      <v-text-field v-model="muestra.matrizMuestra" :error-messages="errors" label="matriz muestra"
+                        outlined required>
+                      </v-text-field>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="fecha recoleccion" rules="required">
+                      <v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40"
+                        transition="scale-transition" offset-y min-width="auto" :error-messages="errors">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field v-model="muestra.fechaRecoleccion" prepend-icon="mdi-calendar" readonly
+                            class="field px-0 py-0 my-0" height="26" v-bind="attrs" v-on="on"></v-text-field>
+                        </template>
+                        <v-date-picker v-model="muestra.fechaRecoleccion" @input="menu1 = false"></v-date-picker>
+                      </v-menu>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="cotizacion" rules="required">
+                      <v-select v-model="muestra.cotizacion" :items="cotizacion" item-text="numCotizacion"
+                        item-key="cotizacion" item-value="_id" :error-messages="errors" outlined label="cotizacion"
+                        data-vv-name="numCotizacion" required></v-select>
+                    </validation-provider>
+                    <validation-provider v-slot="{ errors }" name="item" rules="required">
+                      <v-select v-model="muestra.item" :items="item" :error-messages="errors" outlined label="Item"
+                        data-vv-name="item" required></v-select>
+                    </validation-provider>
+                    
+                    <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded
+                      @click="ingresarMuestra">
+                      Registrar muestra
+                    </v-btn>
+                    <v-dialog v-model="dialogEnsayoModificar" max-width="2000px">
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded v-bind="attrs"
+                          v-on="on">
+                          Modificar muestra
+                        </v-btn>
+                      </template>
+                      <v-card>
+                        <v-card-title>
+                          <h1>Muestras</h1>
+                        </v-card-title>
+                        <v-data-table :headers="headers" :items="muestrasDelCliente" :search="search">
+                          <template v-slot:[`item.actions`]="{ item }">
+                            <v-icon @click="modificarMuestra(item)"> mdi-plus </v-icon>
+                          </template>
+                        </v-data-table>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn color="blue darken-1" text @click="close">
+                            Cerrar
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </form>
+                </validationObserver>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="close">
+                    Cerrar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-card-title>
-          <v-data-table :headers="headers" :items="desserts" :search="search">
+          <v-data-table :headers="headers" :items="mostrarMuestras" :search="search">
             <template v-slot:footer>
               <v-card class="d-flex justify-end">
               </v-card>
@@ -230,12 +339,38 @@
   </v-container>
 </template>
 <script>
-  import axios from 'axios'
+import axios from 'axios'
+import { required, email, min, confirmed } from 'vee-validate/dist/rules'
+import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+setInteractionMode('eager')
+extend('required', {
+  ...required,
+  message: '{_field_} no puede estar vacio',
+})
+extend('email', {
+  ...email,
+  message: 'Email must be valid',
+})
+extend('min', {
+  ...min,
+  message: 'El campo {_field_} debe tener {length} caracteres o más'
+})
+extend('confirmed', {
+  ...confirmed,
+  message: 'El campo {_field_} debe coincidir con contraseña'
+})
 export default {
   name: "PageRecepcion",
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   data: () => ({
-    dialog:false,
-    search: "",
+    dialog: false,
+    dialogEnsayo: false,
+    dialogEnsayoModificar: false,
+    loading: false,
+    
     headerUsuarios: [
       {
         text: "Nombre",
@@ -246,37 +381,63 @@ export default {
       { text: "Rol", value: "rol", sortable: false },
       { text: "Acciones", value: "actions", sortable: false },
     ],
-    usuarios:[],
-    busqueda:'',
-    person:{
-      nombre:'',
-      cc:'',
-      direccion:'',
-      ciudad:'',
-      departamento:'',
-      contacto:'',
-      telefono:'',
-      correo:'',
-      id:''
+    usuarios: [],
+    departa: [],
+    ciudades: [],
+    departamento: '',
+    tipoMuestras: [],
+    cotizacion: [],
+    mostrarMuestras: [],
+    muestrasDelCliente: [],
+    busqueda: '',
+    person: {
+      nombre: '',
+      cc: '',
+      direccion: '',
+      ciudad: '',
+      departamento: '',
+      contacto: '',
+      telefono: '',
+      correo: '',
+      id: ''
     },
+    muestra: {
+      ciudad: '',
+      direccionTomaMuestra: '',
+      lugarTomaMuestra: '',
+      muestraRecolectadaPor: '',
+      procedimientoMuestreo: '',
+      tipoMuestra: '',
+      matrizMuestra: '',
+      fechaRecoleccion: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      cotizacion: '',
+      item: ''
+    },
+    item: [
+      'Item1',
+      'Item2',
+      'Item3'
+    ],
+    menu1: false,
     headers: [
       {
         text: "Código de Muestra",
         align: "start",
         sortable: false,
-        value: "name",
+        value: "codMuestra",
       },
-      { text: "Municipio de recolección", },
-      { text: "Dirección de toma de muestra", value: "fat" },
-      { text: "Lugar de toma de muestra", value: "carbs" },
-      { text: "Muestra recolectada por", value: "protein" },
-      { text: "Procedimiento de muestreo", value: "iron" },
-      { text: "Tipo de muestra" },
-      { text: "Matriz de la muestra" },
-      { text: "Fecha y hora de recolección" },
-      { text: "Cotización" },
-      { text: "Ítem de la cotización" },
+      { text: "Municipio de recolección", value: 'munRecoleccion.departamento' },
+      { text: "Dirección de toma de muestra", value: "direccionTomaMuestra" },
+      { text: "Lugar de toma de muestra", value: "lugarTomaMuestra" },
+      { text: "Muestra recolectada por", value: "muestraRecolectadaPor" },
+      { text: "Procedimiento de muestreo", value: "procedimientoMuestreo" },
+      { text: "Tipo de muestra", value: 'tipoMuestra.tipos' },
+      { text: "Matriz de la muestra", value: "matrizMuestra" },
+      { text: "Fecha y hora de recolección", value: 'fechaRecoleccion' },
+      { text: "Cotización", value: "cotizacion" },
+      { text: "Ítem de la cotización", value: 'item' },
       { text: "Observaciones*" },
+      { text: 'Acciones', value: 'actions' }
     ],
     desserts: [
       {
@@ -305,6 +466,7 @@ export default {
       },
     ],
   }),
+  
   computed: {
     buscar() {
       return this.usuarios.filter((user) => {
@@ -317,6 +479,42 @@ export default {
     },
   },
   methods: {
+    traerDepartamentos() {
+      axios.get('https://labficat.herokuapp.com/api/ciudad/departamentos')
+        .then((response) => {
+          console.log(response.data.departamentos);
+          this.departa = response.data.departamentos
+          console.log(this.departa);
+
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    traerCiudades() {
+      axios.post('https://labficat.herokuapp.com/api/ciudad/nombreDepartamento',
+        { departamento: this.departamento })
+        .then((response) => {
+          console.log(response.data.ciudades);
+          this.ciudades = response.data.ciudades
+          console.log(this.ciudades);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    traerTipoMuestras() {
+      axios.get('https://labficat.herokuapp.com/api/tipoMuestra')
+        .then((res) => {
+          console.log(res.data);
+          this.tipoMuestras = res.data.timuestra
+          console.log(this.tipoMuestras);
+
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
     traerClientes() {
       axios
         .get("https://labficat.herokuapp.com/api/usuario")
@@ -326,7 +524,49 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-        });
+        })
+    },
+    ingresarMuestra() {
+      axios.post('https://labficat.herokuapp.com/api/muestra',
+        {
+          solicitante: this.person.id,
+          munRecoleccion: this.muestra.ciudad,
+          direccionTomaMuestra: this.muestra.direccionTomaMuestra,
+          lugarTomaMuestra: this.muestra.lugarTomaMuestra,
+          muestraRecolectadaPor: this.muestra.muestraRecolectadaPor,
+          procedimientoMuestreo: this.muestra.procedimientoMuestreo,
+          tipoMuestra: this.muestra.tipoMuestra,
+          matrizMuestra: this.muestra.matrizMuestra,
+          fechaRecoleccion: this.muestra.fechaRecoleccion,
+          cotizacion: this.muestra.cotizacion,
+          item: this.muestra.item
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
+    modificarMuestra(muestra) {
+      this.mostrarMuestras.push(muestra)
+      axios.put(`https://labficat.herokuapp.com/api/muestra/${muestra._id}`, {
+        solicitante: this.person.id,
+        munRecoleccion: this.muestra.ciudad,
+        direccionTomaMuestra: this.muestra.direccionTomaMuestra,
+        lugarTomaMuestra: this.muestra.lugarTomaMuestra,
+        muestraRecolectadaPor: this.muestra.muestraRecolectadaPor,
+        procedimientoMuestreo: this.muestra.procedimientoMuestreo,
+        tipoMuestra: this.muestra.tipoMuestra,
+        matrizMuestra: this.muestra.matrizMuestra,
+        fechaRecoleccion: this.muestra.fechaRecoleccion,
+      })
+        .then((res) => {
+          console.log(res.data.modificar);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     },
     llenarInfo(user) {
       console.log(user);
@@ -339,20 +579,54 @@ export default {
       this.person.telefono = user.telefono;
       this.person.contacto = user.contacto;
       this.person.correo = user.correo
+
+
+
+      axios.post('https://labficat.herokuapp.com/api/cotizacion/cliente',
+        {
+          idCliente: this.person.id
+        })
+        .then((res) => {
+          console.log(res.data.cotizacion);
+          this.cotizacion = res.data.cotizacion
+          console.log(this.cotizacion);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+
+
+      axios.post('https://labficat.herokuapp.com/api/muestra/cliente',
+        {
+          solicitante: this.person.id
+        })
+        .then((res) => {
+          this.muestrasDelCliente = res.data.muestra
+          console.log(this.muestrasDelCliente);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     },
     close() {
       this.dialog = false;
+      this.dialogEnsayo = false;
+      this.dialogEnsayoModificar = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
     },
   },
-  created(){
+  created() {
     this.traerClientes()
+    this.traerDepartamentos()
+    this.traerTipoMuestras()
+  },
+  mounted() {
+
   }
 };
-
 </script>
 <style scoped>
 .texto {

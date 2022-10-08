@@ -70,11 +70,6 @@
                     </validation-observer>
                 </v-card>
             </v-col>
-            <!-- <v-row v-for="(de, i) of departa" :key="i">
-                <v-col>
-                    <h1 class="black">{{de.departamento}}</h1>
-                </v-col>
-            </v-row> -->
         </v-row>
     </v-container>
 </template>
@@ -134,7 +129,6 @@ export default {
         ],
         departa: [],
         ciudades: []
-
     }),
     methods: {
         traerDepartamentos() {
