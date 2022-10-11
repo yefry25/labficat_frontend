@@ -6,16 +6,14 @@
           <v-card-title>
             <v-text-field v-model="busqueda" append-icon="mdi-magnify" label="buscar" single-line hide-details>
             </v-text-field>
-
             <v-spacer></v-spacer>
-
             <v-btn color="blue darken-1" to="cotizacion">
               agregar nueva cotizacion
             </v-btn>
           </v-card-title>
           <v-data-table :headers="encabezadoCotizacion" :items="cotizaciones" :search="busqueda">
             <template v-slot:[`item.actions`]="{ item }">
-              <v-icon @click="traerCotizaciones(item)"> mdi-pencil </v-icon>
+              <v-icon @click="editarCotizacion(item)"> mdi-pencil </v-icon>
             </template>
             <template v-slot:[`item.fechaEmision`]="{ item }">
               <span>{{fecha(item.fechaEmision)}}</span>
@@ -42,8 +40,8 @@ export default {
           value: "numCotizacion",
         },
         { text: "Fecha de emision", value: "fechaEmision", sortable: false },
-        { text: "Cliente", value: "idCliente", sortable: false },
-        { text: "Elaborador", value: "idElaboradoPor", sortable: false },
+        { text: "Cliente", value: "idCliente.nombre", sortable: false },
+        { text: "Elaborador", value: "idElaboradoPor.nombre", sortable: false },
         { text: "Total", value: "total", sortable: false },
         { text: "Estado", value: "estado", sortable: false },
         { text: "Acciones", value: "actions", sortable: false },
@@ -55,13 +53,11 @@ export default {
       return this.cotizaciones.filter((user) => {
         const numero = user.numCotizacion.toLowerCase();
         const fecha = user.fechaEmision.toLowerCase();
-        const cliente = user.idCliente.toLowerCase();
-        const Elaborador = user.idElaboradoPor.toLowerCase();
+        const cliente = user.idCliente.nombre.toLowerCase();
+        const Elaborador = user.idElaboradoPor.nombre.toLowerCase();
         const total = user.total.toLowerCase();
         const estado = user.estado.toLowerCase();
         const busqueda = this.busqueda.toLowerCase();
-
-        
 
         return (
           numero.includes(busqueda) ||
@@ -87,14 +83,25 @@ export default {
           console.log(err);
         });
     },
+    prueba(){
+      let minutos = new Date()
+      let fecha = new Date(`2020/11/25T${minutos.toLocaleTimeString()}`)
+      console.log(fecha);
+
+    },
+    editarCotizacion (cotizacion){
+      this.$store.dispatch('setCotizacionEditar',cotizacion)
+      console.log(this.$store.state.cotizacionEditar);
+      this.$router.push('/cotizacion')
+    },
     fecha(r) {
       let d = new Date(r);
-      return d.toLocaleDateString() + " - " + d.toLocaleTimeString()
-    },
+      return d.toLocaleDateString() 
+    }
   },
   created() {
     this.traerCotizaciones();
-   
+    this.prueba()
   },
 };
 </script>
