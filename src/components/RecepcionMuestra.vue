@@ -128,10 +128,16 @@
             <v-dialog v-model="dialogEnsayo" max-width="1000px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                  Nuevo Ensayo
+                  Nueva Muestra
                 </v-btn>
               </template>
               <v-card>
+                <v-toolbar-title color="orange">
+                  <v-avatar @click="close">
+                    <v-icon>mdi-close</v-icon>
+                  </v-avatar>
+                  <span>Editar Recepcion de Muestras</span>
+                </v-toolbar-title>
                 <validationObserver ref="observer" v-slot="{ invalid }">
                   <form @submit.prevent="submit" class="py-7 px-7">
                     <validation-provider v-slot="{ errors }" name="departamento" rules="required">
@@ -194,12 +200,10 @@
                       <v-select v-model="muestra.item" :items="item" :error-messages="errors" outlined label="Item"
                         data-vv-name="item" required></v-select>
                     </validation-provider>
-                    
-                    <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded
-                      @click="ingresarMuestra">
-                      Registrar muestra
+                    <v-btn color="primary" class="mr-4" type="submit" @click="tablaMuestra" :disabled="invalid" rounded>
+                      Agregar
                     </v-btn>
-                    <v-dialog v-model="dialogEnsayoModificar" max-width="2000px">
+                    <!-- <v-dialog v-model="dialogEnsayoModificar" max-width="2000px">
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded v-bind="attrs"
                           v-on="on">
@@ -222,7 +226,7 @@
                           </v-btn>
                         </v-card-actions>
                       </v-card>
-                    </v-dialog>
+                    </v-dialog> -->
                   </form>
                 </validationObserver>
                 <v-card-actions>
@@ -242,6 +246,15 @@
           </v-data-table>
         </v-card>
       </v-col>
+    </v-row>
+    <v-row>
+      <v-btn @click="ingresarMuestra" color="primary my-6" class="mr-4" type="submit" rounded
+        v-if="this.$store.state.muestraVer==false">
+        Registrar muestra
+      </v-btn>
+      <v-btn @click="modificarMuestra" color="primary my-6" class="mr-4" type="submit" rounded v-else>
+        Modificar muestra
+      </v-btn>
     </v-row>
     <v-row>
       <v-col cols="8" class="py-0 px-0">
@@ -370,7 +383,7 @@ export default {
     dialogEnsayo: false,
     dialogEnsayoModificar: false,
     loading: false,
-    
+
     headerUsuarios: [
       {
         text: "Nombre",
@@ -466,15 +479,16 @@ export default {
       },
     ],
   }),
-  
+
   computed: {
     buscar() {
       return this.usuarios.filter((user) => {
         const nombre = user.nombre.toLowerCase();
         const documento = user.documento.toLowerCase();
         const busqueda = this.busqueda.toLowerCase();
+        const rol = user.rol.toLowerCase();
 
-        return nombre.includes(busqueda) || documento.includes(busqueda);
+        return nombre.includes(busqueda) || documento.includes(busqueda) || rol.includes(busqueda);
       });
     },
   },
@@ -482,10 +496,7 @@ export default {
     traerDepartamentos() {
       axios.get('https://labficat.herokuapp.com/api/ciudad/departamentos')
         .then((response) => {
-          console.log(response.data.departamentos);
           this.departa = response.data.departamentos
-          console.log(this.departa);
-
         })
         .catch((error) => {
           console.log(error);
@@ -495,9 +506,7 @@ export default {
       axios.post('https://labficat.herokuapp.com/api/ciudad/nombreDepartamento',
         { departamento: this.departamento })
         .then((response) => {
-          console.log(response.data.ciudades);
           this.ciudades = response.data.ciudades
-          console.log(this.ciudades);
         })
         .catch((error) => {
           console.log(error);
@@ -506,10 +515,7 @@ export default {
     traerTipoMuestras() {
       axios.get('https://labficat.herokuapp.com/api/tipoMuestra')
         .then((res) => {
-          console.log(res.data);
           this.tipoMuestras = res.data.timuestra
-          console.log(this.tipoMuestras);
-
         })
         .catch((err) => {
           console.log(err);
@@ -520,13 +526,13 @@ export default {
         .get("https://labficat.herokuapp.com/api/usuario")
         .then((res) => {
           this.usuarios = res.data.usuario;
-          console.log(this.usuarios);
         })
         .catch((err) => {
           console.log(err);
         })
     },
     ingresarMuestra() {
+
       axios.post('https://labficat.herokuapp.com/api/muestra',
         {
           solicitante: this.person.id,
@@ -543,14 +549,45 @@ export default {
         })
         .then((res) => {
           console.log(res.data);
+          this.$swal({
+            icon: "success",
+            title: "Registro exitoso de la muestra",
+          });
+
+          this.mostrarMuestras.splice(0, this.mostrarMuestras.length)
+          this.person.id = '';
+          this.muestra.ciudad = '';
+          this.muestra.direccionTomaMuestra = '';
+          this.muestra.lugarTomaMuestra = '';
+          this.muestra.muestraRecolectadaPor = '';
+          this.muestra.procedimientoMuestreo = '';
+          this.muestra.tipoMuestra = '';
+          this.muestra.matrizMuestra = '';
+          this.muestra.fechaRecoleccion = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+          this.muestra.cotizacion = '';
+          this.muestra.item = '';
+
+          this.person.id = '';
+          this.person.nombre = '';
+          this.person.cc = '';
+          this.person.direccion = '';
+          this.person.ciudad = '';
+          this.person.departamento = '';
+          this.person.telefono = '';
+          this.person.contacto = '';
+          this.person.correo = ''
         })
         .catch((err) => {
           console.log(err);
+          this.$swal({
+            icon: "error",
+            title: "Error al registrar la muestra",
+          });
         })
     },
-    modificarMuestra(muestra) {
-      this.mostrarMuestras.push(muestra)
-      axios.put(`https://labficat.herokuapp.com/api/muestra/${muestra._id}`, {
+    modificarMuestra() {
+
+      axios.put(`https://labficat.herokuapp.com/api/muestra/${this.$store.state.muestraEditar._id}`, {
         solicitante: this.person.id,
         munRecoleccion: this.muestra.ciudad,
         direccionTomaMuestra: this.muestra.direccionTomaMuestra,
@@ -563,24 +600,56 @@ export default {
       })
         .then((res) => {
           console.log(res.data.modificar);
+          this.$swal({
+            icon: "success",
+            title: "Actualización de la muestra exitoso",
+          });
+          this.$store.state.muestraEditar = ''
+          this.$store.state.muestraVer = false;
+          this.mostrarMuestras.splice(0, this.mostrarMuestras.length)
+          this.person.id = '';
+          this.muestra.ciudad = '';
+          this.muestra.direccionTomaMuestra = '';
+          this.muestra.lugarTomaMuestra = '';
+          this.muestra.muestraRecolectadaPor = '';
+          this.muestra.procedimientoMuestreo = '';
+          this.muestra.tipoMuestra = '';
+          this.muestra.matrizMuestra = '';
+          this.muestra.fechaRecoleccion = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+          this.muestra.cotizacion = '';
+          this.muestra.item = '';
+
+          this.person.id = '';
+          this.person.nombre = '';
+          this.person.cc = '';
+          this.person.direccion = '';
+          this.person.ciudad = '';
+          this.person.departamento = '';
+          this.person.telefono = '';
+          this.person.contacto = '';
+          this.person.correo = ''
         })
         .catch((err) => {
           console.log(err);
+          this.$swal({
+            icon: "error",
+            title: "Error al actualizar la muestra",
+          });
         })
     },
-    llenarInfo(user) {
-      console.log(user);
-      this.person.id = user._id
-      this.person.nombre = user.nombre;
-      this.person.cc = user.documento;
-      this.person.direccion = user.direccion;
-      this.person.ciudad = user.ciudad.Ciudad;
-      this.person.departamento = user.ciudad.departamento;
-      this.person.telefono = user.telefono;
-      this.person.contacto = user.contacto;
-      this.person.correo = user.correo
-
-
+    infoMuestraEditar() {
+      if (this.$store.state.muestraVer == true) {
+        this.mostrarMuestras.push(this.$store.state.muestraEditar)
+      }
+      this.person.id = this.$store.state.muestraEditar.solicitante._id;
+      this.person.nombre = this.$store.state.muestraEditar.solicitante.nombre;
+      this.person.cc = this.$store.state.muestraEditar.solicitante.documento;
+      this.person.direccion = this.$store.state.muestraEditar.solicitante.direccion;
+      this.person.ciudad = this.$store.state.muestraEditar.solicitante.ciudad.Ciudad;
+      this.person.departamento = this.$store.state.muestraEditar.solicitante.ciudad.departamento;
+      this.person.telefono = this.$store.state.muestraEditar.solicitante.telefono;
+      this.person.contacto = this.$store.state.muestraEditar.solicitante.contacto;
+      this.person.correo = this.$store.state.muestraEditar.solicitante.correo;
 
       axios.post('https://labficat.herokuapp.com/api/cotizacion/cliente',
         {
@@ -594,8 +663,58 @@ export default {
         .catch((err) => {
           console.log(err);
         })
-
-
+      axios.post('https://labficat.herokuapp.com/api/muestra/cliente',
+        {
+          solicitante: this.person.id
+        })
+        .then((res) => {
+          this.muestrasDelCliente = res.data.muestra
+          console.log(this.muestrasDelCliente);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
+    tablaMuestra() {
+      this.mostrarMuestras.push({
+        solicitante: this.person.id,
+        munRecoleccion: this.muestra.ciudad,
+        direccionTomaMuestra: this.muestra.direccionTomaMuestra,
+        lugarTomaMuestra: this.muestra.lugarTomaMuestra,
+        muestraRecolectadaPor: this.muestra.muestraRecolectadaPor,
+        procedimientoMuestreo: this.muestra.procedimientoMuestreo,
+        tipoMuestra: this.muestra.tipoMuestra,
+        matrizMuestra: this.muestra.matrizMuestra,
+        fechaRecoleccion: this.muestra.fechaRecoleccion,
+        cotizacion: this.muestra.cotizacion,
+        item: this.muestra.item
+      })
+      if (this.$store.state.muestraVer == true) {
+        this.mostrarMuestras.splice(this.$store.state.muestraEditar, 1)
+      }
+    },
+    llenarInfo(user) {
+      this.person.id = user._id
+      this.person.nombre = user.nombre;
+      this.person.cc = user.documento;
+      this.person.direccion = user.direccion;
+      this.person.ciudad = user.ciudad.Ciudad;
+      this.person.departamento = user.ciudad.departamento;
+      this.person.telefono = user.telefono;
+      this.person.contacto = user.contacto;
+      this.person.correo = user.correo
+      axios.post('https://labficat.herokuapp.com/api/cotizacion/cliente',
+        {
+          idCliente: this.person.id
+        })
+        .then((res) => {
+          console.log(res.data.cotizacion);
+          this.cotizacion = res.data.cotizacion
+          console.log(this.cotizacion);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
       axios.post('https://labficat.herokuapp.com/api/muestra/cliente',
         {
           solicitante: this.person.id
@@ -622,6 +741,7 @@ export default {
     this.traerClientes()
     this.traerDepartamentos()
     this.traerTipoMuestras()
+    this.infoMuestraEditar()
   },
   mounted() {
 

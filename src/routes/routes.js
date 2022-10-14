@@ -11,7 +11,7 @@ import bitacora from '../components/Bitacora.vue'
 import calidad from '../components/Calidad.vue'
 import mostrarCotizacion from '../components/MostrarCotizacion.vue'
 import mostrarMuestra from '../components/MostrarMuestra.vue'
-
+import ordenServicio from '../components/OrdenDeServicios.vue'
 
 export const routes = [
     {path: '/inicio', component: inicio},
@@ -27,4 +27,5 @@ export const routes = [
     {path: '/calidad', component: calidad},
     {path: '/mostrarCotizacion', component: mostrarCotizacion},
     {path: '/mostrarMuestra', component: mostrarMuestra},
+    {path:'/ordenServicio', component: ordenServicio},
 ]

@@ -18,6 +18,18 @@
             <template v-slot:[`item.fechaEmision`]="{ item }">
               <span>{{fecha(item.fechaEmision)}}</span>
             </template>
+            <template v-slot:[`item.estado`]="{ item }">
+                            <div v-if="item.estado==1">
+                                <b>
+                                    <span class="blue--text">Activo</span>
+                                </b>
+                            </div>
+                            <div v-else>
+                                <b>
+                                    <span class="red--text">Inactivo</span>
+                                </b>
+                            </div>
+                        </template>
           </v-data-table>
         </v-card>
       </v-col>

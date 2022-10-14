@@ -11,7 +11,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import './plugins/vuetify'
-import MultiFiltersPlugin from './plugins/multiFilter.js'
+
 library.add(fas);
 library.add(far);
 
@@ -19,7 +19,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueSweetalert2);
 Vue.use(VueRouter);
 Vue.config.productionTip = false;
-Vue.use(MultiFiltersPlugin)
+
 
 const router = new VueRouter({
   //aqui se ponen las rutas

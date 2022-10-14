@@ -16,14 +16,49 @@
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title>Inicio</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="mostrarCotizacion">
             <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
+              <font-awesome-icon icon="fa-solid fa-hand-holding-dollar" />
             </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
+            <v-list-item-title>Cotizacion</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="mostrarMuestra">
+            <v-list-item-icon>
+              <font-awesome-icon icon="fa-solid fa-book" />
+            </v-list-item-icon>
+            <v-list-item-title>Muestra</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="ordenServicio">
+            <v-list-item-icon>
+              <font-awesome-icon icon="fa-solid fa-check-to-slot" />
+            </v-list-item-icon>
+            <v-list-item-title>orden de servicio</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="informeDeResultados">
+            <v-list-item-icon>
+              <font-awesome-icon icon="fa-solid fa-table-list" />
+            </v-list-item-icon>
+            <v-list-item-title>informe de resultados</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="registro">
+            <v-list-item-icon>
+              <font-awesome-icon icon="fa-solid fa-user-pen" />
+            </v-list-item-icon>
+            <v-list-item-title>registrar nuevo usuario</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="configuracion">
+            <v-list-item-icon>
+              <font-awesome-icon icon="fa-solid fa-users-gear" />
+            </v-list-item-icon>
+            <v-list-item-title>configuracion</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>

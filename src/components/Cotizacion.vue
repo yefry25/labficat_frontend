@@ -164,7 +164,7 @@
             <v-dialog v-model="dialog" max-width="1000px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                  New Item
+                  Nuevo Item
                 </v-btn>
               </template>
               <v-card>
@@ -233,7 +233,7 @@
             <v-dialog v-model="dialogItem2" max-width="1000px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                  New Item
+                  Nuevo Item
                 </v-btn>
               </template>
               <v-card>
@@ -282,7 +282,7 @@
             <v-dialog v-model="dialogItem3" max-width="1000px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                  New Item
+                  Nuevo Item
                 </v-btn>
               </template>
               <v-card>
@@ -315,7 +315,7 @@
       </v-col>
     </v-row>
     <v-row>
-        <v-btn class="ml-4 my-6" @click="cotizacion" v-if="this.$store.state.cotizacionVer==false">
+        <v-btn class="ml-4 my-6 primary" @click="cotizacion" v-if="this.$store.state.cotizacionVer==false">
           subir cotización
         </v-btn>
         <v-btn class="ml-4 my-6" @click="modificarCotizacion" v-else>

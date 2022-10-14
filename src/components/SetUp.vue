@@ -8,9 +8,21 @@
   </v-container>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: "pageSetup",
-  data: () => ({}),
-  methods: {},
+  data () {
+    return { 
+      consecutivos:[]
+    }
+  },
+  methods: {
+    traerConsecutivos(){
+      axios.get('https://labficat.herokuapp.com/api')
+    }
+  },
+  created(){
+
+  },
 };
 </script>

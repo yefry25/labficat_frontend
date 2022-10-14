@@ -7,7 +7,9 @@ export const store = new Vuex.Store({
         token:'',
         elaborador:{},
         cotizacionEditar:{},
-        cotizacionVer:false
+        cotizacionVer:false,
+        muestraEditar:{},
+        muestraVer:false,
     },
     mutations:{
         setToken(state,value) {
@@ -19,6 +21,10 @@ export const store = new Vuex.Store({
         setCotizacionEditar(state,value){
             state.cotizacionEditar=value
             state.cotizacionVer=true
+        },
+        setMuestraEditar(state,value){
+            state.muestraEditar=value
+            state.muestraVer=true
         }
 
     },
@@ -31,6 +37,9 @@ export const store = new Vuex.Store({
         },
         setCotizacionEditar(context,value){
             context.commit('setCotizacionEditar',value)
+        },
+        setMuestraEditar(context,value){
+            context.commit('setMuestraEditar',value)
         }
     }
 });
