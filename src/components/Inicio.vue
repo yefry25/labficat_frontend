@@ -133,7 +133,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-card-actions class="boton">
-            <v-btn class="primary" to="registro" outlined rounded text>
+            <v-btn class="primary" to="mostrarUsuarios" outlined rounded text>
               INGRESAR
             </v-btn>
           </v-card-actions>
