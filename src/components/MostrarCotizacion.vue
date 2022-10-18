@@ -11,7 +11,8 @@
               agregar nueva cotizacion
             </v-btn>
           </v-card-title>
-          <v-data-table :headers="encabezadoCotizacion" :items="cotizaciones" :search="busqueda">
+          <v-data-table :headers="encabezadoCotizacion" :items="cotizaciones" :search="busqueda" :loading="myLoading"
+                            loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
               <v-icon @click="editarCotizacion(item)"> mdi-pencil </v-icon>
             </template>
@@ -42,6 +43,7 @@ export default {
   name: "PageMostrar",
   data() {
     return {
+      myLoading:true,
       cotizaciones: [],
       busqueda: "",
       encabezadoCotizacion: [
@@ -89,6 +91,7 @@ export default {
         .get("https://labficat.herokuapp.com/api/cotizacion")
         .then((res) => {
           console.log(res.data.cotizacion);
+          this.myLoading = false
           this.cotizaciones = res.data.cotizacion;
         })
         .catch((err) => {

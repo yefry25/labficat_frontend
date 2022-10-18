@@ -4,7 +4,8 @@
             <v-col>
                 <v-card class="mb-4">
                     <v-card-title> Ordenes de servicio </v-card-title>
-                    <v-data-table :headers="encabezado" :items="ordenes">
+                    <v-data-table :headers="encabezado" :items="ordenes" :loading="myLoading"
+                            loading-text="Cargando... Por favor espera">
                         <template v-slot:[`item.actions`]="{ item }">
                             <v-row>
                                 <v-btn @click="infoOrdenEditar(item)" icon>
@@ -102,6 +103,7 @@ export default {
     },
     data() {
         return {
+            myLoading: true,
             dialog: false,
             resultado: "",
             incertidumbre: "",
@@ -110,7 +112,7 @@ export default {
                     text: "Muestra",
                     align: "start",
                     sortable: false,
-                    value: "idMuestra",
+                    value: "idMuestra.codMuestra",
                 },
                 { text: "observaciones", value: "observaciones", sortable: false },
                 { text: "estado", value: "estado", sortable: false },
@@ -125,6 +127,7 @@ export default {
             axios
                 .get("https://labficat.herokuapp.com/api/orden")
                 .then((res) => {
+                    this.myLoading=false;
                     this.ordenes = res.data.orden;
                     console.log(this.ordenes);
                 })

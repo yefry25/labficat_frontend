@@ -447,7 +447,7 @@ export default {
       { text: "Tipo de muestra", value: 'tipoMuestra.tipos' },
       { text: "Matriz de la muestra", value: "matrizMuestra" },
       { text: "Fecha y hora de recolección", value: 'fechaRecoleccion' },
-      { text: "Cotización", value: "cotizacion" },
+      { text: "Cotización", value: "cotizacion.numCotizacion" },
       { text: "Ítem de la cotización", value: 'item' },
       { text: "Observaciones*" },
       { text: 'Acciones', value: 'actions' }
@@ -532,7 +532,6 @@ export default {
         })
     },
     ingresarMuestra() {
-
       axios.post('https://labficat.herokuapp.com/api/muestra',
         {
           solicitante: this.person.id,
@@ -586,7 +585,6 @@ export default {
         })
     },
     modificarMuestra() {
-
       axios.put(`https://labficat.herokuapp.com/api/muestra/${this.$store.state.muestraEditar._id}`, {
         solicitante: this.person.id,
         munRecoleccion: this.muestra.ciudad,

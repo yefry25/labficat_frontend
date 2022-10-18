@@ -106,8 +106,8 @@ export default {
         nombre: '',
         documento: '',
         direccion: '',
-        departamento: "",
-        ciudad: "",
+        departamento: '',
+        ciudad: '',
         contacto: '',
         celularContacto: '',
         telefono: '',
@@ -137,7 +137,6 @@ export default {
                     console.log(response.data.departamentos);
                     this.departa = response.data.departamentos
                     console.log(this.departa);
-
                 })
                 .catch((error) => {
                     console.log(error);

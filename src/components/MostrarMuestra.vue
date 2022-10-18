@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col>
         <v-card>
@@ -17,7 +17,8 @@
               agregar nueva muestra
             </v-btn>
           </v-card-title>
-          <v-data-table :headers="headers" :items="muestras" :search="busqueda">
+          <v-data-table :headers="headers" :items="muestras" :search="busqueda" :loading="myLoading"
+                            loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
               <v-icon @click="infoMuestraEditar(item)"> mdi-pencil </v-icon>
             </template>
@@ -48,6 +49,7 @@ export default {
   name: "PageMostrar",
   data() {
     return {
+      myLoading:true,
       busqueda: "",
       muestras: [],
       headers: [
@@ -60,7 +62,7 @@ export default {
         { text: "Dirección de toma de muestra", value: "direccionTomaMuestra" },
         { text: "Lugar de toma de muestra", value: "lugarTomaMuestra" },
         { text: "Fecha y hora de recolección", value: "fechaRecoleccion" },
-        { text: "Cotización", value: "cotizacion" },
+        { text: "Cotización", value: "cotizacion.numCotizacion" },
         { text: "Estado", value: "estado" },
         { text: "Acciones", value: "actions" },
       ],
@@ -93,6 +95,7 @@ export default {
         .get("https://labficat.herokuapp.com/api/muestra")
         .then((res) => {
           this.muestras = res.data.muestra;
+          this.myLoading = false
         })
         .catch((err) => {
           console.log(err);
