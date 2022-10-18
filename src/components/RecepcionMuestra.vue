@@ -51,7 +51,7 @@
               Solicitante
               <v-dialog v-model="dialog" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn class="field" v-bind="attrs" v-on="on">
+                  <v-btn class="field" v-bind="attrs" v-on="on" icon>
                     <font-awesome-icon icon="fa-solid fa-user" />
                   </v-btn>
                 </template>
@@ -383,7 +383,6 @@ export default {
     dialogEnsayo: false,
     dialogEnsayoModificar: false,
     loading: false,
-
     headerUsuarios: [
       {
         text: "Nombre",
@@ -552,29 +551,7 @@ export default {
             icon: "success",
             title: "Registro exitoso de la muestra",
           });
-
-          this.mostrarMuestras.splice(0, this.mostrarMuestras.length)
-          this.person.id = '';
-          this.muestra.ciudad = '';
-          this.muestra.direccionTomaMuestra = '';
-          this.muestra.lugarTomaMuestra = '';
-          this.muestra.muestraRecolectadaPor = '';
-          this.muestra.procedimientoMuestreo = '';
-          this.muestra.tipoMuestra = '';
-          this.muestra.matrizMuestra = '';
-          this.muestra.fechaRecoleccion = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
-          this.muestra.cotizacion = '';
-          this.muestra.item = '';
-
-          this.person.id = '';
-          this.person.nombre = '';
-          this.person.cc = '';
-          this.person.direccion = '';
-          this.person.ciudad = '';
-          this.person.departamento = '';
-          this.person.telefono = '';
-          this.person.contacto = '';
-          this.person.correo = ''
+          this.vaciarInformacion()
         })
         .catch((err) => {
           console.log(err);
@@ -602,30 +579,9 @@ export default {
             icon: "success",
             title: "Actualización de la muestra exitoso",
           });
-          this.$store.state.muestraEditar = ''
+          this.$store.state.muestraEditar = '';
           this.$store.state.muestraVer = false;
-          this.mostrarMuestras.splice(0, this.mostrarMuestras.length)
-          this.person.id = '';
-          this.muestra.ciudad = '';
-          this.muestra.direccionTomaMuestra = '';
-          this.muestra.lugarTomaMuestra = '';
-          this.muestra.muestraRecolectadaPor = '';
-          this.muestra.procedimientoMuestreo = '';
-          this.muestra.tipoMuestra = '';
-          this.muestra.matrizMuestra = '';
-          this.muestra.fechaRecoleccion = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
-          this.muestra.cotizacion = '';
-          this.muestra.item = '';
-
-          this.person.id = '';
-          this.person.nombre = '';
-          this.person.cc = '';
-          this.person.direccion = '';
-          this.person.ciudad = '';
-          this.person.departamento = '';
-          this.person.telefono = '';
-          this.person.contacto = '';
-          this.person.correo = ''
+          this.vaciarInformacion();
         })
         .catch((err) => {
           console.log(err);
@@ -634,6 +590,30 @@ export default {
             title: "Error al actualizar la muestra",
           });
         })
+    },
+    vaciarInformacion() {
+      this.mostrarMuestras.splice(0, this.mostrarMuestras.length)
+      this.person.id = '';
+      this.muestra.ciudad = '';
+      this.muestra.direccionTomaMuestra = '';
+      this.muestra.lugarTomaMuestra = '';
+      this.muestra.muestraRecolectadaPor = '';
+      this.muestra.procedimientoMuestreo = '';
+      this.muestra.tipoMuestra = '';
+      this.muestra.matrizMuestra = '';
+      this.muestra.fechaRecoleccion = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+      this.muestra.cotizacion = '';
+      this.muestra.item = '';
+
+      this.person.id = '';
+      this.person.nombre = '';
+      this.person.cc = '';
+      this.person.direccion = '';
+      this.person.ciudad = '';
+      this.person.departamento = '';
+      this.person.telefono = '';
+      this.person.contacto = '';
+      this.person.correo = ''
     },
     infoMuestraEditar() {
       if (this.$store.state.muestraVer == true) {

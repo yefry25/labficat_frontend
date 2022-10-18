@@ -4,13 +4,7 @@
       <v-col>
         <v-card>
           <v-card-title>
-            <v-text-field
-              v-model="busqueda"
-              append-icon="mdi-magnify"
-              label="buscar"
-              single-line
-              hide-details
-            >
+            <v-text-field v-model="busqueda" append-icon="mdi-magnify" label="buscar" single-line hide-details>
             </v-text-field>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" to="recepcionMuestra">
@@ -18,9 +12,23 @@
             </v-btn>
           </v-card-title>
           <v-data-table :headers="headers" :items="muestras" :search="busqueda" :loading="myLoading"
-                            loading-text="Cargando... Por favor espera">
+            loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
-              <v-icon @click="infoMuestraEditar(item)"> mdi-pencil </v-icon>
+              <v-row>
+                <v-btn @click="infoMuestraEditar(item)" icon>
+                  <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
+                </v-btn>
+                <div v-if="item.estado==1">
+                  <v-btn color='red' icon @click="estadoMuestra(item)">
+                    <font-awesome-icon style="font-size:20px" icon="fa-solid fa-ban" />
+                  </v-btn>
+                </div>
+                <div v-else>
+                  <v-btn color="blue" icon @click="estadoMuestra(item)">
+                    <font-awesome-icon style="font-size:20px" icon="fa-regular fa-circle-check" />
+                  </v-btn>
+                </div>
+              </v-row>
             </template>
             <template v-slot:[`item.fechaRecoleccion`]="{ item }">
               <span>{{ fecha(item.fechaRecoleccion) }}</span>
@@ -49,7 +57,7 @@ export default {
   name: "PageMostrar",
   data() {
     return {
-      myLoading:true,
+      myLoading: true,
       busqueda: "",
       muestras: [],
       headers: [
@@ -105,6 +113,43 @@ export default {
       this.$router.push("/recepcionMuestra");
       this.$store.dispatch("setMuestraEditar", muestra);
       console.log(this.$store.state.muestraEditar);
+    },
+    estadoMuestra(muestra) {
+      if (muestra.estado == 1) {
+        axios.put(`https://labficat.herokuapp.com/api/muestra/desactivar/${muestra._id}`)
+          .then((res) => {
+            console.log(res);
+            this.$swal({
+              icon: "success",
+              title: "Muestra desactivada Exitosamente",
+            });
+            this.traerMuestra()
+          })
+          .catch((err) => {
+            console.log(err);
+            this.$swal({
+              icon: "error",
+              title: "Error al desactivar la orden de servicio",
+            });
+          })
+      }else{
+        axios.put(`https://labficat.herokuapp.com/api/muestra/activar/${muestra._id}`)
+        .then((res)=>{
+          console.log(res);
+          this.$swal({
+              icon: "success",
+              title: "Muestra activada Exitosamente",
+            });
+            this.traerMuestra()
+        })
+        .catch((err)=>{
+          console.log(err);
+          this.$swal({
+              icon: "error",
+              title: "Error al activar la muestra",
+            });
+        })
+      }
     },
     fecha(r) {
       let d = new Date(r);

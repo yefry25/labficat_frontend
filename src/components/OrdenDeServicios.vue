@@ -9,16 +9,16 @@
                         <template v-slot:[`item.actions`]="{ item }">
                             <v-row>
                                 <v-btn @click="infoOrdenEditar(item)" icon>
-                                    <font-awesome-icon icon="fa-solid fa-file-pen" />
+                                    <font-awesome-icon style="font-size:20px" icon="fa-solid fa-file-pen" />
                                 </v-btn>
                                 <div v-if="item.estado==1">
                                     <v-btn color='red' icon @click="estadoOrden(item)">
-                                        <font-awesome-icon icon="fa-solid fa-ban" />
+                                        <font-awesome-icon style="font-size:20px" icon="fa-solid fa-ban" />
                                     </v-btn>
                                 </div>
                                 <div v-else>
                                     <v-btn color="blue" icon @click="estadoOrden(item)">
-                                        <font-awesome-icon icon="fa-regular fa-circle-check" />
+                                        <font-awesome-icon style="font-size:20px" icon="fa-regular fa-circle-check" />
                                     </v-btn>
                                 </div>
                             </v-row>

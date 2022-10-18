@@ -12,25 +12,27 @@
             </v-btn>
           </v-card-title>
           <v-data-table :headers="encabezadoCotizacion" :items="cotizaciones" :search="busqueda" :loading="myLoading"
-                            loading-text="Cargando... Por favor espera">
+            loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
-              <v-icon @click="editarCotizacion(item)"> mdi-pencil </v-icon>
+              <v-btn @click="editarCotizacion(item)" icon>
+                <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
+              </v-btn>
             </template>
             <template v-slot:[`item.fechaEmision`]="{ item }">
-              <span>{{fecha(item.fechaEmision)}}</span>
+              <span>{{fecha(item.createdAt)}}</span>
             </template>
             <template v-slot:[`item.estado`]="{ item }">
-                            <div v-if="item.estado==1">
-                                <b>
-                                    <span class="blue--text">Activo</span>
-                                </b>
-                            </div>
-                            <div v-else>
-                                <b>
-                                    <span class="red--text">Inactivo</span>
-                                </b>
-                            </div>
-                        </template>
+              <div v-if="item.estado==1">
+                <b>
+                  <span class="blue--text">Activo</span>
+                </b>
+              </div>
+              <div v-else>
+                <b>
+                  <span class="red--text">Inactivo</span>
+                </b>
+              </div>
+            </template>
           </v-data-table>
         </v-card>
       </v-col>
@@ -43,7 +45,7 @@ export default {
   name: "PageMostrar",
   data() {
     return {
-      myLoading:true,
+      myLoading: true,
       cotizaciones: [],
       busqueda: "",
       encabezadoCotizacion: [
@@ -98,25 +100,19 @@ export default {
           console.log(err);
         });
     },
-    prueba(){
-      let minutos = new Date()
-      let fecha = new Date(`2020/11/25T${minutos.toLocaleTimeString()}`)
-      console.log(fecha);
-
-    },
-    editarCotizacion (cotizacion){
-      this.$store.dispatch('setCotizacionEditar',cotizacion)
+    editarCotizacion(cotizacion) {
+      this.$store.dispatch('setCotizacionEditar', cotizacion)
       console.log(this.$store.state.cotizacionEditar);
       this.$router.push('/cotizacion')
     },
     fecha(r) {
       let d = new Date(r);
-      return d.toLocaleDateString() 
+      return d.toLocaleDateString()+' ' + '-' + ' '+d.toLocaleTimeString()
     }
   },
   created() {
     this.traerCotizaciones();
-    this.prueba()
+    
   },
 };
 </script>

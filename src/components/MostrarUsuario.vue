@@ -18,18 +18,18 @@
                                         <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-user-pen" />
                                     </v-btn>
                                     <div v-if="item.estado==1">
-                                        <v-btn color="red" icon @click="desactivarUsuario(item)">
+                                        <v-btn color="red" icon @click="estadoUsuario(item)">
                                             <font-awesome-icon style="font-size: 20px"
                                                 icon="fa-solid fa-user-large-slash" />
                                         </v-btn>
                                     </div>
-                                    <div v-if="item.estado==0" @click="vacacionUsuario(item)">
+                                    <div v-if="item.estado==0" @click="estadoUsuario(item)">
                                         <v-btn icon color="orange">
                                             <font-awesome-icon style="font-size: 20px"
                                                 icon="fa-solid fa-earth-americas" />
                                         </v-btn>
                                     </div>
-                                    <div v-if="item.estado==2" @click="activarUsuario(item)">
+                                    <div v-if="item.estado==2" @click="estadoUsuario(item)">
                                         <v-btn icon color="blue">
                                             <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-user-large" />
                                         </v-btn>
@@ -169,7 +169,7 @@ export default {
             select: null,
             myLoading: true,
             dialog: false,
-            idPersona:'',
+            idPersona: '',
             encabezado: [
                 {
                     text: "Nombre",
@@ -253,8 +253,9 @@ export default {
                     console.log(err);
                 })
         },
-        activarUsuario(user) {
-            axios.put(`https://labficat.herokuapp.com/api/usuario/activar/${user._id}`)
+        estadoUsuario(user){
+            if(user.estado==1){
+                axios.put(`https://labficat.herokuapp.com/api/usuario/desactivar/${user._id}`)
                 .then((res) => {
                     console.log(res.data.usuario);
                     this.traerUsuarios()
@@ -262,9 +263,8 @@ export default {
                 .catch((err) => {
                     console.log(err);
                 })
-        },
-        desactivarUsuario(user) {
-            axios.put(`https://labficat.herokuapp.com/api/usuario/desactivar/${user._id}`)
+            }else if(user.estado==0){
+                axios.put(`https://labficat.herokuapp.com/api/usuario/vacaciones/${user._id}`)
                 .then((res) => {
                     console.log(res.data.usuario);
                     this.traerUsuarios()
@@ -272,9 +272,8 @@ export default {
                 .catch((err) => {
                     console.log(err);
                 })
-        },
-        vacacionUsuario(user) {
-            axios.put(`https://labficat.herokuapp.com/api/usuario/vacaciones/${user._id}`)
+            }else if(user.estado==2){
+                axios.put(`https://labficat.herokuapp.com/api/usuario/activar/${user._id}`)
                 .then((res) => {
                     console.log(res.data.usuario);
                     this.traerUsuarios()
@@ -282,16 +281,17 @@ export default {
                 .catch((err) => {
                     console.log(err);
                 })
+            }
         },
         actualizarInfoUsuario(user) {
-            this.idPersona=user._id
+            this.idPersona = user._id
             this.persona.nombre = user.nombre;
             this.persona.documento = user.documento;
             this.persona.direccion = user.direccion;
             this.persona.contacto = user.contacto;
             this.persona.celularContacto = user.celularContacto;
             this.persona.telefono = user.telefono;
-            this.persona.email = user.email ;
+            this.persona.email = user.email;
             this.dialog = true
         },
         actualizarUsuario() {

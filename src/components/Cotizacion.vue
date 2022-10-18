@@ -50,11 +50,10 @@
           <v-col cols="4" class="text-center px-0">
             <p for="Name" class="label mb-0">
               Clientes
-
               <v-dialog v-model="dialogo" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn class="field" v-bind="attrs" v-on="on">
-                    <font-awesome-icon icon="fa-solid fa-user" />
+                  <v-btn class="field" v-bind="attrs" v-on="on" icon>
+                    <font-awesome-icon icon="fa-solid fa-user"/>
                   </v-btn>
                 </template>
                 <v-card>
@@ -69,8 +68,8 @@
                         </v-card-title>
                         <v-data-table :headers="headers" :items="buscar" item-text="nombre" item-key="usuarios">
                           <template v-slot:[`item.actions`]="{ item }">
-                            <v-btn @click="llenarInfo(item)">
-                              agregar cliente
+                            <v-btn color="black" @click="llenarInfo(item)" icon>
+                              <font-awesome-icon style="font-size:20px" icon="fa-solid fa-user-plus" />
                             </v-btn>
                           </template>
                         </v-data-table>
@@ -176,7 +175,9 @@
                 </v-card-title>
                 <v-data-table :headers="encabezadoEnsayo" :items="ensayos" :search="search" item-key="ensayos">
                   <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon @click="ensayoCotizacion(item)"> mdi-plus </v-icon>
+                    <v-btn color="black" @click="ensayoCotizacion(item)" icon>
+                      <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
+                    </v-btn>
                   </template>
                   <template v-slot:footer>
                     <v-card class="d-flex justify-end">
@@ -202,16 +203,7 @@
             <template v-slot:[`item.actions`]="{ item }">
               <v-icon @click="eliminarCotizacion1(item)"> mdi-delete </v-icon>
             </template>
-            <!-- <template v-slot:footer>
-              <v-card class="d-flex justify-end">
-                <tr>
-                  <td>
-                    <v-text-field v-model="descuento" class="pr-2" type="number" label="Descuento Global">
-                    </v-text-field>
-                  </td>
-                </tr>
-              </v-card>
-            </template> -->
+            
           </v-data-table>
         </v-card>
       </v-col>
@@ -245,7 +237,9 @@
                 </v-card-title>
                 <v-data-table :headers="encabezadoEnsayo" :items="ensayos" :search="search" item-key="ensayos">
                   <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon @click="ensayoCotizacion2(item)"> mdi-plus </v-icon>
+                    <v-btn color="black" @click="ensayoCotizacion2(item)" icon>
+                      <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
+                    </v-btn>
                   </template>
                 </v-data-table>
                 <v-card-actions>
@@ -294,7 +288,9 @@
                 </v-card-title>
                 <v-data-table :headers="encabezadoEnsayo" :items="ensayos" :search="search" item-key="ensayos">
                   <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon @click="ensayoCotizacion3(item)"> mdi-plus </v-icon>
+                    <v-btn color="black" @click="ensayoCotizacion3(item)" icon>
+                      <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
+                    </v-btn>
                   </template>
                 </v-data-table>
                 <v-card-actions>
@@ -315,14 +311,14 @@
       </v-col>
     </v-row>
     <v-row>
-        <v-btn class="ml-4 my-6 primary" @click="cotizacion" v-if="this.$store.state.cotizacionVer==false">
-          subir cotización
-        </v-btn>
-        <v-btn class="ml-4 my-6" @click="modificarCotizacion" v-else>
-          editar cotización
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-text-field v-model="descuento" class="pr-2 my-6 py-0" type="number" label="Descuento Global"></v-text-field>
+      <v-btn class="ml-4 my-6 primary" @click="cotizacion" v-if="this.$store.state.cotizacionVer==false">
+        subir cotización
+      </v-btn>
+      <v-btn class="ml-4 my-6" @click="modificarCotizacion" v-else>
+        editar cotización
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-text-field v-model="descuento" class="pr-2 my-6 py-0" type="number" label="Descuento Global"></v-text-field>
     </v-row>
     <!-- <v-row>
       <v-col cols="8" class="py-0 px-0">
@@ -549,7 +545,11 @@ export default {
         elaborador: this.$store.state.elaborador.nombre,
         cargoElaborador: this.$store.state.elaborador.rol,
       },
-      rol: ["administrador", "cliente", "director"],
+      rol: [
+        "administrador",
+        "cliente",
+        "director"
+      ],
       busqueda: "",
       Roles: "",
       dialog: false,
@@ -634,7 +634,6 @@ export default {
         { text: "Acciones", value: "actions", sortable: false },
       ],
       cotizaciones: [],
-
       idCotizacionEditar: '',
       dialogCotizacion: false,
     }
@@ -704,28 +703,7 @@ export default {
             title: "Actualización de la cotización exitoso",
           });
           this.idCotizacionEditar = '';
-          this.primerItem.splice(0, this.primerItem.length);
-          this.segundoItem.splice(0, this.segundoItem.length);
-          this.tercerItem.splice(0, this.tercerItem.length);
-          this.id = '';
-          this.validezOferta = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
-          this.entregaResultados = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
-          this.descuento = null;
-          this.item1.itemsEnsayo.splice(0, this.item1.itemsEnsayo.length)
-          this.item2.itemsEnsayo.splice(0, this.item2.itemsEnsayo.length)
-          this.item3.itemsEnsayo.splice(0, this.item3.itemsEnsayo.length)
-
-          this.person.nombre = '';
-          this.person.cc = '';
-          this.person.direccion = '';
-          this.person.ciudad = '';
-          this.person.departamento = '';
-          this.person.telefono = '';
-          this.person.contacto = '';
-          this.person.celularContacto = '';
-          this.person.cargo = '';
-          this.person.correoContacto = '';
-
+          this.vaciarInformacion();
         })
         .catch((err) => {
           console.log(err)
@@ -783,27 +761,8 @@ export default {
             title: "Registro de la cotización exitoso",
           });
           console.log(res.data);
-          this.primerItem.splice(0, this.primerItem.length);
-          this.segundoItem.splice(0, this.segundoItem.length);
-          this.tercerItem.splice(0, this.tercerItem.length);
-          this.id = '';
-          this.validezOferta = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
-          this.entregaResultados = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
-          this.descuento = null;
-          this.item1.itemsEnsayo.splice(0, this.item1.itemsEnsayo.length)
-          this.item2.itemsEnsayo.splice(0, this.item2.itemsEnsayo.length)
-          this.item3.itemsEnsayo.splice(0, this.item3.itemsEnsayo.length)
+          this.vaciarInformacion()
 
-          this.person.nombre = '';
-          this.person.cc = '';
-          this.person.direccion = '';
-          this.person.ciudad = '';
-          this.person.departamento = '';
-          this.person.telefono = '';
-          this.person.contacto = '';
-          this.person.celularContacto = '';
-          this.person.cargo = '';
-          this.person.correoContacto = '';
         })
         .catch((err) => {
           this.$swal({
@@ -866,12 +825,34 @@ export default {
       axios
         .get("https://labficat.herokuapp.com/api/ensayo")
         .then((res) => {
-
           this.ensayos = res.data.ensayos;
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    vaciarInformacion() {
+      this.primerItem.splice(0, this.primerItem.length);
+      this.segundoItem.splice(0, this.segundoItem.length);
+      this.tercerItem.splice(0, this.tercerItem.length);
+      this.id = '';
+      this.validezOferta = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+      this.entregaResultados = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+      this.descuento = null;
+      this.item1.itemsEnsayo.splice(0, this.item1.itemsEnsayo.length)
+      this.item2.itemsEnsayo.splice(0, this.item2.itemsEnsayo.length)
+      this.item3.itemsEnsayo.splice(0, this.item3.itemsEnsayo.length)
+
+      this.person.nombre = '';
+      this.person.cc = '';
+      this.person.direccion = '';
+      this.person.ciudad = '';
+      this.person.departamento = '';
+      this.person.telefono = '';
+      this.person.contacto = '';
+      this.person.celularContacto = '';
+      this.person.cargo = '';
+      this.person.correoContacto = '';
     },
     close() {
       this.dialog = false;
