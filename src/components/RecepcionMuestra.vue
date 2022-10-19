@@ -194,7 +194,7 @@
                     <validation-provider v-slot="{ errors }" name="cotizacion" rules="required">
                       <v-select v-model="muestra.cotizacion" :items="cotizacion" item-text="numCotizacion"
                         item-key="cotizacion" item-value="_id" :error-messages="errors" outlined label="cotizacion"
-                        data-vv-name="numCotizacion" required></v-select>
+                        data-vv-name="numCotizacion" @change="itemCotizacion(muestra.cotizacion)" required></v-select>
                     </validation-provider>
                     <validation-provider v-slot="{ errors }" name="item" rules="required">
                       <v-select v-model="muestra.item" :items="item" :error-messages="errors" outlined label="Item"
@@ -256,6 +256,16 @@
         Modificar muestra
       </v-btn>
     </v-row>
+    <v-col cols="12" class="py-0 px-0">
+      <v-row>
+        <v-col cols="12" class=" text-center px-0">
+          <p for="Name" class="label mb-0 ">Observaciones</p>
+        </v-col>
+        <v-col cols="12" class="pl-0 px-0">
+          <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
+        </v-col>
+      </v-row>
+    </v-col>
     <v-row>
       <v-col cols="8" class="py-0 px-0">
         <h5 class=" primary text-center white--text px-0 py-0" style="width: 100%">
@@ -413,6 +423,7 @@ export default {
       correo: '',
       id: ''
     },
+
     muestra: {
       ciudad: '',
       direccionTomaMuestra: '',
@@ -423,12 +434,10 @@ export default {
       matrizMuestra: '',
       fechaRecoleccion: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       cotizacion: '',
-      item: ''
+      item: '',
     },
     item: [
-      'Item1',
-      'Item2',
-      'Item3'
+      'Item1'
     ],
     menu1: false,
     headers: [
@@ -450,32 +459,6 @@ export default {
       { text: "Ítem de la cotización", value: 'item' },
       { text: "Observaciones*" },
       { text: 'Acciones', value: 'actions' }
-    ],
-    desserts: [
-      {
-        name: "Frozen Yogurt",
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: "1%",
-      },
-      {
-        name: "Ice cream sandwich",
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: "1%",
-      },
-      {
-        name: "Eclair",
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        iron: "7%",
-      },
     ],
   }),
 
@@ -693,6 +676,7 @@ export default {
         .catch((err) => {
           console.log(err);
         })
+
       axios.post('https://labficat.herokuapp.com/api/muestra/cliente',
         {
           solicitante: this.person.id
@@ -704,6 +688,21 @@ export default {
         .catch((err) => {
           console.log(err);
         })
+    },
+    itemCotizacion(cotizacion){
+      axios.get(`https://labficat.herokuapp.com/api/cotizacion/idCotizacion/${cotizacion}`)
+      .then((res)=>{
+        console.log(res.data.cotizacion);
+
+        if(res.data.cotizacion.items.item2.itemsEnsayo.length > 0){
+          this.item.push('item2')
+        }if(res.data.cotizacion.items.item2.itemsEnsayo.length > 0){
+          this.item.push('item3')
+        }
+      })
+      .catch((err) =>{
+        console.log(err);
+      })
     },
     close() {
       this.dialog = false;

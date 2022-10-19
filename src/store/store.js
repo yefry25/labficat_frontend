@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
     mutations:{
         setToken(state,value) {
             state.token=value
+            
         },
         setElaborador(state,value) {
             state.elaborador=value

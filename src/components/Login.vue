@@ -89,6 +89,7 @@ export default {
             rol:response.data.usuario.rol,
             id:response.data.usuario._id
           }
+          
           this.$store.dispatch("setToken", response.data.token);
           this.$store.dispatch('setElaborador',this.elaborado)
           console.log(this.$store.state.elaborador);

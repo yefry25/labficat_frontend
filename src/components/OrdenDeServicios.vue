@@ -5,7 +5,7 @@
                 <v-card class="mb-4">
                     <v-card-title> Ordenes de servicio </v-card-title>
                     <v-data-table :headers="encabezado" :items="ordenes" :loading="myLoading"
-                            loading-text="Cargando... Por favor espera">
+                        loading-text="Cargando... Por favor espera">
                         <template v-slot:[`item.actions`]="{ item }">
                             <v-row>
                                 <v-btn @click="infoOrdenEditar(item)" icon>
@@ -61,6 +61,10 @@
                             <v-text-field v-model="incertidumbre" :error-messages="errors" label="Incertidumbre"
                                 outlined required></v-text-field>
                         </validation-provider>
+                        <validation-provider v-slot="{ errors }" name="observaciones" rules="required">
+                            <v-text-field v-model="observacion" :error-messages="errors" label="Observaciones" outlined
+                                required></v-text-field>
+                        </validation-provider>
                         <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded
                             @click="editarOrdenServicio" block>
                             Actualizar orden de servicio
@@ -107,6 +111,7 @@ export default {
             dialog: false,
             resultado: "",
             incertidumbre: "",
+            observacion:'',
             encabezado: [
                 {
                     text: "Muestra",
@@ -127,7 +132,7 @@ export default {
             axios
                 .get("https://labficat.herokuapp.com/api/orden")
                 .then((res) => {
-                    this.myLoading=false;
+                    this.myLoading = false;
                     this.ordenes = res.data.orden;
                     console.log(this.ordenes);
                 })
@@ -151,6 +156,7 @@ export default {
                                 incertidumbre: this.incertidumbre,
                             },
                         ],
+                        observaciones:this.observacion
                     }
                 )
                 .then((res) => {
@@ -159,6 +165,7 @@ export default {
                         icon: "success",
                         title: "Actualizacion de la orden de servicio exitoso",
                     });
+                    this.traerOrdenes();
                 })
                 .catch((err) => {
                     console.log(err);

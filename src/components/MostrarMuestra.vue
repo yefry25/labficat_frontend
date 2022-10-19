@@ -152,6 +152,10 @@ export default {
       }
     },
     fecha(r) {
+      
+      let fecha=  r.split('T')[0].replace(/-/g,"/")
+      
+      console.log(fecha);
       let d = new Date(r);
       return d.toLocaleDateString();
     },

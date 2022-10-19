@@ -59,40 +59,6 @@
           <v-col cols="4" class="text-center px-0">
             <p for="Name" class="label mb-0">
               Solicitante
-              <v-dialog v-model="dialogCliente" persistent max-width="1000px">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn class="field" v-bind="attrs" v-on="on">
-                    <font-awesome-icon icon="fa-solid fa-user" />
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-row>
-                    <v-col>
-                      <v-card>
-                        <v-card-title>
-                          Usuarios
-                          <v-divider class="mx-4" inset vertical></v-divider>
-                          <v-spacer></v-spacer>
-                          <v-text-field label="buscador" v-model="busqueda" single-line hide-details></v-text-field>
-                        </v-card-title>
-                        <v-data-table :headers="headerUsuarios" :items="buscar" item-text="nombre" item-key="usuarios">
-                          <template v-slot:[`item.actions`]="{ item }">
-                            <v-icon @click="llenarInfo(item)">
-                              mdi-plus
-                            </v-icon>
-                          </template>
-                        </v-data-table>
-                      </v-card>
-                    </v-col>
-                  </v-row>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">
-                      Cerrar
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
             </p>
             <p for="Name" class="label mb-0">NIT / C.C.</p>
             <p for="Name" class="label mb-0">Dirección</p>
@@ -134,41 +100,6 @@
           <v-col cols="4" class="text-center px-0">
             <p for="Name" class="label mb-0">
               Mun de recolección
-              <v-dialog v-model="dialogMuestra" persistent max-width="2000px">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn class="field" v-bind="attrs" v-on="on">
-                    <font-awesome-icon icon="fa-solid fa-user" />
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-row>
-                    <v-col>
-                      <v-card>
-                        <v-card-title>
-                          Muestras
-                          <v-divider class="mx-4" inset vertical></v-divider>
-                          <v-spacer></v-spacer>
-                          <v-text-field label="buscador" v-model="busqueda" single-line hide-details></v-text-field>
-                        </v-card-title>
-                        <v-data-table :headers="headerMuestras" :items="muestrasDelCliente" item-text="nombre"
-                          item-key="usuarios">
-                          <template v-slot:[`item.actions`]="{ item }">
-                            <v-icon @click="llenarInfoMuestra(item)">
-                              mdi-plus
-                            </v-icon>
-                          </template>
-                        </v-data-table>
-                      </v-card>
-                    </v-col>
-                  </v-row>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">
-                      Cerrar
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
             </p>
             <p for="Name" class="label mb-0">Dirección de toma de muestra</p>
             <p for="Name" class="label mb-0">Lugar de toma de muestra</p>
@@ -221,78 +152,35 @@
                 </v-btn>
               </template>
               <v-card>
-                <v-card-title>
-                  <h1>ensayos</h1>
-                </v-card-title>
-                <validationObserver ref="observer" v-slot="{ invalid }">
-                  <form @submit.prevent="submit" class="py-7 px-7">
-                    <validation-provider v-slot="{ errors }" name="ensayo" rules="required">
-                      <v-text-field v-model="ensayos.ensayo" :error-messages="errors"
-                        label="Ensayo" outlined required>
-                      </v-text-field>
-                    </validation-provider>
-                    <validation-provider v-slot="{ errors }" name="metodo" rules="required">
-                      <v-text-field v-model="ensayos.metodo" :error-messages="errors"
-                        label="Metodo" outlined required>
-                      </v-text-field>
-                    </validation-provider>
-                    <validation-provider v-slot="{ errors }" name="tecnica" rules="required">
-                      <v-text-field v-model="ensayos.tecnica" :error-messages="errors"
-                        label="Tecnica" outlined required>
-                      </v-text-field>
-                    </validation-provider>
-                    <validation-provider v-slot="{ errors }" name="valor minimo" rules="required">
-                      <v-text-field v-model="ensayos.valorMinimo" :error-messages="errors"
-                        label="Valor mínimo" outlined required>
-                      </v-text-field>
-                    </validation-provider>
-                    <validation-provider v-slot="{ errors }" name="valor maximo" rules="required">
-                      <v-text-field v-model="ensayos.valorMaximo" :error-messages="errors"
-                        label="Valor máximo" outlined required>
-                      </v-text-field>
-                    </validation-provider>
-                    <validation-provider v-slot="{ errors }" name="costo" rules="required">
-                      <v-text-field v-model="ensayos.costo" :error-messages="errors"
-                        label="Costo" outlined required>
-                      </v-text-field>
-                    </validation-provider>
-                    <validation-provider v-slot="{ errors }" name="descripcion" rules="required">
-                      <v-text-field v-model="ensayos.descripcion" :error-messages="errors"
-                        label="Descripcion" outlined required>
-                      </v-text-field>
-                    </validation-provider>
-                    <validation-provider v-slot="{ errors }" name="limite cuantificacion" rules="required">
-                      <v-text-field v-model="ensayos.limiteCuantificacion" :error-messages="errors"
-                        label="Limite cuantificacion" outlined required>
-                      </v-text-field>
-                    </validation-provider>
-                    <validation-provider>
-                      <template>
-                        <v-autocomplete v-model="ensayos.titular" :items="usuarios" :loading="isLoading" :search-input.sync="search"
-                          chips clearable hide-details hide-selected item-text="nombre"  item-value="_id" label="titular"
-                          solo></v-autocomplete>
-                      </template>
-                    </validation-provider>
-                    <validation-provider>
-                      <template>
-                        <v-autocomplete v-model="ensayos.suplente" :items="usuarios" :loading="isLoading" :search-input.sync="search"
-                          chips clearable hide-details hide-selected item-text="nombre"  item-value="_id" label="suplente"
-                          solo></v-autocomplete>
-                      </template>
-                    </validation-provider>
-                    <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded
-                      @click="ensayoNuevo"
-                      >
-                      Registrar muestra
-                    </v-btn>
-                  </form>
-                </validationObserver>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
-                    Cerrar
-                  </v-btn>
-                </v-card-actions>
+                <v-dialog v-model="orden" persistent max-width="1000px">
+                  <v-card>
+                    <v-row>
+                      <v-col>
+                        <v-card>
+                          <v-card-title>
+                            Ensayos
+                            <v-divider class="mx-4" inset vertical></v-divider>
+                            <v-spacer></v-spacer>
+                            <v-text-field label="buscador" v-model="busqueda" single-line hide-details></v-text-field>
+                          </v-card-title>
+                          <v-data-table :headers="headerOrden" :items="orden">
+                            <template v-slot:[`item.actions`]="{ item }">
+                              <v-btn color="black" @click="infoOrden(item)" icon>
+                                <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
+                              </v-btn>
+                            </template>
+                          </v-data-table>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="close">
+                        Cerrar
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </v-card>
             </v-dialog>
           </v-card-title>
@@ -319,7 +207,7 @@
 <script>
 import axios from "axios"
 import { required, email, min, confirmed } from 'vee-validate/dist/rules'
-import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+import { extend, setInteractionMode } from 'vee-validate'
 setInteractionMode('eager')
 extend('required', {
   ...required,
@@ -340,8 +228,8 @@ extend('confirmed', {
 export default {
   name: "PageInforme",
   components: {
-    ValidationProvider,
-    ValidationObserver,
+    // ValidationProvider,
+    // ValidationObserver,
   },
   data: () => ({
     searchh: "",
@@ -355,6 +243,7 @@ export default {
     search: null,
     tab: null,
     usuarios: [],
+    orden: [],
     person: {
       nombre: '',
       cc: '',
@@ -397,17 +286,17 @@ export default {
       { text: 'Acciones', value: 'actions' }
     ],
     muestrasDelCliente: [],
-    ensayos:{
-      ensayo:'',
-      metodo:'',
-      tecnica:'',
-      valorMinimo:'',
-      valorMaximo:'',
-      costo:null,
-      descripcion:'',
-      limiteCuantificacion:null,
-      titular:'',
-      suplente:''
+    ensayos: {
+      ensayo: '',
+      metodo: '',
+      tecnica: '',
+      valorMinimo: '',
+      valorMaximo: '',
+      costo: null,
+      descripcion: '',
+      limiteCuantificacion: null,
+      titular: '',
+      suplente: ''
     },
     headerUsuarios: [
       {
@@ -419,106 +308,43 @@ export default {
       { text: "Rol", value: "rol", sortable: false },
       { text: "Acciones", value: "actions", sortable: false },
     ],
+    headerOrden: [
+      {
+        text: "Codigo de muestra",
+        align: "start",
+        sortable: false,
+        value: "idMuestra.codMuestra",
+      },
+      { text: "estado", value: "estado", sortable: false },
+      { text: "item", value: "idMuestra.item", sortable: false },
+      { text: "Acciones", value: "actions", sortable: false },
+    ],
+
     headers: [
       {
         text: "Fecha de análisis",
         align: "start",
         sortable: false,
       },
-      { text: "Ensayo", value: "ensayo" },
-      { text: "Método", value: "metodo" },
-      { text: "Técnica", value: "tecnica" },
-      { text: "Resultado", value: "protein" },
-      { text: "Incertidumbre expandida", value: "iron" },
-      { text: "Valor Máximo NTC 1311:2009", value: "valorMaximo" },
-      { text: "Valor Mínimo NTC 1311:2009", value: "valorMinimo" },
-      { text: "Unidades", value: "unidades"},
-    ],
-    desserts: [
-      {
-        name: "Cenizas",
-        metodo: "NTC 570:2012. NTC 1311:2009.",
-        tecnica: "Gravimetría",
-        valormaximo: "N.A.",
-        valorminimo: "0,8",
-        unidades: "fracción en masa en %",
-      },
-      {
-        name: "Humedad",
-        metodo: "NTC 572:2012. AOAC 925.45. NTC 1311:2009.",
-        tecnica: "Gravimetría",
-        valormaximo: "9,0",
-        valorminimo: "N.A.",
-        unidades: "fracción en masa en %"
-      },
-      {
-        name: "° Brix",
-        metodo: "ISO 2173:2003",
-        tecnica: "Refractometría-Sacarosa",
-        valormaximo: "N.A.",
-        valorminimo: "N.A."
-      },
-      {
-        name: "grasas",
-        metodo: "AOAC 920.39 C. NTC 1311:2009.",
-        tecnica: "Gravimetría",
-        valormaximo: "N.A.",
-        valorminimo: "N.A.",
-      },
-      {
-        name: "Fenoles Totales",
-        metodo: "Folin, O., Ciocalteu, V. (1927).Folin, O., Denis, W. (1912).",
-        tecnica: "Espectrofotometría Uv-Vis.λ = 760 nm",
-        valormaximo: "N.A.",
-        valorminimo: "N.A.",
-      },
-      {
-        name: "Sacarosa",
-        metodo: "ISO 10504:2013",
-        tecnica: "Cromatografía HPLC-RID",
-        valormaximo: "93,0",
-        valorminimo: "N.A.",
-      },
-      {
-        name: "Glucosa",
-        metodo: "ISO 10504:2013",
-        tecnica: "Cromatografía HPLC-RID",
-        valormaximo: "N.A.",
-        valorminimo: "N.A.",
-      },
-      {
-        name: "Fructosa",
-        metodo: "ISO 10504:2013",
-        tecnica: "Cromatografía HPLC-RID",
-        valormaximo: "N.A.",
-        valorminimo: "N.A.",
-      },
-      {
-        name: "Azúcares Reductores (Glucosa + Fructosa)",
-        metodo: "Calculado a partir del contenido de glucosa y fructosa.",
-        tecnica: "Calculado, a partir de datos obtenidos con Cromatografía HPLC-RID",
-        valormaximo: "N.A.",
-        valorminimo: "5,0",
-      },
-      {
-        name: "Azúcares Totales (Sacarosa + Glucosa + Fructosa)",
-        metodo: "Calculado a partir del contenido de sacarosa,  glucosa y fructosa.",
-        tecnica: "Calculado, a partir de datos obtenidos con Cromatografía HPLC-RID",
-        valormaximo: "N.A.",
-        valorminimo: "N.A.",
-        iron: "7%",
-      },
+      { text: "Ensayo", value: "ensayo", sortable: false },
+      { text: "Método", value: "metodo", sortable: false  },
+      { text: "Técnica", value: "tecnica", sortable: false  },
+      { text: "Resultado", value: "protein", sortable: false  },
+      { text: "Incertidumbre expandida", value: "iron", sortable: false  },
+      { text: "Valor Máximo NTC 1311:2009", value: "valorMaximo", sortable: false  },
+      { text: "Valor Mínimo NTC 1311:2009", value: "valorMinimo", sortable: false  },
+      { text: "Unidades", value: "unidades", sortable: false  },
     ],
   }),
   watch: {
-    model (val) {
-        if (val != null) this.tab = 0
-        else this.tab = null
-      },
-      search () {
-        // Items have already been loaded
-        if (this.items.length > 0) return
-      }
+    model(val) {
+      if (val != null) this.tab = 0
+      else this.tab = null
+    },
+    search() {
+      // Items have already been loaded
+      if (this.items.length > 0) return
+    }
   },
   computed: {
     buscar() {
@@ -577,34 +403,46 @@ export default {
         this.muestra.matrizMuestra = muestra.matrizMuestra,
         this.muestra.fechaRecoleccion = muestra.fechaRecoleccion
     },
-    ensayoNuevo(){
-      axios.post('https://labficat.herokuapp.com/api/ensayo',{
-        ensayo:this.ensayos.ensayo,
-        metodo:this.ensayos.metodo,
-        tecnica:this.ensayos.tecnica,
-        valorMinimo:this.ensayos.valorMinimo,
-        valorMaximo:this.ensayos.valorMaximo,
-        costo:this.ensayos.costo,
-        descripcion:this.ensayos.descripcion,
-        limiteCuantificacion:this.ensayos.limiteCuantificacion,
-        responsables:{
-          titular:this.ensayos.titular,
-          suplente:this.ensayos.suplente
-        }
+    ensayoNuevo() {
+      axios.post('https://labficat.herokuapp.com/api/ensayo', {
+        ensayo: this.ensayos.ensayo,
+        metodo: this.ensayos.metodo,
+        tecnica: this.ensayos.tecnica,
+        valorMinimo: this.ensayos.valorMinimo,
+        valorMaximo: this.ensayos.valorMaximo,
+        costo: this.ensayos.costo,
+        descripcion: this.ensayos.descripcion,
+        limiteCuantificacion: this.ensayos.limiteCuantificacion,
+        responsables: {
+          titular: this.ensayos.titular,
+          suplente: this.ensayos.suplente
+        },
       })
-      .then((res)=>{
-        console.log(res.data.ensayos)
-        this.$swal({
+        .then((res) => {
+          console.log(res.data.ensayos)
+          this.$swal({
             icon: "success",
             title: "Ensayo registrado exitosamente",
           });
-      })
-      .catch((err)=>{
-        console.log(err)
-        this.$swal({
+        })
+        .catch((err) => {
+          console.log(err)
+          this.$swal({
             icon: "error",
             title: "Error al registrar el ensayo",
           });
+        })
+    },
+    infoOrden(orden){
+      axios.get(`https://labficat.herokuapp.com/api/orden/informeDeResultados/${orden._id}`)
+      .then((res)=>{
+        console.log(res.data.informe);
+        this.analisisMuestra.push({
+          ensayo: orden.id,
+        })
+      })
+      .catch((err)=>{
+        console.log(err);
       })
     },
     close() {
@@ -616,9 +454,21 @@ export default {
         this.editedIndex = -1;
       });
     },
+    traerMuestras() {
+      axios.get(`https://labficat.herokuapp.com/api/orden`,)
+        .then((res) => {
+          console.log(res.data.orden);
+          this.orden = res.data.orden
+          console.log(this.orden)
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
   },
   created() {
     this.traerClientes()
+    this.traerMuestras()
   }
 };
 </script>

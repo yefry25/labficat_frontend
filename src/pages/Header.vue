@@ -47,11 +47,11 @@
             <v-list-item-title>informe de resultados</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="registro">
+          <v-list-item to="mostrarUsuarios">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-user-pen" />
             </v-list-item-icon>
-            <v-list-item-title>registrar nuevo usuario</v-list-item-title>
+            <v-list-item-title>registro de usuarios</v-list-item-title>
           </v-list-item>
 
           <v-list-item to="configuracion">

@@ -53,7 +53,7 @@
               <v-dialog v-model="dialogo" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn class="field" v-bind="attrs" v-on="on" icon>
-                    <font-awesome-icon icon="fa-solid fa-user"/>
+                    <font-awesome-icon icon="fa-solid fa-user" />
                   </v-btn>
                 </template>
                 <v-card>
@@ -203,7 +203,7 @@
             <template v-slot:[`item.actions`]="{ item }">
               <v-icon @click="eliminarCotizacion1(item)"> mdi-delete </v-icon>
             </template>
-            
+
           </v-data-table>
         </v-card>
       </v-col>
@@ -317,6 +317,8 @@
       <v-btn class="ml-4 my-6" @click="modificarCotizacion" v-else>
         editar cotización
       </v-btn>
+      <v-spacer></v-spacer>
+      <v-text-field v-model="observacion" class="pr-2 my-6 py-0" label="Observaciones"></v-text-field>
       <v-spacer></v-spacer>
       <v-text-field v-model="descuento" class="pr-2 my-6 py-0" type="number" label="Descuento Global"></v-text-field>
     </v-row>
@@ -593,6 +595,7 @@ export default {
       id: '',
       ensa: '',
       descuento: null,
+      observacion: '',
       limiteCuantificacion: null,
       item1: {
         itemsEnsayo: []
@@ -694,6 +697,7 @@ export default {
           item2: this.item2,
           item3: this.item3
         },
+        observaciones: this.observacion,
         descuento: this.descuento
       })
         .then((res) => {
@@ -753,6 +757,7 @@ export default {
           item2: this.item2,
           item3: this.item3
         },
+        observaciones: this.observacion,
         descuento: this.descuento
       })
         .then((res) => {
@@ -780,16 +785,17 @@ export default {
       this.idCotizacionEditar = this.$store.state.cotizacionEditar._id
       this.id = this.$store.state.cotizacionEditar.idCliente._id
       this.person.nombre = this.$store.state.cotizacionEditar.idCliente.nombre,
-        this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento,
-        this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion,
-        this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad,
-        this.person.departamento = this.$store.state.cotizacionEditar.idCliente.ciudad.departamento,
-        this.person.telefono = this.$store.state.cotizacionEditar.idCliente.telefono,
-        this.person.contacto = this.$store.state.cotizacionEditar.idCliente.contacto,
-        this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol,
-        this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto,
-        this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo
+      this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento,
+      this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion,
+      this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad,
+      this.person.departamento = this.$store.state.cotizacionEditar.idCliente.ciudad.departamento,
+      this.person.telefono = this.$store.state.cotizacionEditar.idCliente.telefono,
+      this.person.contacto = this.$store.state.cotizacionEditar.idCliente.contacto,
+      this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol,
+      this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto,
+      this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo
       this.descuento = this.$store.state.cotizacionEditar.descuento
+      this.observacion=this.$store.state.cotizacionEditar.observaciones
 
       for (let i = 0; i < this.$store.state.cotizacionEditar.items.item1.itemsEnsayo.length; i++) {
         const element = this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
@@ -839,6 +845,7 @@ export default {
       this.validezOferta = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
       this.entregaResultados = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
       this.descuento = null;
+      this.observacion='',
       this.item1.itemsEnsayo.splice(0, this.item1.itemsEnsayo.length)
       this.item2.itemsEnsayo.splice(0, this.item2.itemsEnsayo.length)
       this.item3.itemsEnsayo.splice(0, this.item3.itemsEnsayo.length)
