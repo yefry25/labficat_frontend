@@ -104,7 +104,15 @@ export default {
           });
         });
     },
+    existeToken(){
+      if(localStorage.token){
+        this.$router.push("/inicio");
+      }
+    }
   },
+  created(){
+    this.existeToken();
+  }
 };
 </script>
 <style scoped>

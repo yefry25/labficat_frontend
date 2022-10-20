@@ -14,9 +14,16 @@
           <v-data-table :headers="encabezadoCotizacion" :items="cotizaciones" :search="busqueda" :loading="myLoading"
             loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
-              <v-btn @click="editarCotizacion(item)" icon>
-                <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
-              </v-btn>
+              <div v-if="item.estado==1">
+                <v-btn @click="editarCotizacion(item)" icon>
+                  <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
+                </v-btn>
+              </div>
+              <div v-else>
+                <v-btn disabled icon>
+                  <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
+                </v-btn>
+              </div>
             </template>
             <template v-slot:[`item.fechaEmision`]="{ item }">
               <span>{{fecha(item.createdAt)}}</span>
@@ -52,14 +59,14 @@ export default {
         {
           text: "Numero de cotización",
           align: "start",
-          sortable: false,
+          sortable: true,
           value: "numCotizacion",
         },
         { text: "Fecha de emision", value: "fechaEmision", sortable: false },
-        { text: "Cliente", value: "idCliente.nombre", sortable: false },
+        { text: "Cliente", value: "idCliente.nombre", sortable: true },
         { text: "Elaborador", value: "idElaboradoPor.nombre", sortable: false },
         { text: "Total", value: "total", sortable: false },
-        { text: "Estado", value: "estado", sortable: false },
+        { text: "Estado", value: "estado", sortable: true },
         { text: "Acciones", value: "actions", sortable: false },
       ],
     };
@@ -68,20 +75,15 @@ export default {
     buscar() {
       return this.cotizaciones.filter((user) => {
         const numero = user.numCotizacion.toLowerCase();
-        const fecha = user.fechaEmision.toLowerCase();
         const cliente = user.idCliente.nombre.toLowerCase();
         const Elaborador = user.idElaboradoPor.nombre.toLowerCase();
-        const total = user.total.toLowerCase();
-        const estado = user.estado.toLowerCase();
         const busqueda = this.busqueda.toLowerCase();
 
         return (
           numero.includes(busqueda) ||
           cliente.includes(busqueda) ||
-          fecha.includes(busqueda) ||
-          Elaborador.includes(busqueda) ||
-          total.includes(busqueda) ||
-          estado.includes(busqueda)
+          Elaborador.includes(busqueda)
+
         );
 
       });
@@ -94,7 +96,7 @@ export default {
         .then((res) => {
           console.log(res.data.cotizacion);
           this.myLoading = false
-          this.cotizaciones = res.data.cotizacion;
+          this.cotizaciones = res.data.cotizacion.reverse();
         })
         .catch((err) => {
           console.log(err);
@@ -107,12 +109,12 @@ export default {
     },
     fecha(r) {
       let d = new Date(r);
-      return d.toLocaleDateString()+' ' + '-' + ' '+d.toLocaleTimeString()
+      return d.toLocaleDateString() + ' ' + '-' + ' ' + d.toLocaleTimeString()
     }
   },
   created() {
     this.traerCotizaciones();
-    
+
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid style="padding: 0;">
     <v-app-bar color="primary" dark flat>
-      <v-app-bar-nav-icon v-if="this.$store.state.token!=''" @click="drawer = true"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="this.$store.state.token!=undefined" @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title class="font-weight-black black--text">LABFICAT</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn  class="font-weight-black" icon @click="cerrarSesion">
@@ -80,9 +80,14 @@ export default {
       this.$router.push('/');
       this.$store.state.token='';
       this.$store.state.elaborador='';
-      this.$store.state.cotizacionEditar=''
-      this.$store.state.cotizacionVer=false
+      this.$store.state.cotizacionEditar='';
+      this.$store.state.cotizacionVer=false;
+      this.$store.state.token = undefined;
+      localStorage.removeItem('token');
     }
+  },
+  created() {
+    console.log('token: '+this.$store.state.token);
   }
 };
 </script>

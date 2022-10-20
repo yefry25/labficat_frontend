@@ -63,13 +63,15 @@
                           Usuarios
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
-                          <v-text-field label="buscador" v-model="busqueda" single-line hide-details></v-text-field>
+                          <v-text-field label="buscar por nombre o por rol" v-model="busqueda" single-line hide-details>
+                          </v-text-field>
                         </v-card-title>
-                        <v-data-table :headers="headerUsuarios" :items="buscar" item-text="nombre" item-key="usuarios">
+                        <v-data-table :headers="headerUsuarios" :items="buscar" :loading="myLoading"
+                          loading-text="Cargando... Por favor espera">
                           <template v-slot:[`item.actions`]="{ item }">
-                            <v-icon @click="llenarInfo(item)">
-                              mdi-plus
-                            </v-icon>
+                            <v-btn @click="llenarInfo(item)" icon>
+                              <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
+                            </v-btn>
                           </template>
                         </v-data-table>
                       </v-card>
@@ -125,19 +127,27 @@
             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
             </v-text-field>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialogEnsayo" max-width="1000px">
+            <v-dialog v-model="dialogEnsayo" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" @click="comprobarCotizaciones">
                   Nueva Muestra
                 </v-btn>
               </template>
               <v-card>
-                <v-toolbar-title color="orange">
+                <v-card-title>
+                  <v-hover v-slot="{ hover }">
+                    <v-btn icon @click="close" :style="{color:hover ? 'red' :''}">
+                      <font-awesome-icon style="fontSize:20px" icon="fa-solid fa-xmark" />
+                    </v-btn>
+                  </v-hover>
+                  Formulario de muestras
+                </v-card-title>
+                <!-- <v-toolbar-title color="orange">
                   <v-avatar @click="close">
                     <v-icon>mdi-close</v-icon>
                   </v-avatar>
                   <span>Editar Recepcion de Muestras</span>
-                </v-toolbar-title>
+                </v-toolbar-title> -->
                 <validationObserver ref="observer" v-slot="{ invalid }">
                   <form @submit.prevent="submit" class="py-7 px-7">
                     <validation-provider v-slot="{ errors }" name="departamento" rules="required">
@@ -230,10 +240,11 @@
                   </form>
                 </validationObserver>
                 <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
-                    Cerrar
-                  </v-btn>
+                  <v-hover v-slot="{ hover }">
+                    <v-btn class="ml-5" text @click="close" :style="{background:hover ? 'red' :''}">
+                      Cerrar
+                    </v-btn>
+                  </v-hover>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -389,6 +400,7 @@ export default {
     ValidationObserver,
   },
   data: () => ({
+    myLoading: true,
     dialog: false,
     dialogEnsayo: false,
     dialogEnsayoModificar: false,
@@ -397,10 +409,10 @@ export default {
       {
         text: "Nombre",
         align: "start",
-        sortable: false,
+        sortable: true,
         value: "nombre",
       },
-      { text: "Rol", value: "rol", sortable: false },
+      { text: "Rol", value: "rol", sortable: true },
       { text: "Acciones", value: "actions", sortable: false },
     ],
     usuarios: [],
@@ -441,24 +453,21 @@ export default {
     ],
     menu1: false,
     headers: [
-      {
+      /* {
         text: "Código de Muestra",
         align: "start",
         sortable: false,
         value: "codMuestra",
-      },
-      { text: "Municipio de recolección", value: 'munRecoleccion.departamento' },
+      }, */
+      { text: "Municipio de recolección", value: 'munRecoleccion' },
       { text: "Dirección de toma de muestra", value: "direccionTomaMuestra" },
       { text: "Lugar de toma de muestra", value: "lugarTomaMuestra" },
       { text: "Muestra recolectada por", value: "muestraRecolectadaPor" },
       { text: "Procedimiento de muestreo", value: "procedimientoMuestreo" },
-      { text: "Tipo de muestra", value: 'tipoMuestra.tipos' },
+      /* { text: "Tipo de muestra", value: 'tipoMuestra' }, */
       { text: "Matriz de la muestra", value: "matrizMuestra" },
       { text: "Fecha y hora de recolección", value: 'fechaRecoleccion' },
-      { text: "Cotización", value: "cotizacion.numCotizacion" },
       { text: "Ítem de la cotización", value: 'item' },
-      { text: "Observaciones*" },
-      { text: 'Acciones', value: 'actions' }
     ],
   }),
 
@@ -507,7 +516,13 @@ export default {
       axios
         .get("https://labficat.herokuapp.com/api/usuario")
         .then((res) => {
-          this.usuarios = res.data.usuario;
+          for (let i = 0; i < res.data.usuario.length; i++) {
+            const element = res.data.usuario[i];
+            if (element.estado == 1) {
+              this.usuarios.push(element)
+            }
+          }
+          this.myLoading = false
         })
         .catch((err) => {
           console.log(err);
@@ -637,9 +652,13 @@ export default {
         })
     },
     tablaMuestra() {
+      this.$swal({
+        icon: "success",
+        title: `La información de la muestra fue cargada con éxito`,
+      });
       this.mostrarMuestras.push({
         solicitante: this.person.id,
-        munRecoleccion: this.muestra.ciudad,
+        munRecoleccion: this.departamento,
         direccionTomaMuestra: this.muestra.direccionTomaMuestra,
         lugarTomaMuestra: this.muestra.lugarTomaMuestra,
         muestraRecolectadaPor: this.muestra.muestraRecolectadaPor,
@@ -647,7 +666,6 @@ export default {
         tipoMuestra: this.muestra.tipoMuestra,
         matrizMuestra: this.muestra.matrizMuestra,
         fechaRecoleccion: this.muestra.fechaRecoleccion,
-        cotizacion: this.muestra.cotizacion,
         item: this.muestra.item
       })
       if (this.$store.state.muestraVer == true) {
@@ -689,20 +707,43 @@ export default {
           console.log(err);
         })
     },
-    itemCotizacion(cotizacion){
+    itemCotizacion(cotizacion) {
       axios.get(`https://labficat.herokuapp.com/api/cotizacion/idCotizacion/${cotizacion}`)
-      .then((res)=>{
-        console.log(res.data.cotizacion);
+        .then((res) => {
+          console.log(res.data.cotizacion);
 
-        if(res.data.cotizacion.items.item2.itemsEnsayo.length > 0){
-          this.item.push('item2')
-        }if(res.data.cotizacion.items.item2.itemsEnsayo.length > 0){
-          this.item.push('item3')
-        }
-      })
-      .catch((err) =>{
-        console.log(err);
-      })
+          if (res.data.cotizacion.items.item2.itemsEnsayo.length > 0) {
+            this.item.push('item2')
+          } if (res.data.cotizacion.items.item2.itemsEnsayo.length > 0) {
+            this.item.push('item3')
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
+    comprobarCotizaciones() {
+      axios.post('https://labficat.herokuapp.com/api/cotizacion/cliente',
+        {
+          idCliente: this.person.id
+        })
+        .then((res) => {
+          console.log(res.data.cotizacion);
+          if (res.data.cotizacion.length > 0) {
+            this.$swal({
+              icon: "success",
+              title: `El usuario ${this.person.nombre} tiene cotizaciones a su nombre`,
+            });
+          } else {
+            this.$swal({
+              icon: "error",
+              title: `El usuario ${this.person.nombre} no tiene cotizaciones, proceda a crear una cotización`,
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     },
     close() {
       this.dialog = false;

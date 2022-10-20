@@ -15,15 +15,18 @@
             loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
               <v-row>
-                <v-btn @click="infoMuestraEditar(item)" icon>
-                  <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
-                </v-btn>
                 <div v-if="item.estado==1">
+                  <v-btn @click="infoMuestraEditar(item)" icon>
+                    <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
+                  </v-btn>
                   <v-btn color='red' icon @click="estadoMuestra(item)">
                     <font-awesome-icon style="font-size:20px" icon="fa-solid fa-ban" />
                   </v-btn>
                 </div>
                 <div v-else>
+                  <v-btn disabled icon>
+                    <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
+                  </v-btn>
                   <v-btn color="blue" icon @click="estadoMuestra(item)">
                     <font-awesome-icon style="font-size:20px" icon="fa-regular fa-circle-check" />
                   </v-btn>
@@ -132,29 +135,29 @@ export default {
               title: "Error al desactivar la orden de servicio",
             });
           })
-      }else{
+      } else {
         axios.put(`https://labficat.herokuapp.com/api/muestra/activar/${muestra._id}`)
-        .then((res)=>{
-          console.log(res);
-          this.$swal({
+          .then((res) => {
+            console.log(res);
+            this.$swal({
               icon: "success",
               title: "Muestra activada Exitosamente",
             });
             this.traerMuestra()
-        })
-        .catch((err)=>{
-          console.log(err);
-          this.$swal({
+          })
+          .catch((err) => {
+            console.log(err);
+            this.$swal({
               icon: "error",
               title: "Error al activar la muestra",
             });
-        })
+          })
       }
     },
     fecha(r) {
-      
-      let fecha=  r.split('T')[0].replace(/-/g,"/")
-      
+
+      let fecha = r.split('T')[0].replace(/-/g, "/")
+
       console.log(fecha);
       let d = new Date(r);
       return d.toLocaleDateString();

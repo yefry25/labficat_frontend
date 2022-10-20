@@ -64,9 +64,13 @@
                           Usuarios
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
-                          <v-text-field label="buscador" v-model="busqueda" single-line hide-details></v-text-field>
+                          <v-text-field label="Buscar por nombre o por rol" v-model="busqueda" single-line hide-details></v-text-field>
+                          <v-divider class="mx-4" inset vertical></v-divider>
+                          <v-spacer></v-spacer>
+                          <v-btn>Agregar usuario</v-btn>
                         </v-card-title>
-                        <v-data-table :headers="headers" :items="buscar" item-text="nombre" item-key="usuarios">
+                        <v-data-table :headers="headers" :items="buscar" :loading="myLoading"
+                          loading-text="Cargando... Por favor espera">
                           <template v-slot:[`item.actions`]="{ item }">
                             <v-btn color="black" @click="llenarInfo(item)" icon>
                               <font-awesome-icon style="font-size:20px" icon="fa-solid fa-user-plus" />
@@ -203,7 +207,6 @@
             <template v-slot:[`item.actions`]="{ item }">
               <v-icon @click="eliminarCotizacion1(item)"> mdi-delete </v-icon>
             </template>
-
           </v-data-table>
         </v-card>
       </v-col>
@@ -513,6 +516,7 @@ export default {
   data() {
     return {
       search: "",
+      myLoading:true,
       dialogo: false,
       encabezado: [
         {
@@ -645,10 +649,10 @@ export default {
     buscar() {
       return this.usuarios.filter((user) => {
         const nombre = user.nombre.toLowerCase();
-        const documento = user.documento.toLowerCase();
+        const rol = user.rol.toLowerCase();
         const busqueda = this.busqueda.toLowerCase();
 
-        return nombre.includes(busqueda) || documento.includes(busqueda);
+        return nombre.includes(busqueda) || rol.includes(busqueda);
       });
     },
   },
@@ -657,7 +661,13 @@ export default {
       axios
         .get("https://labficat.herokuapp.com/api/usuario")
         .then((res) => {
-          this.usuarios = res.data.usuario;
+          this.myLoading=false;
+          for (let i = 0; i < res.data.usuario.length; i++) {
+            const element = res.data.usuario[i];
+            if (element.estado == 1) {
+              this.usuarios.push(element)
+            }
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -785,17 +795,17 @@ export default {
       this.idCotizacionEditar = this.$store.state.cotizacionEditar._id
       this.id = this.$store.state.cotizacionEditar.idCliente._id
       this.person.nombre = this.$store.state.cotizacionEditar.idCliente.nombre,
-      this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento,
-      this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion,
-      this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad,
-      this.person.departamento = this.$store.state.cotizacionEditar.idCliente.ciudad.departamento,
-      this.person.telefono = this.$store.state.cotizacionEditar.idCliente.telefono,
-      this.person.contacto = this.$store.state.cotizacionEditar.idCliente.contacto,
-      this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol,
-      this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto,
-      this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo
+        this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento,
+        this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion,
+        this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad,
+        this.person.departamento = this.$store.state.cotizacionEditar.idCliente.ciudad.departamento,
+        this.person.telefono = this.$store.state.cotizacionEditar.idCliente.telefono,
+        this.person.contacto = this.$store.state.cotizacionEditar.idCliente.contacto,
+        this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol,
+        this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto,
+        this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo
       this.descuento = this.$store.state.cotizacionEditar.descuento
-      this.observacion=this.$store.state.cotizacionEditar.observaciones
+      this.observacion = this.$store.state.cotizacionEditar.observaciones
 
       for (let i = 0; i < this.$store.state.cotizacionEditar.items.item1.itemsEnsayo.length; i++) {
         const element = this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
@@ -845,8 +855,8 @@ export default {
       this.validezOferta = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
       this.entregaResultados = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
       this.descuento = null;
-      this.observacion='',
-      this.item1.itemsEnsayo.splice(0, this.item1.itemsEnsayo.length)
+      this.observacion = '',
+        this.item1.itemsEnsayo.splice(0, this.item1.itemsEnsayo.length)
       this.item2.itemsEnsayo.splice(0, this.item2.itemsEnsayo.length)
       this.item3.itemsEnsayo.splice(0, this.item3.itemsEnsayo.length)
 
