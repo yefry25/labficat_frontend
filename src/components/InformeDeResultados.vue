@@ -48,12 +48,13 @@
       <v-col cols="2" class="text-center">
         <p class="parrafo font-weight-black">
           Código <br />
-          CAT–ST–OC–F–002 <br />
+          {{informe[0].codigo}}
           <br />
-          Aprobación <br />2022-04-01 <br />
+          Aprobación <br /> 
+          {{informe[0].aprobacion}} <br >
           <br />
           Versión <br />
-          2
+          {{informe[0].version}}
         </p>
       </v-col>
     </v-row>
@@ -317,6 +318,7 @@ export default {
     // ValidationObserver,
   },
   data: () => ({
+    informe: "",
     searchh: "",
     busqueda: "",
     dialogCliente: false,
@@ -612,10 +614,23 @@ export default {
           console.log(err);
         });
     },
+    traerCalidad() {
+      axios.post('https://labficat.herokuapp.com/api/calidad/formato', {
+        nombre:'Informe de Resultados'
+      })
+        .then((res) => {
+          console.log(res.data.calidad)
+          this.informe=res.data.calidad
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   },
   created() {
     this.traerClientes();
     this.traerMuestras();
+    this.traerCalidad();
   },
 };
 </script>

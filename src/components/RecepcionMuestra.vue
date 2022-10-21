@@ -20,19 +20,19 @@
           <v-col cols="5" class="justificar px-0 py-0">
             <p class="font-weight-black mb-0" style="border: 1px solid black">
               CÓDIGO <br />
-              CAT–ST–MI–F–002
+              {{formato[0].codigo}}
             </p>
           </v-col>
           <v-col cols="5 px-0 py-0">
             <p class="justificar font-weight-black mb-0" style="border: 1px solid black">
               APROBACIÓN <br />
-              2022-04-01
+              {{formato[0].aprobacion}}
             </p>
           </v-col>
           <v-col cols="2 px-0 py-0">
             <p class="justificar font-weight-black mb-0" style="border: 1px solid black">
               VERSIÓN: <br />
-              2
+              {{formato[0].version}}
             </p>
           </v-col>
         </v-row>
@@ -415,6 +415,7 @@ export default {
       { text: "Rol", value: "rol", sortable: true },
       { text: "Acciones", value: "actions", sortable: false },
     ],
+    formato: "",
     usuarios: [],
     departa: [],
     ciudades: [],
@@ -616,40 +617,42 @@ export default {
     infoMuestraEditar() {
       if (this.$store.state.muestraVer == true) {
         this.mostrarMuestras.push(this.$store.state.muestraEditar)
-      }
-      this.person.id = this.$store.state.muestraEditar.solicitante._id;
-      this.person.nombre = this.$store.state.muestraEditar.solicitante.nombre;
-      this.person.cc = this.$store.state.muestraEditar.solicitante.documento;
-      this.person.direccion = this.$store.state.muestraEditar.solicitante.direccion;
-      this.person.ciudad = this.$store.state.muestraEditar.solicitante.ciudad.Ciudad;
-      this.person.departamento = this.$store.state.muestraEditar.solicitante.ciudad.departamento;
-      this.person.telefono = this.$store.state.muestraEditar.solicitante.telefono;
-      this.person.contacto = this.$store.state.muestraEditar.solicitante.contacto;
-      this.person.correo = this.$store.state.muestraEditar.solicitante.correo;
 
-      axios.post('https://labficat.herokuapp.com/api/cotizacion/cliente',
-        {
-          idCliente: this.person.id
-        })
-        .then((res) => {
-          console.log(res.data.cotizacion);
-          this.cotizacion = res.data.cotizacion
-          console.log(this.cotizacion);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      axios.post('https://labficat.herokuapp.com/api/muestra/cliente',
-        {
-          solicitante: this.person.id
-        })
-        .then((res) => {
-          this.muestrasDelCliente = res.data.muestra
-          console.log(this.muestrasDelCliente);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+        this.person.id = this.$store.state.muestraEditar.solicitante._id;
+        this.person.nombre = this.$store.state.muestraEditar.solicitante.nombre;
+        this.person.cc = this.$store.state.muestraEditar.solicitante.documento;
+        this.person.direccion = this.$store.state.muestraEditar.solicitante.direccion;
+        this.person.ciudad = this.$store.state.muestraEditar.solicitante.ciudad.Ciudad;
+        this.person.departamento = this.$store.state.muestraEditar.solicitante.ciudad.departamento;
+        this.person.telefono = this.$store.state.muestraEditar.solicitante.telefono;
+        this.person.contacto = this.$store.state.muestraEditar.solicitante.contacto;
+        this.person.correo = this.$store.state.muestraEditar.solicitante.correo;
+
+        axios.post('https://labficat.herokuapp.com/api/cotizacion/cliente',
+          {
+            idCliente: this.person.id
+          })
+          .then((res) => {
+            console.log(res.data.cotizacion);
+            this.cotizacion = res.data.cotizacion
+            console.log(this.cotizacion);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        axios.post('https://labficat.herokuapp.com/api/muestra/cliente',
+          {
+            solicitante: this.person.id
+          })
+          .then((res) => {
+            this.muestrasDelCliente = res.data.muestra
+            console.log(this.muestrasDelCliente);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      }
+
     },
     tablaMuestra() {
       this.$swal({
@@ -754,12 +757,25 @@ export default {
         this.editedIndex = -1;
       });
     },
+    traerCalidad() {
+      axios.post('https://labficat.herokuapp.com/api/calidad/formato', {
+        nombre: 'Recepción de Muestras'
+      })
+        .then((res) => {
+          console.log(res.data.calidad)
+          this.formato = res.data.calidad
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   },
   created() {
-    this.traerClientes()
-    this.traerDepartamentos()
-    this.traerTipoMuestras()
-    this.infoMuestraEditar()
+    this.traerClientes();
+    this.traerDepartamentos();
+    this.traerTipoMuestras();
+    this.infoMuestraEditar();
+    this.traerCalidad();
   },
   mounted() {
 

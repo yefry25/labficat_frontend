@@ -4,9 +4,9 @@
       <v-app-bar-nav-icon v-if="this.$store.state.token!=undefined" @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title class="font-weight-black black--text">LABFICAT</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn  class="font-weight-black" icon @click="cerrarSesion">
-        <v-list-item-title class="black--text">Salir</v-list-item-title>
-        <v-icon class="black--text">mdi-logout</v-icon>
+      <v-btn class="font-weight-black" icon @click="cerrarSesion">
+        <!-- <v-list-item-title class="black--text">Salir</v-list-item-title> -->
+        <font-awesome-icon style="font-size:30px; color: black" icon="fa-solid fa-right-from-bracket" />
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary bottom dark expand-on-hover>
@@ -76,18 +76,18 @@ export default {
     }
   },
   methods: {
-    cerrarSesion(){
+    cerrarSesion() {
       this.$router.push('/');
-      this.$store.state.token='';
-      this.$store.state.elaborador='';
-      this.$store.state.cotizacionEditar='';
-      this.$store.state.cotizacionVer=false;
+      this.$store.state.token = '';
+      this.$store.state.elaborador = '';
+      this.$store.state.cotizacionEditar = '';
+      this.$store.state.cotizacionVer = false;
       this.$store.state.token = undefined;
       localStorage.removeItem('token');
     }
   },
   created() {
-    console.log('token: '+this.$store.state.token);
+    console.log('token: ' + this.$store.state.token);
   }
 };
 </script>

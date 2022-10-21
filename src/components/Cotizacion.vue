@@ -20,22 +20,22 @@
       </v-col>
       <v-col cols="2" class="text-center">
         <h3 class="mt-0 font-weight-black">cotización No.</h3>
-        <h2 class="mt-2 red--text">xxxxx</h2>
+        <h2 class="mt-2 red--text">{{numeroCotizacion}}</h2>
         <h3 class="mt-2 font-weight-black">fecha de emisión:</h3>
         <h2 class="mt-2 red--text">{{this.fechaEmision}}</h2>
       </v-col>
       <v-col cols="2" class="codigo font-weight-black">
         <p>
           Código <br />
-          CAT–ST–OC–F–002
+          {{formato[0].codigo}}
         </p>
         <p>
           Aprobación <br />
-          2021-08-30
+          {{formato[0].aprobacion}}
         </p>
         <p>
           Versión <br />
-          1
+          {{formato[0].version}}
         </p>
       </v-col>
     </v-row>
@@ -64,10 +64,99 @@
                           Usuarios
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
-                          <v-text-field label="Buscar por nombre o por rol" v-model="busqueda" single-line hide-details></v-text-field>
+                          <v-text-field label="Buscar por nombre o por rol" v-model="busqueda" single-line hide-details>
+                          </v-text-field>
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
-                          <v-btn>Agregar usuario</v-btn>
+                          <v-dialog v-model="dialogUser" max-width="1000px" persistent>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-btn class="primary" v-bind="attrs" v-on="on" @click="traerDepartamentos">Agregar
+                                usuario</v-btn>
+                            </template>
+                            <v-card outlined>
+                              <v-card-title>
+                                <v-hover v-slot="{ hover }">
+                                  <v-btn icon @click="close" :style="{color:hover ? 'red' :''}">
+                                    <font-awesome-icon style="fontSize:20px" icon="fa-solid fa-xmark" />
+                                  </v-btn>
+                                </v-hover>
+                                Formulario registro de usuarios
+                              </v-card-title>
+                              <validation-observer ref="observer" v-slot="{ invalid }">
+                                <form @submit.prevent="submit" class="py-7 px-7">
+                                  <validation-provider v-slot="{ errors }" name="tipo de persona" rules="required">
+                                    <v-select v-model="select" :items="items" :error-messages="errors" outlined
+                                      label="Tipo de persona" data-vv-name="tipo de persona" required></v-select>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="nombre" rules="required">
+                                    <v-text-field v-model="nombre" :error-messages="errors" label="Nombre" outlined
+                                      required></v-text-field>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="documento" rules="required">
+                                    <v-text-field v-model="documento" :error-messages="errors" label="Documento"
+                                      outlined required></v-text-field>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="dirección" rules="required">
+                                    <v-text-field v-model="direccion" :error-messages="errors" label="Dirección"
+                                      outlined required></v-text-field>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="departamento" rules="required">
+                                    <v-select v-model="departamento" :items="departa" item-text="departamento"
+                                      item-key="departa" item-value="_id" :error-messages="errors" outlined
+                                      label="Departamento" data-vv-name="departamento" @change="traerCiudades(departa)"
+                                      required></v-select>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="ciudad" rules="required">
+                                    <v-select v-model="ciudad" :items="ciudades" item-text="Ciudad" item-key="ciudades"
+                                      item-value="_id" :error-messages="errors" outlined label="Cuidad"
+                                      data-vv-name="ciudad" required></v-select>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="contacto" rules="required">
+                                    <v-text-field v-model="contacto" :error-messages="errors" label="Contacto" outlined
+                                      required></v-text-field>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="teléfono del contacto"
+                                    rules="required">
+                                    <v-text-field v-model="celularContacto" :error-messages="errors"
+                                      label="Telefono contacto" outlined required></v-text-field>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="teléfono" rules="required">
+                                    <v-text-field v-model="telefono" :error-messages="errors" label="Teléfono" outlined
+                                      required></v-text-field>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
+                                    <v-text-field v-model="email" :error-messages="errors" label="E-mail"
+                                      prepend-icon='mdi-email' outlined required></v-text-field>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="contraseña" vid="password"
+                                    :rules="{required:true , min:8 }">
+                                    <v-text-field v-model="password" :error-messages="errors" label="Contraseña"
+                                      type="password" outlined prepend-icon='mdi-lock' required></v-text-field>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="confirmar contraseña"
+                                    rules='required|confirmed:password'>
+                                    <v-text-field v-model="confirmation" :error-messages="errors"
+                                      label="confirmar contraseña" outlined type="password" required></v-text-field>
+                                  </validation-provider>
+                                  <validation-provider v-slot="{ errors }" name="rol" rules="required">
+                                    <v-select v-model="roll" :items="roles" :error-messages="errors" outlined
+                                      label="Roles" data-vv-name="roles" required></v-select>
+                                  </validation-provider>
+                                  <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block
+                                    @click="registrar">
+                                    Registrar
+                                  </v-btn>
+                                </form>
+                              </validation-observer>
+                              <v-card-actions>
+                                <v-hover v-slot="{ hover }">
+                                  <v-btn class="ml-5" text @click="close" :style="{background:hover ? 'red' :''}">
+                                    Cerrar
+                                  </v-btn>
+                                </v-hover>
+                              </v-card-actions>
+                            </v-card>
+                          </v-dialog>
                         </v-card-title>
                         <v-data-table :headers="headers" :items="buscar" :loading="myLoading"
                           loading-text="Cargando... Por favor espera">
@@ -177,21 +266,11 @@
                   <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
                   </v-text-field>
                 </v-card-title>
-                <v-data-table :headers="encabezadoEnsayo" :items="ensayos" :search="search" item-key="ensayos">
+                <v-data-table :headers="encabezadoEnsayo" :items="ensayos1" :search="search" item-key="ensayos">
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="ensayoCotizacion(item)" icon>
                       <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
                     </v-btn>
-                  </template>
-                  <template v-slot:footer>
-                    <v-card class="d-flex justify-end">
-                      <tr>
-                        <td>
-                          <v-text-field class=" mr-2" v-model="limiteCuantificacion" type="number"
-                            label="Limite cuantificación"></v-text-field>
-                        </td>
-                      </tr>
-                    </v-card>
                   </template>
                 </v-data-table>
                 <v-card-actions>
@@ -238,7 +317,7 @@
                   <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
                   </v-text-field>
                 </v-card-title>
-                <v-data-table :headers="encabezadoEnsayo" :items="ensayos" :search="search" item-key="ensayos">
+                <v-data-table :headers="encabezadoEnsayo" :items="ensayos2" :search="search" item-key="ensayos">
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="ensayoCotizacion2(item)" icon>
                       <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
@@ -289,7 +368,7 @@
                   <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
                   </v-text-field>
                 </v-card-title>
-                <v-data-table :headers="encabezadoEnsayo" :items="ensayos" :search="search" item-key="ensayos">
+                <v-data-table :headers="encabezadoEnsayo" :items="ensayos3" :search="search" item-key="ensayos">
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="ensayoCotizacion3(item)" icon>
                       <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
@@ -511,12 +590,36 @@
 
 <script>
 import axios from "axios";
+import { required, email, min, confirmed } from 'vee-validate/dist/rules'
+import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+setInteractionMode('eager')
+extend('required', {
+  ...required,
+  message: '{_field_} no puede estar vacio',
+})
+extend('email', {
+  ...email,
+  message: 'Email must be valid',
+})
+extend('min', {
+  ...min,
+  message: 'El campo {_field_} debe tener {length} caracteres o más'
+})
+extend('confirmed', {
+  ...confirmed,
+  message: 'El campo {_field_} debe coincidir con contraseña'
+})
 export default {
   name: "PageCotizacion",
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   data() {
     return {
+      formato: '',
       search: "",
-      myLoading:true,
+      myLoading: true,
       dialogo: false,
       encabezado: [
         {
@@ -569,7 +672,9 @@ export default {
         { text: "Rol", value: "rol", sortable: false },
         { text: "Acciones", value: "actions", sortable: false },
       ],
-      ensayos: [],
+      ensayos1: [],
+      ensayos2: [],
+      ensayos3: [],
       encabezadoEnsayo: [
         {
           text: "Fecha de Analisis",
@@ -640,9 +745,41 @@ export default {
         { text: "Estado", value: "estado", sortable: false },
         { text: "Acciones", value: "actions", sortable: false },
       ],
+      numeroCotizacion: 'XXXX-XXXXVX',
       cotizaciones: [],
       idCotizacionEditar: '',
       dialogCotizacion: false,
+
+
+      /* variables del registro de usuario */
+      dialogUser: false,
+      select: null,
+      nombre: '',
+      documento: '',
+      direccion: '',
+      departamento: '',
+      ciudad: '',
+      contacto: '',
+      celularContacto: '',
+      telefono: '',
+      email: '',
+      password: '',
+      confirmation: '',
+      roll: '',
+      items: [
+        'Natural',
+        'Jurídica'
+      ],
+      roles: [
+        'cliente',
+        'secretario',
+        'administrador',
+        'director',
+        'especialista',
+        'supervisor'
+      ],
+      departa: [],
+      ciudades: []
     }
   },
   computed: {
@@ -661,7 +798,7 @@ export default {
       axios
         .get("https://labficat.herokuapp.com/api/usuario")
         .then((res) => {
-          this.myLoading=false;
+          this.myLoading = false;
           for (let i = 0; i < res.data.usuario.length; i++) {
             const element = res.data.usuario[i];
             if (element.estado == 1) {
@@ -729,30 +866,52 @@ export default {
     },
     ensayoCotizacion(ensayo) {
       console.log(ensayo);
-      this.primerItem.push(ensayo);
-      this.item1.itemsEnsayo.push({
-        ensayo: ensayo._id,
-        limiteCuantificacion: ensayo.limiteCuantificacion,
-        costoEnsayo: ensayo.costo
-      })
+      let isEnsayo = null;
+      isEnsayo = this.primerItem.find(e =>
+        e._id == ensayo._id)
+      console.log(isEnsayo);
+      if (isEnsayo == undefined) {
+        this.primerItem.push(ensayo);
+        this.item1.itemsEnsayo.push({
+          ensayo: ensayo._id,
+          limiteCuantificacion: ensayo.limiteCuantificacion,
+          costoEnsayo: ensayo.costo
+        })
+      } else {
+        alert('Ya existe el ensayo')
+      }
+      this.ensayos2.splice(ensayo, 1)
       console.log(this.item1);
     },
     ensayoCotizacion2(ensayo) {
-      this.segundoItem.push(ensayo);
-      this.item2.itemsEnsayo.push({
-        ensayo: ensayo._id,
-        limiteCuantificacion: ensayo.limiteCuantificacion,
-        costoEnsayo: ensayo.costo
-      })
+      let isEnsayo = null;
+      isEnsayo = this.segundoItem.find(e =>
+        e._id == ensayo._id)
+      if (isEnsayo == undefined) {
+        this.segundoItem.push(ensayo);
+        this.item2.itemsEnsayo.push({
+          ensayo: ensayo._id,
+          limiteCuantificacion: ensayo.limiteCuantificacion,
+          costoEnsayo: ensayo.costo
+        })
+      }
+      this.ensayos3.splice(ensayo, 1)
       console.log(this.item2);
     },
     ensayoCotizacion3(ensayo) {
-      this.tercerItem.push(ensayo);
-      this.item3.itemsEnsayo.push({
-        ensayo: ensayo._id,
-        limiteCuantificacion: ensayo.limiteCuantificacion,
-        costoEnsayo: ensayo.costo
-      })
+      let isEnsayo = null;
+      isEnsayo = this.tercerItem.find(e =>
+        e._id == ensayo._id)
+      if (isEnsayo == undefined) {
+        this.tercerItem.push(ensayo);
+        this.item3.itemsEnsayo.push({
+          ensayo: ensayo._id,
+          limiteCuantificacion: ensayo.limiteCuantificacion,
+          costoEnsayo: ensayo.costo
+        })
+      }
+
+      this.ensayos3.splice(ensayo, 1)
       console.log(this.item3);
     },
     cotizacion() {
@@ -788,13 +947,14 @@ export default {
         })
     },
     infoCotizacionEditar() {
-      this.item1.itemsEnsayo = this.$store.state.cotizacionEditar.items.item1.itemsEnsayo;
-      this.item2.itemsEnsayo = this.$store.state.cotizacionEditar.items.item2.itemsEnsayo;
-      this.item3.itemsEnsayo = this.$store.state.cotizacionEditar.items.item3.itemsEnsayo;
+      if (this.$store.state.cotizacionVer != false) {
+        this.item1.itemsEnsayo = this.$store.state.cotizacionEditar.items.item1.itemsEnsayo;
+        this.item2.itemsEnsayo = this.$store.state.cotizacionEditar.items.item2.itemsEnsayo;
+        this.item3.itemsEnsayo = this.$store.state.cotizacionEditar.items.item3.itemsEnsayo;
 
-      this.idCotizacionEditar = this.$store.state.cotizacionEditar._id
-      this.id = this.$store.state.cotizacionEditar.idCliente._id
-      this.person.nombre = this.$store.state.cotizacionEditar.idCliente.nombre,
+        this.idCotizacionEditar = this.$store.state.cotizacionEditar._id
+        this.id = this.$store.state.cotizacionEditar.idCliente._id
+        this.person.nombre = this.$store.state.cotizacionEditar.idCliente.nombre,
         this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento,
         this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion,
         this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad,
@@ -804,44 +964,52 @@ export default {
         this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol,
         this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto,
         this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo
-      this.descuento = this.$store.state.cotizacionEditar.descuento
-      this.observacion = this.$store.state.cotizacionEditar.observaciones
+        this.descuento = this.$store.state.cotizacionEditar.descuento
+        this.observacion = this.$store.state.cotizacionEditar.observaciones
+        this.numeroCotizacion = this.$store.state.cotizacionEditar.numCotizacion
 
-      for (let i = 0; i < this.$store.state.cotizacionEditar.items.item1.itemsEnsayo.length; i++) {
-        const element = this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
-        this.primerItem.push(element.ensayo);
-      }
+        for (let i = 0; i < this.$store.state.cotizacionEditar.items.item1.itemsEnsayo.length; i++) {
+          const element = this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
+          this.primerItem.push(element.ensayo);
+        }
 
-      for (let i = 0; i < this.$store.state.cotizacionEditar.items.item2.itemsEnsayo.length; i++) {
-        const element = this.$store.state.cotizacionEditar.items.item2.itemsEnsayo[i];
-        this.segundoItem.push(element.ensayo);
-      }
+        for (let i = 0; i < this.$store.state.cotizacionEditar.items.item2.itemsEnsayo.length; i++) {
+          const element = this.$store.state.cotizacionEditar.items.item2.itemsEnsayo[i];
+          this.segundoItem.push(element.ensayo);
+        }
 
-      for (let i = 0; i < this.$store.state.cotizacionEditar.items.item3.itemsEnsayo.length; i++) {
-        const element = this.$store.state.cotizacionEditar.items.item3.itemsEnsayo[i];
-        this.tercerItem.push(element.ensayo);
+        for (let i = 0; i < this.$store.state.cotizacionEditar.items.item3.itemsEnsayo.length; i++) {
+          const element = this.$store.state.cotizacionEditar.items.item3.itemsEnsayo[i];
+          this.tercerItem.push(element.ensayo);
+        }
       }
     },
     eliminarCotizacion1(cotizacion) {
       this.primerItem.splice(cotizacion, 1)
       this.item1.itemsEnsayo.splice(cotizacion, 1)
+      this.ensayos1.push(cotizacion)
       console.log(this.item1);
     },
     eliminarCotizacion2(cotizacion) {
       this.segundoItem.splice(cotizacion, 1)
       this.item2.itemsEnsayo.splice(cotizacion, 1)
+      this.ensayos2.push(cotizacion)
       console.log(this.item2);
     },
     eliminarCotizacion3(cotizacion) {
       this.tercerItem.splice(cotizacion, 1)
       this.item3.itemsEnsayo.splice(cotizacion, 1)
+      this.ensayos3.push(cotizacion)
       console.log(this.item3);
     },
     traerEnsayos() {
       axios
         .get("https://labficat.herokuapp.com/api/ensayo")
         .then((res) => {
-          this.ensayos = res.data.ensayos;
+          this.ensayos1 = res.data.ensayos;
+          this.ensayos2 = res.data.ensayos;
+          this.ensayos3 = res.data.ensayos;
+
         })
         .catch((err) => {
           console.log(err);
@@ -876,18 +1044,89 @@ export default {
       this.dialogItem2 = false;
       this.dialogItem3 = false;
       this.dialogCotizacion = false;
+      this.dialogUser = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
     },
+
+    /* metodos para el registro de una persona */
+
+    traerDepartamentos() {
+      axios.get('https://labficat.herokuapp.com/api/ciudad/departamentos')
+        .then((response) => {
+          console.log(response.data.departamentos);
+          this.departa = response.data.departamentos
+          console.log(this.departa);
+          console.log('hola');
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    traerCiudades(ciudad) {
+      console.log(ciudad);
+      axios.post('https://labficat.herokuapp.com/api/ciudad/nombreDepartamento', { departamento: this.departamento })
+        .then((response) => {
+          console.log(response.data.ciudades);
+          this.ciudades = response.data.ciudades
+          console.log(this.ciudades);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    registrar() {
+      axios.post('https://labficat.herokuapp.com/api/usuario', {
+        tipoPersona: this.select,
+        nombre: this.nombre,
+        documento: this.documento,
+        direccion: this.direccion,
+        ciudad: this.ciudad,
+        contacto: this.contacto,
+        celularContacto: this.celularContacto,
+        telefono: this.telefono,
+        correo: this.email,
+        password: this.password,
+        rol: this.roll
+      })
+        .then((res) => {
+          console.log(res.data);
+          this.$swal({
+            icon: "success",
+            title: "Registro exitoso",
+            text: `${res.data.usuario.nombre} registrado exitosamente`,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$swal({
+            icon: "error",
+            title: "Error al registrar el usuario",
+          });
+        })
+    },
+    traerCalidad() {
+      axios.post('https://labficat.herokuapp.com/api/calidad/formato', {
+        nombre: 'Oferta de Servicios'
+      })
+        .then((res) => {
+          console.log(res.data.calidad)
+          this.formato = res.data.calidad
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   },
   created() {
     this.traerClientes();
     this.traerEnsayos();
-    this.traerCotizaciones()
-    this.infoCotizacionEditar()
-  }
+    this.traerCotizaciones();
+    this.infoCotizacionEditar();
+    this.traerCalidad();
+  },
 }
 </script>
 <style scoped>
