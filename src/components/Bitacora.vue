@@ -2,9 +2,17 @@
   <v-container fluid>
     <v-row>
       <v-col>
-        <v-data-table :headers="encabezadoBitacora" :items="bitacora" :loading="myLoading"
-          loading-text="Cargando... Por favor espera">
-        </v-data-table>
+        <v-card>
+          <v-card-actions>
+            <h2>Bitacora</h2>
+          </v-card-actions>
+          <v-data-table :headers="encabezadoBitacora" :items="bitacora" :loading="myLoading"
+            loading-text="Cargando... Por favor espera">
+            <template v-slot:[`item.createdAt`]="{ item }">
+              <span>{{ fecha(item.createdAt) }}</span>
+            </template>
+          </v-data-table>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -21,9 +29,10 @@ export default {
           text: "Usuario",
           align: "start",
           sortable: false,
-          value: "usuario",
+          value: "usuario.nombre",
         },
         { text: "Mensaje", value: "mensaje", sortable: false },
+        { text: "Fecha y hora", value: "createdAt", sortable: true },
       ],
       bitacora: []
     }
@@ -38,8 +47,14 @@ export default {
         .catch((err) => {
           console.log(err);
         })
+    },
+    fecha(r) {
+      let d = new Date(r);
+      console.log();
+      return d.toLocaleDateString() + ' ' + '-' + ' ' + d.toLocaleTimeString()
     }
   },
+
   created() {
     this.traerBitacora()
   }

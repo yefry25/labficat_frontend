@@ -188,8 +188,5 @@ export default {
     created() {
         this.traerDepartamentos()
     },
-    mounted() {
-
-    }
 }
 </script>

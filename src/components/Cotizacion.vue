@@ -253,7 +253,7 @@
             <v-spacer></v-spacer>
             <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialog" max-width="1000px">
+            <v-dialog v-model="dialog" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                   Nuevo Item
@@ -304,7 +304,7 @@
             <v-spacer></v-spacer>
             <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialogItem2" max-width="1000px">
+            <v-dialog v-model="dialogItem2" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                   Nuevo Item
@@ -355,7 +355,7 @@
             <v-spacer></v-spacer>
             <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialogItem3" max-width="1000px">
+            <v-dialog v-model="dialogItem3" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                   Nuevo Item
@@ -865,12 +865,16 @@ export default {
         })
     },
     ensayoCotizacion(ensayo) {
-      console.log(ensayo);
-      let isEnsayo = null;
-      isEnsayo = this.primerItem.find(e =>
+      let isEnsayo1 = null;
+      let isEnsayo2 = null;
+      let isEnsayo3 = null;
+      isEnsayo1 = this.primerItem.find(e =>
         e._id == ensayo._id)
-      console.log(isEnsayo);
-      if (isEnsayo == undefined) {
+      isEnsayo2 = this.segundoItem.find(e =>
+        e._id == ensayo._id)
+      isEnsayo3 = this.tercerItem.find(e =>
+        e._id == ensayo._id)
+      if (isEnsayo1 == undefined && isEnsayo2 == undefined && isEnsayo3 == undefined) {
         this.primerItem.push(ensayo);
         this.item1.itemsEnsayo.push({
           ensayo: ensayo._id,
@@ -878,41 +882,59 @@ export default {
           costoEnsayo: ensayo.costo
         })
       } else {
-        alert('Ya existe el ensayo')
+        this.$swal({
+          icon: "error",
+          title: "No se puede agregar un ensayo que ya has seleccionado",
+        });
       }
-      this.ensayos2.splice(ensayo, 1)
-      console.log(this.item1);
     },
     ensayoCotizacion2(ensayo) {
-      let isEnsayo = null;
-      isEnsayo = this.segundoItem.find(e =>
+      let isEnsayo1 = null;
+      let isEnsayo2 = null;
+      let isEnsayo3 = null;
+      isEnsayo1 = this.primerItem.find(e =>
         e._id == ensayo._id)
-      if (isEnsayo == undefined) {
+      isEnsayo2 = this.segundoItem.find(e =>
+        e._id == ensayo._id)
+      isEnsayo3 = this.tercerItem.find(e =>
+        e._id == ensayo._id)
+      if (isEnsayo1 == undefined && isEnsayo2 == undefined && isEnsayo3 == undefined) {
         this.segundoItem.push(ensayo);
         this.item2.itemsEnsayo.push({
           ensayo: ensayo._id,
           limiteCuantificacion: ensayo.limiteCuantificacion,
           costoEnsayo: ensayo.costo
         })
+      } else {
+        this.$swal({
+          icon: "error",
+          title: "No se puede agregar un ensayo que ya has seleccionado",
+        });
       }
-      this.ensayos3.splice(ensayo, 1)
-      console.log(this.item2);
     },
     ensayoCotizacion3(ensayo) {
-      let isEnsayo = null;
-      isEnsayo = this.tercerItem.find(e =>
+      let isEnsayo1 = null;
+      let isEnsayo2 = null;
+      let isEnsayo3 = null;
+      isEnsayo1 = this.primerItem.find(e =>
         e._id == ensayo._id)
-      if (isEnsayo == undefined) {
+      isEnsayo2 = this.segundoItem.find(e =>
+        e._id == ensayo._id)
+      isEnsayo3 = this.tercerItem.find(e =>
+        e._id == ensayo._id)
+      if (isEnsayo1 == undefined && isEnsayo2 == undefined && isEnsayo3 == undefined) {
         this.tercerItem.push(ensayo);
         this.item3.itemsEnsayo.push({
           ensayo: ensayo._id,
           limiteCuantificacion: ensayo.limiteCuantificacion,
           costoEnsayo: ensayo.costo
         })
+      } else {
+        this.$swal({
+          icon: "error",
+          title: "No se puede agregar un ensayo que ya has seleccionado",
+        });
       }
-
-      this.ensayos3.splice(ensayo, 1)
-      console.log(this.item3);
     },
     cotizacion() {
       axios.post('https://labficat.herokuapp.com/api/cotizacion', {
@@ -955,15 +977,15 @@ export default {
         this.idCotizacionEditar = this.$store.state.cotizacionEditar._id
         this.id = this.$store.state.cotizacionEditar.idCliente._id
         this.person.nombre = this.$store.state.cotizacionEditar.idCliente.nombre,
-        this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento,
-        this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion,
-        this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad,
-        this.person.departamento = this.$store.state.cotizacionEditar.idCliente.ciudad.departamento,
-        this.person.telefono = this.$store.state.cotizacionEditar.idCliente.telefono,
-        this.person.contacto = this.$store.state.cotizacionEditar.idCliente.contacto,
-        this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol,
-        this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto,
-        this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo
+          this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento,
+          this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion,
+          this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad,
+          this.person.departamento = this.$store.state.cotizacionEditar.idCliente.ciudad.departamento,
+          this.person.telefono = this.$store.state.cotizacionEditar.idCliente.telefono,
+          this.person.contacto = this.$store.state.cotizacionEditar.idCliente.contacto,
+          this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol,
+          this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto,
+          this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo
         this.descuento = this.$store.state.cotizacionEditar.descuento
         this.observacion = this.$store.state.cotizacionEditar.observaciones
         this.numeroCotizacion = this.$store.state.cotizacionEditar.numCotizacion
@@ -987,19 +1009,19 @@ export default {
     eliminarCotizacion1(cotizacion) {
       this.primerItem.splice(cotizacion, 1)
       this.item1.itemsEnsayo.splice(cotizacion, 1)
-      this.ensayos1.push(cotizacion)
+      
       console.log(this.item1);
     },
     eliminarCotizacion2(cotizacion) {
       this.segundoItem.splice(cotizacion, 1)
       this.item2.itemsEnsayo.splice(cotizacion, 1)
-      this.ensayos2.push(cotizacion)
+      
       console.log(this.item2);
     },
     eliminarCotizacion3(cotizacion) {
       this.tercerItem.splice(cotizacion, 1)
       this.item3.itemsEnsayo.splice(cotizacion, 1)
-      this.ensayos3.push(cotizacion)
+     
       console.log(this.item3);
     },
     traerEnsayos() {
@@ -1127,6 +1149,10 @@ export default {
     this.infoCotizacionEditar();
     this.traerCalidad();
   },
+  destroyed() {
+    this.vaciarInformacion()
+    console.log('hola');
+  }
 }
 </script>
 <style scoped>

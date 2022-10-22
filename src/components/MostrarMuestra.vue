@@ -72,7 +72,7 @@ export default {
         },
         { text: "Dirección de toma de muestra", value: "direccionTomaMuestra" },
         { text: "Lugar de toma de muestra", value: "lugarTomaMuestra" },
-        { text: "Fecha y hora de recolección", value: "fechaRecoleccion" },
+        { text: "Fecha de recolección", value: "fechaRecoleccion" },
         { text: "Cotización", value: "cotizacion.numCotizacion" },
         { text: "Estado", value: "estado" },
         { text: "Acciones", value: "actions" },
@@ -155,9 +155,7 @@ export default {
       }
     },
     fecha(r) {
-
       let fecha = r.split('T')[0].replace(/-/g, "/")
-
       console.log(fecha);
       let d = new Date(r);
       return d.toLocaleDateString();
