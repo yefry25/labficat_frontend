@@ -20,22 +20,22 @@
       </v-col>
       <v-col cols="2" class="text-center">
         <h3 class="mt-0 font-weight-black">cotización No.</h3>
-        <h2 class="mt-2 red--text">{{numeroCotizacion}}</h2>
+        <h2 class="mt-2 red--text">{{ numeroCotizacion }}</h2>
         <h3 class="mt-2 font-weight-black">fecha de emisión:</h3>
-        <h2 class="mt-2 red--text">{{this.fechaEmision}}</h2>
+        <h2 class="mt-2 red--text">{{ this.fechaEmision }}</h2>
       </v-col>
       <v-col cols="2" class="codigo font-weight-black">
         <p>
           Código <br />
-          {{formato[0].codigo}}
+          {{ formato[0].codigo }}
         </p>
         <p>
           Aprobación <br />
-          {{formato[0].aprobacion}}
+          {{ formato[0].aprobacion }}
         </p>
         <p>
           Versión <br />
-          {{formato[0].version}}
+          {{ formato[0].version }}
         </p>
       </v-col>
     </v-row>
@@ -76,7 +76,7 @@
                             <v-card outlined>
                               <v-card-title>
                                 <v-hover v-slot="{ hover }">
-                                  <v-btn icon @click="close" :style="{color:hover ? 'red' :''}">
+                                  <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
                                     <font-awesome-icon style="fontSize:20px" icon="fa-solid fa-xmark" />
                                   </v-btn>
                                 </v-hover>
@@ -129,7 +129,7 @@
                                       prepend-icon='mdi-email' outlined required></v-text-field>
                                   </validation-provider>
                                   <validation-provider v-slot="{ errors }" name="contraseña" vid="password"
-                                    :rules="{required:true , min:8 }">
+                                    :rules="{ required: true, min: 8 }">
                                     <v-text-field v-model="password" :error-messages="errors" label="Contraseña"
                                       type="password" outlined prepend-icon='mdi-lock' required></v-text-field>
                                   </validation-provider>
@@ -150,7 +150,7 @@
                               </validation-observer>
                               <v-card-actions>
                                 <v-hover v-slot="{ hover }">
-                                  <v-btn class="ml-5" text @click="close" :style="{background:hover ? 'red' :''}">
+                                  <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
                                     Cerrar
                                   </v-btn>
                                 </v-hover>
@@ -393,7 +393,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-btn class="ml-4 my-6 primary" @click="cotizacion" v-if="this.$store.state.cotizacionVer==false">
+      <v-btn class="ml-4 my-6 primary" @click="cotizacion" v-if="this.$store.state.cotizacionVer == false">
         subir cotización
       </v-btn>
       <v-btn class="ml-4 my-6" @click="modificarCotizacion" v-else>
@@ -795,20 +795,21 @@ export default {
   },
   methods: {
     traerClientes() {
+      
       axios
-        .get("https://labficat.herokuapp.com/api/usuario")
-        .then((res) => {
-          this.myLoading = false;
-          for (let i = 0; i < res.data.usuario.length; i++) {
-            const element = res.data.usuario[i];
-            if (element.estado == 1) {
-              this.usuarios.push(element)
+          .get("https://labficat.herokuapp.com/api/usuario")
+          .then((res) => {
+            this.myLoading = false;
+            for (let i = 0; i < res.data.usuario.length; i++) {
+              const element = res.data.usuario[i];
+              if (element.estado == 1) {
+                this.usuarios.push(element)
+              }
             }
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          })
+          .catch((err) => {
+            console.log(err);
+          });          
     },
     traerCotizaciones() {
       axios.get('https://labficat.herokuapp.com/api/cotizacion')
@@ -1009,19 +1010,19 @@ export default {
     eliminarCotizacion1(cotizacion) {
       this.primerItem.splice(cotizacion, 1)
       this.item1.itemsEnsayo.splice(cotizacion, 1)
-      
+
       console.log(this.item1);
     },
     eliminarCotizacion2(cotizacion) {
       this.segundoItem.splice(cotizacion, 1)
       this.item2.itemsEnsayo.splice(cotizacion, 1)
-      
+
       console.log(this.item2);
     },
     eliminarCotizacion3(cotizacion) {
       this.tercerItem.splice(cotizacion, 1)
       this.item3.itemsEnsayo.splice(cotizacion, 1)
-     
+
       console.log(this.item3);
     },
     traerEnsayos() {

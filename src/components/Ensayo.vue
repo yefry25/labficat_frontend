@@ -3,6 +3,9 @@
     <v-row>
       <v-col>
         <v-card class="rounded-xl rounded-bl-0" outlined>
+          <v-card-actions>
+            <h2>Formulario de ensayos</h2>
+          </v-card-actions>
           <validation-observer ref="observer" v-slot="{ invalid }">
             <form @submit.prevent="submit" class="py-7 px-7">
               <validation-provider v-slot="{ errors }" name="ensayo" rules="required">
@@ -16,6 +19,21 @@
                 <v-text-field v-model="tecnica" :error-messages="errors" label="Técnica" type="text" outlined required>
                 </v-text-field>
               </validation-provider>
+              <validation-provider v-slot="{ errors }" name="valor mínimo" rules="required">
+                <v-text-field v-model="valorMinimo" :error-messages="errors" label="Valor Mínimo" type="number" outlined
+                  required>
+                </v-text-field>
+              </validation-provider>
+              <validation-provider v-slot="{ errors }" name="valor maximo" rules="required">
+                <v-text-field v-model="valorMaximo" :error-messages="errors" label="Valor Máximo" type="number" outlined
+                  required>
+                </v-text-field>
+              </validation-provider>
+              <validation-provider v-slot="{ errors }" name="unidades" rules="required">
+                <v-text-field v-model="unidades" :error-messages="errors" label="Unidades" type="number" outlined
+                  required>
+                </v-text-field>
+              </validation-provider>
               <validation-provider v-slot="{ errors }" name="costo" rules="required">
                 <v-text-field v-model="costo" :error-messages="errors" label="Costo" type="number" outlined required>
                 </v-text-field>
@@ -25,14 +43,13 @@
                 </v-text-field>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="limite cuantificación" rules="required">
-                <v-text-field v-model="limiteCuantificacion" :error-messages="errors" type="number" label="Límite cuantificación"
-                  outlined required>
+                <v-text-field v-model="limiteCuantificacion" :error-messages="errors" type="number"
+                  label="Límite cuantificación" outlined required>
                 </v-text-field>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="titular" rules="required">
                 <v-autocomplete v-model="responsables.titular" :error-messages="errors" :items="usuarios"
                   item-text="nombre" item-value="._id" dense filled label="Titular"></v-autocomplete>
-
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="suplente" rules="required">
                 <v-autocomplete v-model="responsables.suplente" :error-messages="errors" :items="usuarios"
@@ -81,6 +98,9 @@ export default {
       ensayo: '',
       metodo: '',
       tecnica: '',
+      valorMinimo: null,
+      valorMaximo: null,
+      unidades: null,
       costo: null,
       descripcion: '',
       limiteCuantificacion: '',
@@ -92,14 +112,15 @@ export default {
     }
   },
   methods: {
-    
+
     ingresarEnsayo() {
-      console.log(this.responsables.titular);
-      console.log(this.responsables.suplente);
       axios.post('https://labficat.herokuapp.com/api/ensayo', {
         ensayo: this.ensayo,
         metodo: this.metodo,
         tecnica: this.tecnica,
+        valorMinimo: this.valorMinimo,
+        valorMaximo: this.valorMaximo,
+        unidades: this.unidades,
         costo: this.costo,
         descripcion: this.descripcion,
         limiteCuantificacion: this.limiteCuantificacion,

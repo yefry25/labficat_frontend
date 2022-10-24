@@ -5,7 +5,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     token: localStorage.token,
-    elaborador: {},
+    elaborador: JSON.parse(localStorage.getItem("elaborador")),
     cotizacionEditar: {},
     cotizacionVer: false,
     muestraEditar: {},
@@ -16,12 +16,16 @@ export const store = new Vuex.Store({
       localStorage.token = value;
       if (localStorage.token) {
         state.token = localStorage.token;
-      }else{
-        state.token = value
+      } else {
+        state.token = value;
       }
     },
     setElaborador(state, value) {
-      state.elaborador = value;
+      localStorage.setItem("elaborador", JSON.stringify(value));
+      let l = JSON.parse(localStorage.getItem("elaborador"));
+      if (l) {
+        state.elaborador = l;
+      }
     },
     setCotizacionEditar(state, value) {
       state.cotizacionEditar = value;

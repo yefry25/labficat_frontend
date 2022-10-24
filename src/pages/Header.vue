@@ -84,6 +84,7 @@ export default {
       this.$store.state.cotizacionVer = false;
       this.$store.state.token = undefined;
       localStorage.removeItem('token');
+      localStorage.removeItem('elaborador');
     }
   },
   created() {

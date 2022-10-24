@@ -13,6 +13,8 @@ import mostrarCotizacion from '../components/MostrarCotizacion.vue'
 import mostrarMuestra from '../components/MostrarMuestra.vue'
 import ordenServicio from '../components/OrdenDeServicios.vue'
 import mostrarUsuario from '../components/MostrarUsuario.vue'
+import mostrarEnsayo from '../components/MostrarEnsayos.vue'
+import lismamu from '../components/LisMaMu.vue'
 
 export const routes = [
     {path: '/inicio', component: inicio},
@@ -29,5 +31,7 @@ export const routes = [
     {path: '/mostrarCotizacion', component: mostrarCotizacion},
     {path: '/mostrarMuestra', component: mostrarMuestra},
     {path:'/ordenServicio', component: ordenServicio},
-    {path:'/mostrarUsuarios',component: mostrarUsuario}
+    {path:'/mostrarUsuarios',component: mostrarUsuario},
+    {path:'/mostrarEnsayos',component: mostrarEnsayo},
+    {path:'/lismamu' , component: lismamu}
 ]

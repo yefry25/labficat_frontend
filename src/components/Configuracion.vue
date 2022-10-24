@@ -47,7 +47,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-card-actions class="boton">
-            <v-btn class="primary" to="ensayo" outlined rounded text>
+            <v-btn class="primary" to="mostrarEnsayos" outlined rounded text>
               INGRESAR
             </v-btn>
           </v-card-actions>
