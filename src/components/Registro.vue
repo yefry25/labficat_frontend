@@ -4,7 +4,7 @@
             <v-col cols="8">
                 <v-card class="rounded-xl rounded-bl-0" outlined>
                     <validation-observer ref="observer" v-slot="{ invalid }">
-                        <form @submit.prevent="registrar" class="py-7 px-7">
+                        <form @submit.prevent="submit" class="py-7 px-7">
                             <validation-provider v-slot="{ errors }" name="tipo de persona" rules="required">
                                 <v-select v-model="select" :items="items" :error-messages="errors" outlined
                                     label="Tipo de persona" data-vv-name="tipo de persona" required></v-select>
@@ -175,6 +175,7 @@ export default {
                         title: "Registro exitoso",
                         text: `${res.data.usuario.nombre} registrado exitosamente`,
                     });
+                    this.limpiarInfo();
                 })
                 .catch((err) => {
                     console.log(err);
@@ -183,6 +184,19 @@ export default {
                         title: "Error al registrar el usuario",
                     });
                 })
+        },
+        limpiarInfo(){
+            this.select='';
+            this.nombre='';
+            this.documento='';
+            this.direccion='';
+            this.ciudad='';
+            this.contacto='';
+            this.celularContacto='';
+            this.telefono='';
+            this.email='';
+            this.password='';
+            this.rol=''
         }
     },
     created() {

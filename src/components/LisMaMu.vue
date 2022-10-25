@@ -2,18 +2,18 @@
     <v-container fluid>
         <v-row>
             <v-col>
-                    <v-data-table :headers="header" :items="lismamu" :loading="myLoading"
-                        loading-text="Cargando... Por favor espera">
-                        <template v-slot:[`item.createdAt`]="{ item }">
-                            <span>{{ fechaCompleta(item.createdAt) }}</span>
-                        </template>
-                        <template v-slot:[`item.fechaRecoleccion`]="{ item }">
-                            <span>{{ fecha(item.fechaRecoleccion) }}</span>
-                        </template>
-                        <template v-slot:[`item.cotizacion.entregaResultados`]="{ item }">
-                            <span>{{ fecha(item.cotizacion.entregaResultados) }}</span>
-                        </template>
-                    </v-data-table>
+                <v-data-table :headers="header" :items="lismamu" :loading="myLoading"
+                    loading-text="Cargando... Por favor espera">
+                    <template v-slot:[`item.createdAt`]="{ item }">
+                        <span>{{ fechaCompleta(item.createdAt) }}</span>
+                    </template>
+                    <template v-slot:[`item.fechaRecoleccion`]="{ item }">
+                        <span>{{ fecha(item.fechaRecoleccion) }}</span>
+                    </template>
+                    <template v-slot:[`item.cotizacion.entregaResultados`]="{ item }">
+                        <span>{{ fecha(item.cotizacion.entregaResultados) }}</span>
+                    </template>
+                </v-data-table>
             </v-col>
         </v-row>
     </v-container>
@@ -52,7 +52,7 @@ export default {
                 { text: "Fecha recoleccion muestra", value: "fechaRecoleccion", sortable: false },
                 { text: "Cotización", value: "cotizacion.numCotizacion", sortable: false },
                 { text: "Item cotización", value: "item", sortable: false },
-                { text: "Fecha recepción muestra", value: "metodo", sortable: false },
+                { text: "Fecha recepción muestra", value: "createdAt", sortable: false },
                 { text: "Fecha emisión muestra", value: "metodo", sortable: false },
                 { text: "Fecha entrega resultados", value: "cotizacion.entregaResultados", sortable: false },
                 { text: "Seguimiento entrega resultados", value: "metodo", sortable: false },

@@ -8,10 +8,17 @@
                         loading-text="Cargando... Por favor espera">
                         <template v-slot:[`item.actions`]="{ item }">
                             <v-row>
-                                <v-btn @click="infoOrdenEditar(item)" icon>
-                                    <font-awesome-icon style="font-size:20px" icon="fa-solid fa-file-pen" />
-                                </v-btn>
-                                <div v-if="item.estado==1">
+                                <div v-if="item.estado == 1">
+                                    <v-btn @click="infoOrdenEditar(item)" icon>
+                                        <font-awesome-icon style="font-size:20px" icon="fa-solid fa-file-pen" />
+                                    </v-btn>
+                                </div>
+                                <div v-if="item.estado == 0">
+                                    <v-btn disabled icon>
+                                        <font-awesome-icon style="font-size:20px" icon="fa-solid fa-file-pen" />
+                                    </v-btn>
+                                </div>
+                                <div v-if="item.estado == 1">
                                     <v-btn color='red' icon @click="estadoOrden(item)">
                                         <font-awesome-icon style="font-size:20px" icon="fa-solid fa-ban" />
                                     </v-btn>
@@ -24,7 +31,7 @@
                             </v-row>
                         </template>
                         <template v-slot:[`item.estado`]="{ item }">
-                            <div v-if="item.estado==1">
+                            <div v-if="item.estado == 1">
                                 <b>
                                     <span class="blue--text">Activo</span>
                                 </b>
@@ -43,23 +50,25 @@
 
         <!--   segmento de cuadro de dialog -->
 
-        <v-dialog v-model="dialog" max-width="1000px">
+        <v-dialog v-model="dialog" max-width="1000px" persistent>
             <v-card>
-                <v-toolbar-title color="orange">
-                    <v-avatar @click="close">
-                        <v-icon>mdi-close</v-icon>
-                    </v-avatar>
-                    <span>Editar orden de servicio</span>
-                </v-toolbar-title>
+                <v-card-title>
+                    <v-hover v-slot="{ hover }">
+                        <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                            <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
+                        </v-btn>
+                    </v-hover>
+                    Editar Editar orden de servicio
+                </v-card-title>
                 <validation-observer ref="observer" v-slot="{ invalid }">
                     <form @submit.prevent="submit" class="py-7 px-7">
                         <validation-provider v-slot="{ errors }" name="resultado" rules="required">
-                            <v-text-field v-model="resultado" :error-messages="errors" label="Resultado" outlined
-                                required></v-text-field>
+                            <v-text-field v-model="resultado" :error-messages="errors" type="number" label="Resultado"
+                                outlined required></v-text-field>
                         </validation-provider>
                         <validation-provider v-slot="{ errors }" name="incertidumbre" rules="required">
-                            <v-text-field v-model="incertidumbre" :error-messages="errors" label="Incertidumbre"
-                                outlined required></v-text-field>
+                            <v-text-field v-model="incertidumbre" :error-messages="errors" type="number"
+                                label="Incertidumbre" outlined required></v-text-field>
                         </validation-provider>
                         <validation-provider v-slot="{ errors }" name="observaciones" rules="required">
                             <v-text-field v-model="observacion" :error-messages="errors" label="Observaciones" outlined
@@ -111,7 +120,7 @@ export default {
             dialog: false,
             resultado: "",
             incertidumbre: "",
-            observacion:'',
+            observacion: '',
             encabezado: [
                 {
                     text: "Muestra",
@@ -156,7 +165,7 @@ export default {
                                 incertidumbre: this.incertidumbre,
                             },
                         ],
-                        observaciones:this.observacion
+                        observaciones: this.observacion
                     }
                 )
                 .then((res) => {
@@ -166,6 +175,7 @@ export default {
                         title: "Actualizacion de la orden de servicio exitoso",
                     });
                     this.traerOrdenes();
+                    this.limpiarInfo()
                 })
                 .catch((err) => {
                     console.log(err);
@@ -174,6 +184,11 @@ export default {
                         title: "Error al actualizar la orden de servicio",
                     });
                 });
+        },
+        limpiarInfo() {
+            this.resultado = '';
+            this.incertidumbre = '';
+            this.observacion = ''
         },
         estadoOrden(orden) {
             console.log("estado: " + orden.estado);

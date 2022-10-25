@@ -13,12 +13,14 @@
                 </v-btn>
               </template>
               <v-card>
-                <v-toolbar-title color="orange">
-                  <v-avatar @click="close">
-                    <v-icon>mdi-close</v-icon>
-                  </v-avatar>
-                  <span>Agregar nuevo formato</span>
-                </v-toolbar-title>
+                <v-card-title>
+                  <v-hover v-slot="{ hover }">
+                    <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                      <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
+                    </v-btn>
+                  </v-hover>
+                  Agregar nuevo formato
+                </v-card-title>
                 <validationObserver ref="observer" v-slot="{ invalid }">
                   <form @submit.prevent="submit" class="py-7 px-7">
                     <validation-provider v-slot="{ errors }" name="formato" rules="required">
@@ -72,12 +74,14 @@
       <v-col>
         <v-dialog v-model="dialogEditar" max-width="1000px">
           <v-card>
-            <v-toolbar-title color="orange">
-              <v-avatar @click="close">
-                <v-icon>mdi-close</v-icon>
-              </v-avatar>
-              <span>Agregar nuevo formato</span>
-            </v-toolbar-title>
+            <v-card-title>
+              <v-hover v-slot="{ hover }">
+                <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                  <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
+                </v-btn>
+              </v-hover>
+              Editar formato de calidad
+            </v-card-title>
             <validationObserver ref="observer" v-slot="{ invalid }">
               <form @submit.prevent="submit" class="py-7 px-7">
                 <validation-provider v-slot="{ errors }" name="formato" rules="required">
@@ -206,6 +210,10 @@ export default {
       console.log(formato);
       this.formatoEditar = formato
       this.dialogEditar = true;
+      this.formato = formato.formato;
+      this.codigo = formato.codigo;
+      this.aprobacion = formato.aprobacion;
+      this.version = formato.version;
     },
     editarCalidad() {
       axios.put(`https://labficat.herokuapp.com/api/calidad/modificar/${this.formatoEditar._id}`, {

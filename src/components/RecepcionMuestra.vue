@@ -142,12 +142,7 @@
                   </v-hover>
                   Formulario de muestras
                 </v-card-title>
-                <!-- <v-toolbar-title color="orange">
-                  <v-avatar @click="close">
-                    <v-icon>mdi-close</v-icon>
-                  </v-avatar>
-                  <span>Editar Recepcion de Muestras</span>
-                </v-toolbar-title> -->
+                
                 <validationObserver ref="observer" v-slot="{ invalid }">
                   <form @submit.prevent="submit" class="py-7 px-7">
                     <validation-provider v-slot="{ errors }" name="departamento" rules="required">
@@ -240,6 +235,7 @@
                   </form>
                 </validationObserver>
                 <v-card-actions>
+                  <v-spacer></v-spacer>
                   <v-hover v-slot="{ hover }">
                     <v-btn class="ml-5" text @click="close" :style="{background:hover ? 'red' :''}">
                       Cerrar
@@ -530,6 +526,7 @@ export default {
         })
     },
     ingresarMuestra() {
+      let header = { headers: { "x-token": this.$store.state.token } };
       axios.post('https://labficat.herokuapp.com/api/muestra',
         {
           solicitante: this.person.id,
@@ -543,7 +540,7 @@ export default {
           fechaRecoleccion: this.muestra.fechaRecoleccion,
           cotizacion: this.muestra.cotizacion,
           item: this.muestra.item
-        })
+        },header)
         .then((res) => {
           console.log(res.data);
           this.$swal({
@@ -561,6 +558,7 @@ export default {
         })
     },
     modificarMuestra() {
+      let header = { headers: { "x-token": this.$store.state.token } };
       axios.put(`https://labficat.herokuapp.com/api/muestra/${this.$store.state.muestraEditar._id}`, {
         solicitante: this.person.id,
         munRecoleccion: this.muestra.ciudad,
@@ -571,7 +569,7 @@ export default {
         tipoMuestra: this.muestra.tipoMuestra,
         matrizMuestra: this.muestra.matrizMuestra,
         fechaRecoleccion: this.muestra.fechaRecoleccion,
-      })
+      },header)
         .then((res) => {
           console.log(res.data.modificar);
           this.$swal({

@@ -119,7 +119,8 @@ export default {
     },
     estadoMuestra(muestra) {
       if (muestra.estado == 1) {
-        axios.put(`https://labficat.herokuapp.com/api/muestra/desactivar/${muestra._id}`)
+        let header = { headers: { "x-token": this.$store.state.token } };
+        axios.put(`https://labficat.herokuapp.com/api/muestra/desactivar/${muestra._id}`,header)
           .then((res) => {
             console.log(res);
             this.$swal({
@@ -136,7 +137,8 @@ export default {
             });
           })
       } else {
-        axios.put(`https://labficat.herokuapp.com/api/muestra/activar/${muestra._id}`)
+        let header = { headers: { "x-token": this.$store.state.token } };
+        axios.put(`https://labficat.herokuapp.com/api/muestra/activar/${muestra._id}`,header)
           .then((res) => {
             console.log(res);
             this.$swal({

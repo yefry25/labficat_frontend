@@ -185,12 +185,13 @@
             <p for="Name" class="label mb-0">Validez de la oferta</p>
             <p for="Name" class="label mb-0">Elaborado por</p>
           </v-col>
+
           <v-col cols="8" class="pl-0">
-            <v-text-field v-model="person.nombre" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.direccion" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.departamento" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.contacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.celularContacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.nombre" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.direccion" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.departamento" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.contacto" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.celularContacto" class="field pl-1 py-0 my-0" height="26"></v-text-field>
 
             <v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
               offset-y min-width="auto">
@@ -200,7 +201,7 @@
               </template>
               <v-date-picker v-model="validezOferta" @input="menu1 = false"></v-date-picker>
             </v-menu>
-            <v-text-field v-model="person.elaborador" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.elaborador" class="field pl-1 px-0 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -216,11 +217,11 @@
             <p for="Name" class="label mb-0">Cargo</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field v-model="person.cc" class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.ciudad" class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.telefono" class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.cargo" class="field py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.correoContacto" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.cc" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.ciudad" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.telefono" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.cargo" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.correoContacto" class="field pl-1 py-0 my-0" height="26"></v-text-field>
             <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
               offset-y min-width="auto">
               <template v-slot:activator="{ on, attrs }">
@@ -229,7 +230,7 @@
               </template>
               <v-date-picker v-model="entregaResultados" @input="menu2 = false"></v-date-picker>
             </v-menu>
-            <v-text-field v-model="person.cargoElaborador" class="field py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.cargoElaborador" class="field pl-1 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -750,7 +751,6 @@ export default {
       idCotizacionEditar: '',
       dialogCotizacion: false,
 
-
       /* variables del registro de usuario */
       dialogUser: false,
       select: null,
@@ -795,21 +795,20 @@ export default {
   },
   methods: {
     traerClientes() {
-      
       axios
-          .get("https://labficat.herokuapp.com/api/usuario")
-          .then((res) => {
-            this.myLoading = false;
-            for (let i = 0; i < res.data.usuario.length; i++) {
-              const element = res.data.usuario[i];
-              if (element.estado == 1) {
-                this.usuarios.push(element)
-              }
+        .get("https://labficat.herokuapp.com/api/usuario")
+        .then((res) => {
+          this.myLoading = false;
+          for (let i = 0; i < res.data.usuario.length; i++) {
+            const element = res.data.usuario[i];
+            if (element.estado == 1) {
+              this.usuarios.push(element)
             }
-          })
-          .catch((err) => {
-            console.log(err);
-          });          
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     traerCotizaciones() {
       axios.get('https://labficat.herokuapp.com/api/cotizacion')
@@ -834,6 +833,7 @@ export default {
       this.person.correoContacto = user.correo;
     },
     modificarCotizacion() {
+      let header = { headers: { "x-token": this.$store.state.token } };
       axios.put(`https://labficat.herokuapp.com/api/cotizacion/modificar/${this.idCotizacionEditar}`, {
         fechaEmision: this.fechaEmision,
         idCliente: this.id,
@@ -847,7 +847,7 @@ export default {
         },
         observaciones: this.observacion,
         descuento: this.descuento
-      })
+      },header)
         .then((res) => {
           console.log(res.data.cotizacion)
           this.$swal({
@@ -867,15 +867,9 @@ export default {
     },
     ensayoCotizacion(ensayo) {
       let isEnsayo1 = null;
-      let isEnsayo2 = null;
-      let isEnsayo3 = null;
       isEnsayo1 = this.primerItem.find(e =>
         e._id == ensayo._id)
-      isEnsayo2 = this.segundoItem.find(e =>
-        e._id == ensayo._id)
-      isEnsayo3 = this.tercerItem.find(e =>
-        e._id == ensayo._id)
-      if (isEnsayo1 == undefined && isEnsayo2 == undefined && isEnsayo3 == undefined) {
+      if (isEnsayo1 == undefined) {
         this.primerItem.push(ensayo);
         this.item1.itemsEnsayo.push({
           ensayo: ensayo._id,
@@ -890,16 +884,11 @@ export default {
       }
     },
     ensayoCotizacion2(ensayo) {
-      let isEnsayo1 = null;
       let isEnsayo2 = null;
-      let isEnsayo3 = null;
-      isEnsayo1 = this.primerItem.find(e =>
-        e._id == ensayo._id)
       isEnsayo2 = this.segundoItem.find(e =>
         e._id == ensayo._id)
-      isEnsayo3 = this.tercerItem.find(e =>
-        e._id == ensayo._id)
-      if (isEnsayo1 == undefined && isEnsayo2 == undefined && isEnsayo3 == undefined) {
+
+      if (isEnsayo2 == undefined) {
         this.segundoItem.push(ensayo);
         this.item2.itemsEnsayo.push({
           ensayo: ensayo._id,
@@ -914,16 +903,10 @@ export default {
       }
     },
     ensayoCotizacion3(ensayo) {
-      let isEnsayo1 = null;
-      let isEnsayo2 = null;
       let isEnsayo3 = null;
-      isEnsayo1 = this.primerItem.find(e =>
-        e._id == ensayo._id)
-      isEnsayo2 = this.segundoItem.find(e =>
-        e._id == ensayo._id)
       isEnsayo3 = this.tercerItem.find(e =>
         e._id == ensayo._id)
-      if (isEnsayo1 == undefined && isEnsayo2 == undefined && isEnsayo3 == undefined) {
+      if (isEnsayo3 == undefined) {
         this.tercerItem.push(ensayo);
         this.item3.itemsEnsayo.push({
           ensayo: ensayo._id,
@@ -938,6 +921,7 @@ export default {
       }
     },
     cotizacion() {
+      let header = { headers: { "x-token": this.$store.state.token } };
       axios.post('https://labficat.herokuapp.com/api/cotizacion', {
         fechaEmision: this.fechaEmision,
         idCliente: this.id,
@@ -951,7 +935,7 @@ export default {
         },
         observaciones: this.observacion,
         descuento: this.descuento
-      })
+      }, header)
         .then((res) => {
           this.$swal({
             icon: "success",
@@ -959,7 +943,6 @@ export default {
           });
           console.log(res.data);
           this.vaciarInformacion()
-
         })
         .catch((err) => {
           this.$swal({
@@ -975,21 +958,21 @@ export default {
         this.item2.itemsEnsayo = this.$store.state.cotizacionEditar.items.item2.itemsEnsayo;
         this.item3.itemsEnsayo = this.$store.state.cotizacionEditar.items.item3.itemsEnsayo;
 
-        this.idCotizacionEditar = this.$store.state.cotizacionEditar._id
-        this.id = this.$store.state.cotizacionEditar.idCliente._id
-        this.person.nombre = this.$store.state.cotizacionEditar.idCliente.nombre,
-          this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento,
-          this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion,
-          this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad,
-          this.person.departamento = this.$store.state.cotizacionEditar.idCliente.ciudad.departamento,
-          this.person.telefono = this.$store.state.cotizacionEditar.idCliente.telefono,
-          this.person.contacto = this.$store.state.cotizacionEditar.idCliente.contacto,
-          this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol,
-          this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto,
-          this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo
-        this.descuento = this.$store.state.cotizacionEditar.descuento
-        this.observacion = this.$store.state.cotizacionEditar.observaciones
-        this.numeroCotizacion = this.$store.state.cotizacionEditar.numCotizacion
+        this.idCotizacionEditar = this.$store.state.cotizacionEditar._id;
+        this.id = this.$store.state.cotizacionEditar.idCliente._id;
+        this.person.nombre = this.$store.state.cotizacionEditar.idCliente.nombre;
+        this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento;
+        this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion;
+        this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad;
+        this.person.departamento = this.$store.state.cotizacionEditar.idCliente.ciudad.departamento;
+        this.person.telefono = this.$store.state.cotizacionEditar.idCliente.telefono;
+        this.person.contacto = this.$store.state.cotizacionEditar.idCliente.contacto;
+        this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol;
+        this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto;
+        this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo;
+        this.descuento = this.$store.state.cotizacionEditar.descuento;
+        this.observacion = this.$store.state.cotizacionEditar.observaciones;
+        this.numeroCotizacion = this.$store.state.cotizacionEditar.numCotizacion;
 
         for (let i = 0; i < this.$store.state.cotizacionEditar.items.item1.itemsEnsayo.length; i++) {
           const element = this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];

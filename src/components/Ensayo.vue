@@ -133,6 +133,7 @@ export default {
             title: "Registro exitoso",
             text: `Registro exitoso del ensayo`,
           });
+          this.limpiarInfo()
         })
         .catch((err) => {
           console.log(err);
@@ -151,6 +152,21 @@ export default {
         .catch((err) => {
           console.log(err);
         })
+    },
+    limpiarInfo(){
+      this.ensayo= '',
+      this.metodo= '',
+      this.tecnica= '',
+      this.valorMinimo= null,
+      this.valorMaximo= null,
+      this.unidades= null,
+      this.costo= null,
+      this.descripcion= '',
+      this.limiteCuantificacion= '',
+      this.responsables= {
+        titular: '',
+        suplente: ''
+      }
     }
   },
   created() {

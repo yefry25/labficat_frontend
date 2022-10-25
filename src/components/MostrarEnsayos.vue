@@ -26,14 +26,16 @@
 
         <v-row>
             <v-col>
-                <v-dialog v-model="dialogEditar" max-width="1000px">
+                <v-dialog v-model="dialogEditar" max-width="1000px" persistent>
                     <v-card>
-                        <v-toolbar-title color="orange">
-                            <v-avatar @click="close">
-                                <v-icon>mdi-close</v-icon>
-                            </v-avatar>
-                            <span>Agregar nuevo formato</span>
-                        </v-toolbar-title>
+                        <v-card-title>
+                            <v-hover v-slot="{ hover }">
+                                <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                                    <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
+                                </v-btn>
+                            </v-hover>
+                            Editar ensayos
+                        </v-card-title>
                         <validationObserver ref="observer" v-slot="{ invalid }">
                             <form @submit.prevent="submit" class="py-7 px-7">
                                 <validation-provider v-slot="{ errors }" name="ensayo" rules="required">
@@ -92,10 +94,18 @@
                                 </validation-provider>
                                 <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block
                                     @click="editarEnsayo">
-                                    Registrar
+                                    Editar ensayo
                                 </v-btn>
                             </form>
                         </validationObserver>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-hover v-slot="{ hover }">
+                                <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
+                                    Cerrar
+                                </v-btn>
+                            </v-hover>
+                        </v-card-actions>
                     </v-card>
                 </v-dialog>
             </v-col>
@@ -160,7 +170,7 @@ export default {
             tecnica: '',
             valorMinimo: null,
             valorMaximo: null,
-            unidades:null,
+            unidades: null,
             costo: null,
             descripcion: '',
             limiteCuantificacion: '',
@@ -189,7 +199,7 @@ export default {
                 tecnica: this.tecnica,
                 valorMinimo: this.valorMinimo,
                 valorMaximo: this.valorMaximo,
-                unidades:this.unidades,
+                unidades: this.unidades,
                 costo: this.costo,
                 descripcion: this.descripcion,
                 limiteCuantificacion: this.limiteCuantificacion,
@@ -203,6 +213,7 @@ export default {
                         title: "Registro exitoso",
                         text: `Ensayo modificado exitosamente`,
                     });
+                    this.limpiarInfo();
                 })
                 .catch((err) => {
                     console.log(err);
@@ -214,16 +225,21 @@ export default {
         },
         editar(ensayo) {
             console.log(ensayo);
-            this.dialogEditar = true
-            this.idEnsayo = ensayo._id
-            this.ensayo = ensayo.ensayo,
-            this.metodo = ensayo.metodo,
-            this.tecnica = ensayo.tecnica,
-            this.valorMinimo = null,
-            this.valorMaximo = null,
-            this.costo = ensayo.costo,
-            this.descripcion = ensayo.descripcion,
-            this.limiteCuantificacion = ensayo.limiteCuantificacion
+            this.dialogEditar = true;
+            this.idEnsayo = ensayo._id;
+            this.ensayo = ensayo.ensayo;
+            this.metodo = ensayo.metodo;
+            this.tecnica = ensayo.tecnica;
+            this.valorMinimo = ensayo.valorMinimo;
+            this.valorMaximo = ensayo.valorMaximo;
+            this.unidades = ensayo.unidades;
+            this.costo = ensayo.costo;
+            this.descripcion = ensayo.descripcion;
+            this.limiteCuantificacion = ensayo.limiteCuantificacion;
+            this.responsables = {
+                titular: ensayo.responsables.titular,
+                suplente: ensayo.responsables.suplente
+            }
         },
         traerUsuarios() {
             axios.get('https://labficat.herokuapp.com/api/usuario')
@@ -234,6 +250,21 @@ export default {
                 .catch((err) => {
                     console.log(err);
                 })
+        },
+        limpiarInfo() {
+            this.ensayo = '',
+                this.metodo = '',
+                this.tecnica = '',
+                this.valorMinimo = null,
+                this.valorMaximo = null,
+                this.unidades = null,
+                this.costo = null,
+                this.descripcion = '',
+                this.limiteCuantificacion = '',
+                this.responsables = {
+                    titular: '',
+                    suplente: ''
+                }
         },
         close() {
 
