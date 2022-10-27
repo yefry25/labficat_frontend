@@ -6,6 +6,7 @@ export const store = new Vuex.Store({
   state: {
     token: localStorage.token,
     elaborador: JSON.parse(localStorage.getItem("elaborador")),
+    emailConfirmed:localStorage.email,
     cotizacionEditar: {},
     cotizacionVer: false,
     muestraEditar: {},
@@ -19,6 +20,15 @@ export const store = new Vuex.Store({
       } else {
         state.token = value;
       }
+    },
+    setEmail(state,value){
+      localStorage.email = value;
+      if (localStorage.email) {
+        state.emailConfirmed = localStorage.email;
+      } else {
+        state.emailConfirmed = value
+      }
+      
     },
     setElaborador(state, value) {
       localStorage.setItem("elaborador", JSON.stringify(value));
@@ -48,6 +58,9 @@ export const store = new Vuex.Store({
     },
     setMuestraEditar(context, value) {
       context.commit("setMuestraEditar", value);
+    },
+    setEmail(context, value){
+      context.commit("setEmail", value)
     },
   },
 });

@@ -17,7 +17,7 @@
                 <v-text-field v-model="password" :error-messages="errors" label="Contraseña" type="password" outlined
                   prepend-icon='mdi-lock' required></v-text-field>
               </validation-provider>
-              <h3 class="text--blue" @click="dialogRecuperar = true">¿Olvidaste la contraseña?</h3>
+              <span class="blue--text" @click="dialogRecuperar = true">¿Olvidaste la contraseña?</span> 
 
               <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block @click="iniciar">
                 ingresar
@@ -36,7 +36,7 @@
     <v-row>
       <v-col>
         <v-dialog v-model="dialogRecuperar" max-width="1000px" persistent>
-          <v-card>
+          <v-card class="rounded-xl rounded-bl-0" outlined>
             <v-card-title>
               <v-hover v-slot="{ hover }">
                 <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
@@ -46,16 +46,17 @@
               Editar orden de servicio
             </v-card-title>
             <validation-observer ref="observer" v-slot="{ invalid }">
-            <form @submit.prevent="submit" class="py-7 px-7">
-              <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
-                <v-text-field v-model="email" :error-messages="errors" label="E-mail" prepend-icon='mdi-email' outlined
-                  required></v-text-field>
-              </validation-provider>
-              <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block @click="enviarEmail">
-                Enviar Email
-              </v-btn>
-            </form>
-          </validation-observer>
+              <form @submit.prevent="submit" class="py-7 px-7">
+                <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
+                  <v-text-field v-model="email" :error-messages="errors" label="E-mail" prepend-icon='mdi-email'
+                    outlined required></v-text-field>
+                </validation-provider>
+                <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block
+                  @click="enviarEmail">
+                  Enviar Email
+                </v-btn>
+              </form>
+            </validation-observer>
           </v-card>
         </v-dialog>
       </v-col>
@@ -137,24 +138,27 @@ export default {
           });
         });
     },
-    enviarEmail(){
-      axios.put('https://labficat.herokuapp.com/api/usuario/recuperarPassword',{
-        correo:this.email
+    enviarEmail() {
+      axios.put('https://labficat.herokuapp.com/api/usuario/recuperarPassword', {
+        correo: this.email
       })
-      .then((res)=>{
-        console.log(res);
-        this.$swal({
+        .then((res) => {
+          console.log(res);
+          this.$swal({
             icon: "success",
             title: "Email enviado exitosamente",
+            
           });
-      })
-      .catch((err)=>{
-        console.log(err);
-        this.$swal({
+          this.$store.dispatch('setEmail',this.email)
+          console.log("email: "+this.$store.state.emailConfirmed);
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$swal({
             icon: "error",
             title: "Error al enviar el correo",
           });
-      })
+        })
     },
     existeToken() {
       if (localStorage.token) {

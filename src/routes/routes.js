@@ -16,6 +16,7 @@ import mostrarUsuario from '../components/MostrarUsuario.vue'
 import mostrarEnsayo from '../components/MostrarEnsayos.vue'
 import lismamu from '../components/LisMaMu.vue'
 import prueba from '../components/Pruebas.vue'
+import cambiar from '../components/CambiarPassword.vue'
 
 export const routes = [
     {path: '/inicio', component: inicio},
@@ -35,5 +36,6 @@ export const routes = [
     {path:'/mostrarUsuarios',component: mostrarUsuario},
     {path:'/mostrarEnsayos',component: mostrarEnsayo},
     {path:'/lismamu' , component: lismamu},
-    {path:'/pruebas', component:prueba}
+    {path:'/pruebas', component:prueba},
+    {path:'/cambiarPrueba', component:cambiar}
 ]
