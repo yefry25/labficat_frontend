@@ -78,8 +78,6 @@ export default {
   methods: {
     cerrarSesion() {
       this.$router.push('/');
-      this.$store.state.token = '';
-      this.$store.state.elaborador = '';
       this.$store.state.cotizacionEditar = '';
       this.$store.state.cotizacionVer = false;
       this.$store.state.token = undefined;

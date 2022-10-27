@@ -17,22 +17,24 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-dialog v-model="dialog" max-width="1000px">
+        <v-dialog v-model="dialog" max-width="1000px" persistent>
           <v-card>
-            <v-toolbar-title color="orange">
-              <v-avatar @click="close">
-                <v-icon>mdi-close</v-icon>
-              </v-avatar>
-              <span>Editar orden de servicio</span>
-            </v-toolbar-title>
+            <v-card-title>
+              <v-hover v-slot="{ hover }">
+                <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                  <font-awesome-icon style="fontsize: 26px" icon="fa-solid fa-xmark" />
+                </v-btn>
+              </v-hover>
+              Editar números consecutivos
+            </v-card-title>
             <validation-observer ref="observer" v-slot="{ invalid }">
               <form @submit.prevent="submit" class="py-7 px-7">
-                <validation-provider v-slot="{ errors }" name="Consecutivo muestra" >
+                <validation-provider v-slot="{ errors }" name="Consecutivo muestra">
                   <v-text-field v-model="consecutivoMuestra" :error-messages="errors" label="consecutivo muestra"
                     outlined required>
                   </v-text-field>
                 </validation-provider>
-                <validation-provider v-slot="{ errors }" name="Consecutivo oferta" >
+                <validation-provider v-slot="{ errors }" name="Consecutivo oferta">
                   <v-text-field v-model="consecutivoOferta" :error-messages="errors" label="consecutivo oferta" outlined
                     required></v-text-field>
                 </validation-provider>
@@ -98,7 +100,7 @@ export default {
       consecutivoOferta: 1,
       iva: 19,
       consecutivos: [],
-      consecutivoEditar:{}
+      consecutivoEditar: {}
     }
   },
   methods: {
@@ -114,53 +116,53 @@ export default {
     },
     editarConsecutivos(consecutivo) {
       this.dialog = true
-      this.consecutivoEditar=consecutivo
+      this.consecutivoEditar = consecutivo
     },
-    consecutivoActualizar(){
-        axios.put(`https://labficat.herokuapp.com/api/setup/modificar/${this.consecutivoEditar._id}`, {
-          consecutivoMuestra: this.consecutivoMuestra,
-          consecutivoOferta: this.consecutivoOferta,
-          consecutivoInforme: 1,
-          iva: this.iva
+    consecutivoActualizar() {
+      axios.put(`https://labficat.herokuapp.com/api/setup/modificar/${this.consecutivoEditar._id}`, {
+        consecutivoMuestra: this.consecutivoMuestra,
+        consecutivoOferta: this.consecutivoOferta,
+        consecutivoInforme: 1,
+        iva: this.iva
+      })
+        .then((res) => {
+          console.log(res.data.modificar);
+          this.traerConsecutivos()
+          this.$swal({
+            icon: "success",
+            title: "Actualizacion de los consecutivos exitoso",
+          });
         })
-          .then((res) => {
-            console.log(res.data.modificar);
-            this.traerConsecutivos()
-            this.$swal({
-              icon: "success",
-              title: "Actualizacion de los consecutivos exitoso",
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            this.$swal({
-              icon: "error",
-              title: "Error al actualizar los consecutivos",
-            });
-          })
+        .catch((err) => {
+          console.log(err);
+          this.$swal({
+            icon: "error",
+            title: "Error al actualizar los consecutivos",
+          });
+        })
     },
-    resetearConsecutivos(consecutivo){
+    resetearConsecutivos(consecutivo) {
       axios.put(`https://labficat.herokuapp.com/api/setup/modificar/${consecutivo._id}`, {
-          consecutivoMuestra: 1,
-          consecutivoOferta: 1,
-          consecutivoInforme: 1,
-          iva: 19
+        consecutivoMuestra: 1,
+        consecutivoOferta: 1,
+        consecutivoInforme: 1,
+        iva: 19
+      })
+        .then((res) => {
+          console.log(res.data.modificar);
+          this.traerConsecutivos()
+          this.$swal({
+            icon: "success",
+            title: "Actualizacion de los consecutivos exitoso",
+          });
         })
-          .then((res) => {
-            console.log(res.data.modificar);
-            this.traerConsecutivos()
-            this.$swal({
-              icon: "success",
-              title: "Actualizacion de los consecutivos exitoso",
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            this.$swal({
-              icon: "error",
-              title: "Error al actualizar los consecutivos",
-            });
-          })
+        .catch((err) => {
+          console.log(err);
+          this.$swal({
+            icon: "error",
+            title: "Error al actualizar los consecutivos",
+          });
+        })
       this.traerConsecutivos()
     },
     close() {

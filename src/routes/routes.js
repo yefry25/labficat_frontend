@@ -15,6 +15,7 @@ import ordenServicio from '../components/OrdenDeServicios.vue'
 import mostrarUsuario from '../components/MostrarUsuario.vue'
 import mostrarEnsayo from '../components/MostrarEnsayos.vue'
 import lismamu from '../components/LisMaMu.vue'
+import prueba from '../components/Pruebas.vue'
 
 export const routes = [
     {path: '/inicio', component: inicio},
@@ -33,5 +34,6 @@ export const routes = [
     {path:'/ordenServicio', component: ordenServicio},
     {path:'/mostrarUsuarios',component: mostrarUsuario},
     {path:'/mostrarEnsayos',component: mostrarEnsayo},
-    {path:'/lismamu' , component: lismamu}
+    {path:'/lismamu' , component: lismamu},
+    {path:'/pruebas', component:prueba}
 ]

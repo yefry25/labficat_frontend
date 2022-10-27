@@ -6,9 +6,9 @@
           <v-card-title class="primary" id="" style="text-align: center; justify-content: center;">
             <font-awesome-icon style="font-size: 36px" icon="fa-solid fa-user" />
           </v-card-title>
-            <h2 class="pt-4">Inicia sesión</h2>
+          <h2 class="pt-4">Inicia sesión</h2>
           <validation-observer ref="observer" v-slot="{ invalid }">
-            <form @submit.prevent="iniciar" class="py-7 px-7">
+            <form @submit.prevent="submit" class="py-7 px-7">
               <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
                 <v-text-field v-model="email" :error-messages="errors" label="E-mail" prepend-icon='mdi-email' outlined
                   required></v-text-field>
@@ -17,7 +17,9 @@
                 <v-text-field v-model="password" :error-messages="errors" label="Contraseña" type="password" outlined
                   prepend-icon='mdi-lock' required></v-text-field>
               </validation-provider>
-              <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block>
+              <h3 class="text--blue" @click="dialogRecuperar = true">¿Olvidaste la contraseña?</h3>
+
+              <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block @click="iniciar">
                 ingresar
               </v-btn>
             </form>
@@ -27,6 +29,36 @@
       <v-overlay :value="overlay">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
+    </v-row>
+
+    <!-- dialogo para recuperar contraseña -->
+
+    <v-row>
+      <v-col>
+        <v-dialog v-model="dialogRecuperar" max-width="1000px" persistent>
+          <v-card>
+            <v-card-title>
+              <v-hover v-slot="{ hover }">
+                <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                  <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
+                </v-btn>
+              </v-hover>
+              Editar orden de servicio
+            </v-card-title>
+            <validation-observer ref="observer" v-slot="{ invalid }">
+            <form @submit.prevent="submit" class="py-7 px-7">
+              <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
+                <v-text-field v-model="email" :error-messages="errors" label="E-mail" prepend-icon='mdi-email' outlined
+                  required></v-text-field>
+              </validation-provider>
+              <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block @click="enviarEmail">
+                Enviar Email
+              </v-btn>
+            </form>
+          </validation-observer>
+          </v-card>
+        </v-dialog>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -56,13 +88,14 @@ export default {
     ValidationObserver,
   },
   data: () => ({
+    dialogRecuperar: false,
     name: '',
     phoneNumber: '',
     email: '',
     password: '',
     select: null,
     overlay: false,
-    elaborado:{}
+    elaborado: {}
   }),
 
   methods: {
@@ -84,14 +117,14 @@ export default {
           });
           this.overlay = false
 
-          this.elaborado={
-            nombre:response.data.usuario.nombre,
-            rol:response.data.usuario.rol,
-            id:response.data.usuario._id
+          this.elaborado = {
+            nombre: response.data.usuario.nombre,
+            rol: response.data.usuario.rol,
+            id: response.data.usuario._id
           }
-          
+
           this.$store.dispatch("setToken", response.data.token);
-          this.$store.dispatch('setElaborador',this.elaborado)
+          this.$store.dispatch('setElaborador', this.elaborado)
           console.log(this.$store.state.elaborador);
         })
         .catch((error) => {
@@ -104,19 +137,44 @@ export default {
           });
         });
     },
-    existeToken(){
-      if(localStorage.token){
+    enviarEmail(){
+      axios.put('https://labficat.herokuapp.com/api/usuario/recuperarPassword',{
+        correo:this.email
+      })
+      .then((res)=>{
+        console.log(res);
+        this.$swal({
+            icon: "success",
+            title: "Email enviado exitosamente",
+          });
+      })
+      .catch((err)=>{
+        console.log(err);
+        this.$swal({
+            icon: "error",
+            title: "Error al enviar el correo",
+          });
+      })
+    },
+    existeToken() {
+      if (localStorage.token) {
         this.$router.push("/inicio");
       }
-    }
+    },
+    close() {
+      this.dialogRecuperar = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
   },
-  created(){
+  created() {
     this.existeToken();
   }
 };
 </script>
 <style scoped>
-
 #border {
   border: 1px solid black;
 }

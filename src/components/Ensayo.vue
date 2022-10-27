@@ -112,8 +112,8 @@ export default {
     }
   },
   methods: {
-
     ingresarEnsayo() {
+      let header = { headers: { "x-token": this.$store.state.token } };
       axios.post('https://labficat.herokuapp.com/api/ensayo', {
         ensayo: this.ensayo,
         metodo: this.metodo,
@@ -125,7 +125,7 @@ export default {
         descripcion: this.descripcion,
         limiteCuantificacion: this.limiteCuantificacion,
         responsables: this.responsables,
-      })
+      },header)
         .then((res) => {
           console.log(res.data.ensayos);
           this.$swal({
@@ -137,10 +137,30 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          this.$swal({
+          
+          if (
+              err.response.data.msg ==
+              "Token expiró, por favor inicie sesión nuevamente"
+            ) {
+              this.$swal({
+                icon: "error",
+                title: `${err.response.data.msg}`,
+                confirmButtonText: "Ir a inicio de sesión",
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  this.$router.push("/");
+                  this.$store.state.token = undefined;
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("elaborador");
+                }
+              });
+            } else{
+              this.$swal({
             icon: "error",
             title: "Error al registrar un ensayo",
           });
+            }
         })
     },
     traerUsuarios() {
@@ -151,22 +171,40 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          if (
+              err.response.data.msg ==
+              "Token expiró, por favor inicie sesión nuevamente"
+            ) {
+              this.$swal({
+                icon: "error",
+                title: `${err.response.data.msg}`,
+                confirmButtonText: "Ir a inicio de sesión",
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  this.$router.push("/");
+                  this.$store.state.token = undefined;
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("elaborador");
+                }
+              });
+            }
         })
     },
-    limpiarInfo(){
-      this.ensayo= '',
-      this.metodo= '',
-      this.tecnica= '',
-      this.valorMinimo= null,
-      this.valorMaximo= null,
-      this.unidades= null,
-      this.costo= null,
-      this.descripcion= '',
-      this.limiteCuantificacion= '',
-      this.responsables= {
-        titular: '',
-        suplente: ''
-      }
+    limpiarInfo() {
+      this.ensayo = '',
+        this.metodo = '',
+        this.tecnica = '',
+        this.valorMinimo = null,
+        this.valorMaximo = null,
+        this.unidades = null,
+        this.costo = null,
+        this.descripcion = '',
+        this.limiteCuantificacion = '',
+        this.responsables = {
+          titular: '',
+          suplente: ''
+        }
     }
   },
   created() {

@@ -2,8 +2,11 @@
   <v-container fluid style="height: 100%">
     <v-row>
       <v-col cols="2">
-        <v-img width="164" height="162"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png">
+        <v-img
+          width="164"
+          height="162"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png"
+        >
         </v-img>
       </v-col>
       <v-col cols="6" class="texto">
@@ -64,93 +67,264 @@
                           Usuarios
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
-                          <v-text-field label="Buscar por nombre o por rol" v-model="busqueda" single-line hide-details>
+                          <v-text-field
+                            label="Buscar por nombre o por rol"
+                            v-model="busqueda"
+                            single-line
+                            hide-details
+                          >
                           </v-text-field>
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
-                          <v-dialog v-model="dialogUser" max-width="1000px" persistent>
+                          <v-dialog
+                            v-model="dialogUser"
+                            max-width="1000px"
+                            persistent
+                          >
                             <template v-slot:activator="{ on, attrs }">
-                              <v-btn class="primary" v-bind="attrs" v-on="on" @click="traerDepartamentos">Agregar
-                                usuario</v-btn>
+                              <v-btn
+                                class="primary"
+                                v-bind="attrs"
+                                v-on="on"
+                                @click="traerDepartamentos"
+                                >Agregar usuario</v-btn
+                              >
                             </template>
                             <v-card outlined>
                               <v-card-title>
                                 <v-hover v-slot="{ hover }">
-                                  <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
-                                    <font-awesome-icon style="fontSize:20px" icon="fa-solid fa-xmark" />
+                                  <v-btn
+                                    icon
+                                    @click="close"
+                                    :style="{ color: hover ? 'red' : '' }"
+                                  >
+                                    <font-awesome-icon
+                                      style="fontsize: 20px"
+                                      icon="fa-solid fa-xmark"
+                                    />
                                   </v-btn>
                                 </v-hover>
                                 Formulario registro de usuarios
                               </v-card-title>
-                              <validation-observer ref="observer" v-slot="{ invalid }">
-                                <form @submit.prevent="submit" class="py-7 px-7">
-                                  <validation-provider v-slot="{ errors }" name="tipo de persona" rules="required">
-                                    <v-select v-model="select" :items="items" :error-messages="errors" outlined
-                                      label="Tipo de persona" data-vv-name="tipo de persona" required></v-select>
+                              <validation-observer
+                                ref="observer"
+                                v-slot="{ invalid }"
+                              >
+                                <form
+                                  @submit.prevent="submit"
+                                  class="py-7 px-7"
+                                >
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="tipo de persona"
+                                    rules="required"
+                                  >
+                                    <v-select
+                                      v-model="select"
+                                      :items="items"
+                                      :error-messages="errors"
+                                      outlined
+                                      label="Tipo de persona"
+                                      data-vv-name="tipo de persona"
+                                      required
+                                    ></v-select>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="nombre" rules="required">
-                                    <v-text-field v-model="nombre" :error-messages="errors" label="Nombre" outlined
-                                      required></v-text-field>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="nombre"
+                                    rules="required"
+                                  >
+                                    <v-text-field
+                                      v-model="nombre"
+                                      :error-messages="errors"
+                                      label="Nombre"
+                                      outlined
+                                      required
+                                    ></v-text-field>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="documento" rules="required">
-                                    <v-text-field v-model="documento" :error-messages="errors" label="Documento"
-                                      outlined required></v-text-field>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="documento"
+                                    rules="required"
+                                  >
+                                    <v-text-field
+                                      v-model="documento"
+                                      :error-messages="errors"
+                                      label="Documento"
+                                      outlined
+                                      required
+                                    ></v-text-field>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="dirección" rules="required">
-                                    <v-text-field v-model="direccion" :error-messages="errors" label="Dirección"
-                                      outlined required></v-text-field>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="dirección"
+                                    rules="required"
+                                  >
+                                    <v-text-field
+                                      v-model="direccion"
+                                      :error-messages="errors"
+                                      label="Dirección"
+                                      outlined
+                                      required
+                                    ></v-text-field>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="departamento" rules="required">
-                                    <v-select v-model="departamento" :items="departa" item-text="departamento"
-                                      item-key="departa" item-value="_id" :error-messages="errors" outlined
-                                      label="Departamento" data-vv-name="departamento" @change="traerCiudades(departa)"
-                                      required></v-select>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="departamento"
+                                    rules="required"
+                                  >
+                                    <v-select
+                                      v-model="departamento"
+                                      :items="departa"
+                                      item-text="departamento"
+                                      item-key="departa"
+                                      item-value="_id"
+                                      :error-messages="errors"
+                                      outlined
+                                      label="Departamento"
+                                      data-vv-name="departamento"
+                                      @change="traerCiudades(departa)"
+                                      required
+                                    ></v-select>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="ciudad" rules="required">
-                                    <v-select v-model="ciudad" :items="ciudades" item-text="Ciudad" item-key="ciudades"
-                                      item-value="_id" :error-messages="errors" outlined label="Cuidad"
-                                      data-vv-name="ciudad" required></v-select>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="ciudad"
+                                    rules="required"
+                                  >
+                                    <v-select
+                                      v-model="ciudad"
+                                      :items="ciudades"
+                                      item-text="Ciudad"
+                                      item-key="ciudades"
+                                      item-value="_id"
+                                      :error-messages="errors"
+                                      outlined
+                                      label="Cuidad"
+                                      data-vv-name="ciudad"
+                                      required
+                                    ></v-select>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="contacto" rules="required">
-                                    <v-text-field v-model="contacto" :error-messages="errors" label="Contacto" outlined
-                                      required></v-text-field>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="contacto"
+                                    rules="required"
+                                  >
+                                    <v-text-field
+                                      v-model="contacto"
+                                      :error-messages="errors"
+                                      label="Contacto"
+                                      outlined
+                                      required
+                                    ></v-text-field>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="teléfono del contacto"
-                                    rules="required">
-                                    <v-text-field v-model="celularContacto" :error-messages="errors"
-                                      label="Telefono contacto" outlined required></v-text-field>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="teléfono del contacto"
+                                    rules="required"
+                                  >
+                                    <v-text-field
+                                      v-model="celularContacto"
+                                      :error-messages="errors"
+                                      label="Telefono contacto"
+                                      outlined
+                                      required
+                                    ></v-text-field>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="teléfono" rules="required">
-                                    <v-text-field v-model="telefono" :error-messages="errors" label="Teléfono" outlined
-                                      required></v-text-field>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="teléfono"
+                                    rules="required"
+                                  >
+                                    <v-text-field
+                                      v-model="telefono"
+                                      :error-messages="errors"
+                                      label="Teléfono"
+                                      outlined
+                                      required
+                                    ></v-text-field>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
-                                    <v-text-field v-model="email" :error-messages="errors" label="E-mail"
-                                      prepend-icon='mdi-email' outlined required></v-text-field>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="Email"
+                                    rules="required|email"
+                                  >
+                                    <v-text-field
+                                      v-model="email"
+                                      :error-messages="errors"
+                                      label="E-mail"
+                                      prepend-icon="mdi-email"
+                                      outlined
+                                      required
+                                    ></v-text-field>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="contraseña" vid="password"
-                                    :rules="{ required: true, min: 8 }">
-                                    <v-text-field v-model="password" :error-messages="errors" label="Contraseña"
-                                      type="password" outlined prepend-icon='mdi-lock' required></v-text-field>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="contraseña"
+                                    vid="password"
+                                    :rules="{ required: true, min: 8 }"
+                                  >
+                                    <v-text-field
+                                      v-model="password"
+                                      :error-messages="errors"
+                                      label="Contraseña"
+                                      type="password"
+                                      outlined
+                                      prepend-icon="mdi-lock"
+                                      required
+                                    ></v-text-field>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="confirmar contraseña"
-                                    rules='required|confirmed:password'>
-                                    <v-text-field v-model="confirmation" :error-messages="errors"
-                                      label="confirmar contraseña" outlined type="password" required></v-text-field>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="confirmar contraseña"
+                                    rules="required|confirmed:password"
+                                  >
+                                    <v-text-field
+                                      v-model="confirmation"
+                                      :error-messages="errors"
+                                      label="confirmar contraseña"
+                                      outlined
+                                      type="password"
+                                      required
+                                    ></v-text-field>
                                   </validation-provider>
-                                  <validation-provider v-slot="{ errors }" name="rol" rules="required">
-                                    <v-select v-model="roll" :items="roles" :error-messages="errors" outlined
-                                      label="Roles" data-vv-name="roles" required></v-select>
+                                  <validation-provider
+                                    v-slot="{ errors }"
+                                    name="rol"
+                                    rules="required"
+                                  >
+                                    <v-select
+                                      v-model="roll"
+                                      :items="roles"
+                                      :error-messages="errors"
+                                      outlined
+                                      label="Roles"
+                                      data-vv-name="roles"
+                                      required
+                                    ></v-select>
                                   </validation-provider>
-                                  <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block
-                                    @click="registrar">
+                                  <v-btn
+                                    color="primary"
+                                    class="mr-4"
+                                    type="submit"
+                                    :disabled="invalid"
+                                    rounded
+                                    block
+                                    @click="registrar"
+                                  >
                                     Registrar
                                   </v-btn>
                                 </form>
                               </validation-observer>
                               <v-card-actions>
+                                <v-spacer></v-spacer>
                                 <v-hover v-slot="{ hover }">
-                                  <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
+                                  <v-btn
+                                    class="ml-5"
+                                    text
+                                    @click="close"
+                                    :style="{ background: hover ? 'red' : '' }"
+                                  >
                                     Cerrar
                                   </v-btn>
                                 </v-hover>
@@ -158,11 +332,18 @@
                             </v-card>
                           </v-dialog>
                         </v-card-title>
-                        <v-data-table :headers="headers" :items="buscar" :loading="myLoading"
-                          loading-text="Cargando... Por favor espera">
+                        <v-data-table
+                          :headers="headers"
+                          :items="buscar"
+                          :loading="myLoading"
+                          loading-text="Cargando... Por favor espera"
+                        >
                           <template v-slot:[`item.actions`]="{ item }">
                             <v-btn color="black" @click="llenarInfo(item)" icon>
-                              <font-awesome-icon style="font-size:20px" icon="fa-solid fa-user-plus" />
+                              <font-awesome-icon
+                                style="font-size: 20px"
+                                icon="fa-solid fa-user-plus"
+                              />
                             </v-btn>
                           </template>
                         </v-data-table>
@@ -171,9 +352,16 @@
                   </v-row>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogo = false">
-                      Cerrar
-                    </v-btn>
+                    <v-hover v-slot="{ hover }">
+                      <v-btn
+                        class="ml-5"
+                        text
+                        @click="close"
+                        :style="{ background: hover ? 'red' : '' }"
+                      >
+                        Cerrar
+                      </v-btn>
+                    </v-hover>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -187,21 +375,61 @@
           </v-col>
 
           <v-col cols="8" class="pl-0">
-            <v-text-field v-model="person.nombre" class="field pl-1 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.direccion" class="field pl-1 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.departamento" class="field pl-1 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.contacto" class="field pl-1 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.celularContacto" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field
+              v-model="person.nombre"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
+            <v-text-field
+              v-model="person.direccion"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
+            <v-text-field
+              v-model="person.departamento"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
+            <v-text-field
+              v-model="person.contacto"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
+            <v-text-field
+              v-model="person.celularContacto"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
 
-            <v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
-              offset-y min-width="auto">
+            <v-menu
+              v-model="menu1"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
               <template v-slot:activator="{ on, attrs }">
-                <v-text-field v-model="validezOferta" prepend-icon="mdi-calendar" readonly class="field px-0 py-0 my-0"
-                  height="26" v-bind="attrs" v-on="on"></v-text-field>
+                <v-text-field
+                  v-model="validezOferta"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                  class="field px-0 py-0 my-0"
+                  height="26"
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
               </template>
-              <v-date-picker v-model="validezOferta" @input="menu1 = false"></v-date-picker>
+              <v-date-picker
+                v-model="validezOferta"
+                @input="menu1 = false"
+              ></v-date-picker>
             </v-menu>
-            <v-text-field v-model="person.elaborador" class="field pl-1 px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field
+              v-model="person.elaborador"
+              class="field pl-1 px-0 py-0 my-0"
+              height="26"
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -217,20 +445,60 @@
             <p for="Name" class="label mb-0">Cargo</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field v-model="person.cc" class="field pl-1 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.ciudad" class="field pl-1 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.telefono" class="field pl-1 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.cargo" class="field pl-1 py-0 my-0" height="26"></v-text-field>
-            <v-text-field v-model="person.correoContacto" class="field pl-1 py-0 my-0" height="26"></v-text-field>
-            <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
-              offset-y min-width="auto">
+            <v-text-field
+              v-model="person.cc"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
+            <v-text-field
+              v-model="person.ciudad"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
+            <v-text-field
+              v-model="person.telefono"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
+            <v-text-field
+              v-model="person.cargo"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
+            <v-text-field
+              v-model="person.correoContacto"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
+            <v-menu
+              v-model="menu2"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
               <template v-slot:activator="{ on, attrs }">
-                <v-text-field v-model="entregaResultados" prepend-icon="mdi-calendar" readonly
-                  class="field px-0 py-0 my-0" height="26" v-bind="attrs" v-on="on"></v-text-field>
+                <v-text-field
+                  v-model="entregaResultados"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                  class="field px-0 py-0 my-0"
+                  height="26"
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
               </template>
-              <v-date-picker v-model="entregaResultados" @input="menu2 = false"></v-date-picker>
+              <v-date-picker
+                v-model="entregaResultados"
+                @input="menu2 = false"
+              ></v-date-picker>
             </v-menu>
-            <v-text-field v-model="person.cargoElaborador" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field
+              v-model="person.cargoElaborador"
+              class="field pl-1 py-0 my-0"
+              height="26"
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -252,11 +520,22 @@
             Ensayos
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
+            <v-text-field
+              label="buscador"
+              v-model="search"
+              single-line
+              hide-details
+            ></v-text-field>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                <v-btn
+                  color="primary"
+                  dark
+                  class="mb-2"
+                  v-bind="attrs"
+                  v-on="on"
+                >
                   Nuevo Item
                 </v-btn>
               </template>
@@ -264,13 +543,27 @@
                 <v-card-title>
                   ENSAYOS
                   <v-spacer></v-spacer>
-                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
+                  <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                  >
                   </v-text-field>
                 </v-card-title>
-                <v-data-table :headers="encabezadoEnsayo" :items="ensayos1" :search="search" item-key="ensayos">
+                <v-data-table
+                  :headers="encabezadoEnsayo"
+                  :items="ensayos1"
+                  :search="search"
+                  item-key="ensayos"
+                >
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="ensayoCotizacion(item)" icon>
-                      <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
+                      <font-awesome-icon
+                        style="font-size: 20px"
+                        icon="fa-solid fa-plus"
+                      />
                     </v-btn>
                   </template>
                 </v-data-table>
@@ -303,11 +596,22 @@
             Ensayos
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
+            <v-text-field
+              label="buscador"
+              v-model="search"
+              single-line
+              hide-details
+            ></v-text-field>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialogItem2" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                <v-btn
+                  color="primary"
+                  dark
+                  class="mb-2"
+                  v-bind="attrs"
+                  v-on="on"
+                >
                   Nuevo Item
                 </v-btn>
               </template>
@@ -315,13 +619,27 @@
                 <v-card-title>
                   ENSAYOS
                   <v-spacer></v-spacer>
-                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
+                  <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                  >
                   </v-text-field>
                 </v-card-title>
-                <v-data-table :headers="encabezadoEnsayo" :items="ensayos2" :search="search" item-key="ensayos">
+                <v-data-table
+                  :headers="encabezadoEnsayo"
+                  :items="ensayos2"
+                  :search="search"
+                  item-key="ensayos"
+                >
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="ensayoCotizacion2(item)" icon>
-                      <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
+                      <font-awesome-icon
+                        style="font-size: 20px"
+                        icon="fa-solid fa-plus"
+                      />
                     </v-btn>
                   </template>
                 </v-data-table>
@@ -354,11 +672,22 @@
             Ensayos
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
+            <v-text-field
+              label="buscador"
+              v-model="search"
+              single-line
+              hide-details
+            ></v-text-field>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialogItem3" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                <v-btn
+                  color="primary"
+                  dark
+                  class="mb-2"
+                  v-bind="attrs"
+                  v-on="on"
+                >
                   Nuevo Item
                 </v-btn>
               </template>
@@ -366,13 +695,27 @@
                 <v-card-title>
                   ENSAYOS
                   <v-spacer></v-spacer>
-                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
+                  <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                  >
                   </v-text-field>
                 </v-card-title>
-                <v-data-table :headers="encabezadoEnsayo" :items="ensayos3" :search="search" item-key="ensayos">
+                <v-data-table
+                  :headers="encabezadoEnsayo"
+                  :items="ensayos3"
+                  :search="search"
+                  item-key="ensayos"
+                >
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="ensayoCotizacion3(item)" icon>
-                      <font-awesome-icon style="font-size:20px" icon="fa-solid fa-plus" />
+                      <font-awesome-icon
+                        style="font-size: 20px"
+                        icon="fa-solid fa-plus"
+                      />
                     </v-btn>
                   </template>
                 </v-data-table>
@@ -394,16 +737,29 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-btn class="ml-4 my-6 primary" @click="cotizacion" v-if="this.$store.state.cotizacionVer == false">
+      <v-btn
+        class="ml-4 my-6 primary"
+        @click="cotizacion"
+        v-if="this.$store.state.cotizacionVer == false"
+      >
         subir cotización
       </v-btn>
       <v-btn class="ml-4 my-6" @click="modificarCotizacion" v-else>
         editar cotización
       </v-btn>
       <v-spacer></v-spacer>
-      <v-text-field v-model="observacion" class="pr-2 my-6 py-0" label="Observaciones"></v-text-field>
+      <v-text-field
+        v-model="observacion"
+        class="pr-2 my-6 py-0"
+        label="Observaciones"
+      ></v-text-field>
       <v-spacer></v-spacer>
-      <v-text-field v-model="descuento" class="pr-2 my-6 py-0" type="number" label="Descuento Global"></v-text-field>
+      <v-text-field
+        v-model="descuento"
+        class="pr-2 my-6 py-0"
+        type="number"
+        label="Descuento Global"
+      ></v-text-field>
     </v-row>
     <!-- <v-row>
       <v-col cols="8" class="py-0 px-0">
@@ -591,25 +947,30 @@
 
 <script>
 import axios from "axios";
-import { required, email, min, confirmed } from 'vee-validate/dist/rules'
-import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
-setInteractionMode('eager')
-extend('required', {
+import { required, email, min, confirmed } from "vee-validate/dist/rules";
+import {
+  extend,
+  ValidationObserver,
+  ValidationProvider,
+  setInteractionMode,
+} from "vee-validate";
+setInteractionMode("eager");
+extend("required", {
   ...required,
-  message: '{_field_} no puede estar vacio',
-})
-extend('email', {
+  message: "{_field_} no puede estar vacio",
+});
+extend("email", {
   ...email,
-  message: 'Email must be valid',
-})
-extend('min', {
+  message: "Email must be valid",
+});
+extend("min", {
   ...min,
-  message: 'El campo {_field_} debe tener {length} caracteres o más'
-})
-extend('confirmed', {
+  message: "El campo {_field_} debe tener {length} caracteres o más",
+});
+extend("confirmed", {
   ...confirmed,
-  message: 'El campo {_field_} debe coincidir con contraseña'
-})
+  message: "El campo {_field_} debe coincidir con contraseña",
+});
 export default {
   name: "PageCotizacion",
   components: {
@@ -618,7 +979,7 @@ export default {
   },
   data() {
     return {
-      formato: '',
+      formato: "",
       search: "",
       myLoading: true,
       dialogo: false,
@@ -629,13 +990,21 @@ export default {
           sortable: false,
           value: "",
         },
-        { text: "Descripción del ensayo", value: "descripcion", sortable: false },
+        {
+          text: "Descripción del ensayo",
+          value: "descripcion",
+          sortable: false,
+        },
         { text: "unidades", value: "unidades", sortable: false },
         { text: "Técnica analítica", value: "tecnica", sortable: false },
         { text: "Método analítico", value: "metodo", sortable: false },
-        { text: "Límite de cuantificación", value: "limiteCuantificacion", sortable: false },
+        {
+          text: "Límite de cuantificación",
+          value: "limiteCuantificacion",
+          sortable: false,
+        },
         { text: "Costo del ensayo", value: "costo", sortable: false },
-        { text: "Acciones", value: 'actions', sortable: false },
+        { text: "Acciones", value: "actions", sortable: false },
       ],
       primerItem: [],
       usuarios: [],
@@ -655,11 +1024,7 @@ export default {
         elaborador: this.$store.state.elaborador.nombre,
         cargoElaborador: this.$store.state.elaborador.rol,
       },
-      rol: [
-        "administrador",
-        "cliente",
-        "director"
-      ],
+      rol: ["administrador", "cliente", "director"],
       busqueda: "",
       Roles: "",
       dialog: false,
@@ -702,28 +1067,40 @@ export default {
         { text: "unidades", value: "unidades", sortable: false },
         { text: "Acciones", value: "actions", sortable: false },
       ],
-      id: '',
-      ensa: '',
+      id: "",
+      ensa: "",
       descuento: null,
-      observacion: '',
+      observacion: "",
       limiteCuantificacion: null,
       item1: {
-        itemsEnsayo: []
+        itemsEnsayo: [],
       },
-      fechaEmision: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-      validezOferta: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-      entregaResultados: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      fechaEmision: new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .substr(0, 10),
+      validezOferta: new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .substr(0, 10),
+      entregaResultados: new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .substr(0, 10),
       menu2: false,
       menu1: false,
       dialogItem2: false,
       segundoItem: [],
       item2: {
-        itemsEnsayo: []
+        itemsEnsayo: [],
       },
       dialogItem3: false,
       tercerItem: [],
       item3: {
-        itemsEnsayo: []
+        itemsEnsayo: [],
       },
       encabezadoCotizacion: [
         {
@@ -734,8 +1111,16 @@ export default {
         },
         { text: "Fecha de emision", value: "fechaEmision", sortable: false },
         { text: "Cliente", value: "idCliente", sortable: false },
-        { text: "Validez de la oferta", value: "validezOferta", sortable: false },
-        { text: "Entrega de resultados", value: "entregaResultados", sortable: false },
+        {
+          text: "Validez de la oferta",
+          value: "validezOferta",
+          sortable: false,
+        },
+        {
+          text: "Entrega de resultados",
+          value: "entregaResultados",
+          sortable: false,
+        },
         { text: "Elaborador", value: "idElaboradoPor", sortable: false },
         { text: "Items", value: "items", sortable: false },
         { text: "Observaciones", value: "observaciones", sortable: false },
@@ -746,41 +1131,38 @@ export default {
         { text: "Estado", value: "estado", sortable: false },
         { text: "Acciones", value: "actions", sortable: false },
       ],
-      numeroCotizacion: 'XXXX-XXXXVX',
+      numeroCotizacion: "XXXX-XXXXVX",
       cotizaciones: [],
-      idCotizacionEditar: '',
+      idCotizacionEditar: "",
       dialogCotizacion: false,
 
       /* variables del registro de usuario */
       dialogUser: false,
       select: null,
-      nombre: '',
-      documento: '',
-      direccion: '',
-      departamento: '',
-      ciudad: '',
-      contacto: '',
-      celularContacto: '',
-      telefono: '',
-      email: '',
-      password: '',
-      confirmation: '',
-      roll: '',
-      items: [
-        'Natural',
-        'Jurídica'
-      ],
+      nombre: "",
+      documento: "",
+      direccion: "",
+      departamento: "",
+      ciudad: "",
+      contacto: "",
+      celularContacto: "",
+      telefono: "",
+      email: "",
+      password: "",
+      confirmation: "",
+      roll: "",
+      items: ["Natural", "Jurídica"],
       roles: [
-        'cliente',
-        'secretario',
-        'administrador',
-        'director',
-        'especialista',
-        'supervisor'
+        "cliente",
+        "secretario",
+        "administrador",
+        "director",
+        "especialista",
+        "supervisor",
       ],
       departa: [],
-      ciudades: []
-    }
+      ciudades: [],
+    };
   },
   computed: {
     buscar() {
@@ -802,25 +1184,64 @@ export default {
           for (let i = 0; i < res.data.usuario.length; i++) {
             const element = res.data.usuario[i];
             if (element.estado == 1) {
-              this.usuarios.push(element)
+              this.usuarios.push(element);
             }
           }
         })
         .catch((err) => {
           console.log(err);
+
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
         });
     },
     traerCotizaciones() {
-      axios.get('https://labficat.herokuapp.com/api/cotizacion')
+      axios
+        .get("https://labficat.herokuapp.com/api/cotizacion")
         .then((res) => {
-          this.cotizaciones = res.data.cotizacion
+          this.cotizaciones = res.data.cotizacion;
         })
         .catch((err) => {
           console.log(err);
-        })
+
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
+        });
     },
     llenarInfo(user) {
-      this.id = user._id
+      this.id = user._id;
       this.person.nombre = user.nombre;
       this.person.cc = user.documento;
       this.person.direccion = user.direccion;
@@ -834,48 +1255,72 @@ export default {
     },
     modificarCotizacion() {
       let header = { headers: { "x-token": this.$store.state.token } };
-      axios.put(`https://labficat.herokuapp.com/api/cotizacion/modificar/${this.idCotizacionEditar}`, {
-        fechaEmision: this.fechaEmision,
-        idCliente: this.id,
-        validezOferta: this.validezOferta,
-        entregaResultados: this.entregaResultados,
-        idElaboradoPor: this.$store.state.elaborador.id,
-        items: {
-          item1: this.item1,
-          item2: this.item2,
-          item3: this.item3
-        },
-        observaciones: this.observacion,
-        descuento: this.descuento
-      },header)
+      axios
+        .put(
+          `https://labficat.herokuapp.com/api/cotizacion/modificar/${this.idCotizacionEditar}`,
+          {
+            fechaEmision: this.fechaEmision,
+            idCliente: this.id,
+            validezOferta: this.validezOferta,
+            entregaResultados: this.entregaResultados,
+            idElaboradoPor: this.$store.state.elaborador.id,
+            items: {
+              item1: this.item1,
+              item2: this.item2,
+              item3: this.item3,
+            },
+            observaciones: this.observacion,
+            descuento: this.descuento,
+          },
+          header
+        )
         .then((res) => {
-          console.log(res.data.cotizacion)
+          console.log(res.data.cotizacion);
           this.$swal({
             icon: "success",
             title: "Actualización de la cotización exitoso",
           });
-          this.idCotizacionEditar = '';
+          this.idCotizacionEditar = "";
           this.vaciarInformacion();
         })
         .catch((err) => {
-          console.log(err)
-          this.$swal({
-            icon: 'error',
-            title: "Error en la actualizacion de la cotización",
-          });
-        })
+          console.log(err);
+
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          } else {
+            this.$swal({
+              icon: "error",
+              title: "Error en la actualizacion de la cotización",
+            });
+          }
+        });
     },
     ensayoCotizacion(ensayo) {
       let isEnsayo1 = null;
-      isEnsayo1 = this.primerItem.find(e =>
-        e._id == ensayo._id)
+      isEnsayo1 = this.primerItem.find((e) => e._id == ensayo._id);
       if (isEnsayo1 == undefined) {
         this.primerItem.push(ensayo);
         this.item1.itemsEnsayo.push({
           ensayo: ensayo._id,
           limiteCuantificacion: ensayo.limiteCuantificacion,
-          costoEnsayo: ensayo.costo
-        })
+          costoEnsayo: ensayo.costo,
+        });
       } else {
         this.$swal({
           icon: "error",
@@ -885,16 +1330,15 @@ export default {
     },
     ensayoCotizacion2(ensayo) {
       let isEnsayo2 = null;
-      isEnsayo2 = this.segundoItem.find(e =>
-        e._id == ensayo._id)
+      isEnsayo2 = this.segundoItem.find((e) => e._id == ensayo._id);
 
       if (isEnsayo2 == undefined) {
         this.segundoItem.push(ensayo);
         this.item2.itemsEnsayo.push({
           ensayo: ensayo._id,
           limiteCuantificacion: ensayo.limiteCuantificacion,
-          costoEnsayo: ensayo.costo
-        })
+          costoEnsayo: ensayo.costo,
+        });
       } else {
         this.$swal({
           icon: "error",
@@ -904,15 +1348,14 @@ export default {
     },
     ensayoCotizacion3(ensayo) {
       let isEnsayo3 = null;
-      isEnsayo3 = this.tercerItem.find(e =>
-        e._id == ensayo._id)
+      isEnsayo3 = this.tercerItem.find((e) => e._id == ensayo._id);
       if (isEnsayo3 == undefined) {
         this.tercerItem.push(ensayo);
         this.item3.itemsEnsayo.push({
           ensayo: ensayo._id,
           limiteCuantificacion: ensayo.limiteCuantificacion,
-          costoEnsayo: ensayo.costo
-        })
+          costoEnsayo: ensayo.costo,
+        });
       } else {
         this.$swal({
           icon: "error",
@@ -922,89 +1365,140 @@ export default {
     },
     cotizacion() {
       let header = { headers: { "x-token": this.$store.state.token } };
-      axios.post('https://labficat.herokuapp.com/api/cotizacion', {
-        fechaEmision: this.fechaEmision,
-        idCliente: this.id,
-        validezOferta: this.validezOferta,
-        entregaResultados: this.entregaResultados,
-        idElaboradoPor: this.$store.state.elaborador.id,
-        items: {
-          item1: this.item1,
-          item2: this.item2,
-          item3: this.item3
-        },
-        observaciones: this.observacion,
-        descuento: this.descuento
-      }, header)
+      axios
+        .post(
+          "https://labficat.herokuapp.com/api/cotizacion",
+          {
+            fechaEmision: this.fechaEmision,
+            idCliente: this.id,
+            validezOferta: this.validezOferta,
+            entregaResultados: this.entregaResultados,
+            idElaboradoPor: this.$store.state.elaborador.id,
+            items: {
+              item1: this.item1,
+              item2: this.item2,
+              item3: this.item3,
+            },
+            observaciones: this.observacion,
+            descuento: this.descuento,
+          },
+          header
+        )
         .then((res) => {
           this.$swal({
             icon: "success",
             title: "Registro de la cotización exitoso",
           });
           console.log(res.data);
-          this.vaciarInformacion()
+          this.vaciarInformacion();
         })
         .catch((err) => {
-          this.$swal({
-            icon: "error",
-            title: "Error al registrar la cotización",
-          });
           console.log(err);
-        })
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          } else {
+            this.$swal({
+              icon: "error",
+              title: "Error al registrar la cotización",
+            });
+          }
+        });
     },
     infoCotizacionEditar() {
       if (this.$store.state.cotizacionVer != false) {
-        this.item1.itemsEnsayo = this.$store.state.cotizacionEditar.items.item1.itemsEnsayo;
-        this.item2.itemsEnsayo = this.$store.state.cotizacionEditar.items.item2.itemsEnsayo;
-        this.item3.itemsEnsayo = this.$store.state.cotizacionEditar.items.item3.itemsEnsayo;
+        this.item1.itemsEnsayo =
+          this.$store.state.cotizacionEditar.items.item1.itemsEnsayo;
+        this.item2.itemsEnsayo =
+          this.$store.state.cotizacionEditar.items.item2.itemsEnsayo;
+        this.item3.itemsEnsayo =
+          this.$store.state.cotizacionEditar.items.item3.itemsEnsayo;
 
         this.idCotizacionEditar = this.$store.state.cotizacionEditar._id;
         this.id = this.$store.state.cotizacionEditar.idCliente._id;
-        this.person.nombre = this.$store.state.cotizacionEditar.idCliente.nombre;
+        this.person.nombre =
+          this.$store.state.cotizacionEditar.idCliente.nombre;
         this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento;
-        this.person.direccion = this.$store.state.cotizacionEditar.idCliente.direccion;
-        this.person.ciudad = this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad;
-        this.person.departamento = this.$store.state.cotizacionEditar.idCliente.ciudad.departamento;
-        this.person.telefono = this.$store.state.cotizacionEditar.idCliente.telefono;
-        this.person.contacto = this.$store.state.cotizacionEditar.idCliente.contacto;
+        this.person.direccion =
+          this.$store.state.cotizacionEditar.idCliente.direccion;
+        this.person.ciudad =
+          this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad;
+        this.person.departamento =
+          this.$store.state.cotizacionEditar.idCliente.ciudad.departamento;
+        this.person.telefono =
+          this.$store.state.cotizacionEditar.idCliente.telefono;
+        this.person.contacto =
+          this.$store.state.cotizacionEditar.idCliente.contacto;
         this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol;
-        this.person.celularContacto = this.$store.state.cotizacionEditar.idCliente.celularContacto;
-        this.person.correoContacto = this.$store.state.cotizacionEditar.idCliente.correo;
+        this.person.celularContacto =
+          this.$store.state.cotizacionEditar.idCliente.celularContacto;
+        this.person.correoContacto =
+          this.$store.state.cotizacionEditar.idCliente.correo;
         this.descuento = this.$store.state.cotizacionEditar.descuento;
         this.observacion = this.$store.state.cotizacionEditar.observaciones;
-        this.numeroCotizacion = this.$store.state.cotizacionEditar.numCotizacion;
+        this.numeroCotizacion =
+          this.$store.state.cotizacionEditar.numCotizacion;
 
-        for (let i = 0; i < this.$store.state.cotizacionEditar.items.item1.itemsEnsayo.length; i++) {
-          const element = this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
+        for (
+          let i = 0;
+          i < this.$store.state.cotizacionEditar.items.item1.itemsEnsayo.length;
+          i++
+        ) {
+          const element =
+            this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
           this.primerItem.push(element.ensayo);
         }
 
-        for (let i = 0; i < this.$store.state.cotizacionEditar.items.item2.itemsEnsayo.length; i++) {
-          const element = this.$store.state.cotizacionEditar.items.item2.itemsEnsayo[i];
+        for (
+          let i = 0;
+          i < this.$store.state.cotizacionEditar.items.item2.itemsEnsayo.length;
+          i++
+        ) {
+          const element =
+            this.$store.state.cotizacionEditar.items.item2.itemsEnsayo[i];
           this.segundoItem.push(element.ensayo);
         }
 
-        for (let i = 0; i < this.$store.state.cotizacionEditar.items.item3.itemsEnsayo.length; i++) {
-          const element = this.$store.state.cotizacionEditar.items.item3.itemsEnsayo[i];
+        for (
+          let i = 0;
+          i < this.$store.state.cotizacionEditar.items.item3.itemsEnsayo.length;
+          i++
+        ) {
+          const element =
+            this.$store.state.cotizacionEditar.items.item3.itemsEnsayo[i];
           this.tercerItem.push(element.ensayo);
         }
       }
     },
     eliminarCotizacion1(cotizacion) {
-      this.primerItem.splice(cotizacion, 1)
-      this.item1.itemsEnsayo.splice(cotizacion, 1)
+      this.primerItem.splice(cotizacion, 1);
+      this.item1.itemsEnsayo.splice(cotizacion, 1);
 
       console.log(this.item1);
     },
     eliminarCotizacion2(cotizacion) {
-      this.segundoItem.splice(cotizacion, 1)
-      this.item2.itemsEnsayo.splice(cotizacion, 1)
+      this.segundoItem.splice(cotizacion, 1);
+      this.item2.itemsEnsayo.splice(cotizacion, 1);
 
       console.log(this.item2);
     },
     eliminarCotizacion3(cotizacion) {
-      this.tercerItem.splice(cotizacion, 1)
-      this.item3.itemsEnsayo.splice(cotizacion, 1)
+      this.tercerItem.splice(cotizacion, 1);
+      this.item3.itemsEnsayo.splice(cotizacion, 1);
 
       console.log(this.item3);
     },
@@ -1015,38 +1509,64 @@ export default {
           this.ensayos1 = res.data.ensayos;
           this.ensayos2 = res.data.ensayos;
           this.ensayos3 = res.data.ensayos;
-
         })
         .catch((err) => {
           console.log(err);
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
         });
     },
     vaciarInformacion() {
       this.primerItem.splice(0, this.primerItem.length);
       this.segundoItem.splice(0, this.segundoItem.length);
       this.tercerItem.splice(0, this.tercerItem.length);
-      this.id = '';
-      this.validezOferta = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
-      this.entregaResultados = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+      this.id = "";
+      this.validezOferta = new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .substr(0, 10);
+      this.entregaResultados = new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .substr(0, 10);
       this.descuento = null;
-      this.observacion = '',
-        this.item1.itemsEnsayo.splice(0, this.item1.itemsEnsayo.length)
-      this.item2.itemsEnsayo.splice(0, this.item2.itemsEnsayo.length)
-      this.item3.itemsEnsayo.splice(0, this.item3.itemsEnsayo.length)
+      (this.observacion = ""),
+        this.item1.itemsEnsayo.splice(0, this.item1.itemsEnsayo.length);
+      this.item2.itemsEnsayo.splice(0, this.item2.itemsEnsayo.length);
+      this.item3.itemsEnsayo.splice(0, this.item3.itemsEnsayo.length);
 
-      this.person.nombre = '';
-      this.person.cc = '';
-      this.person.direccion = '';
-      this.person.ciudad = '';
-      this.person.departamento = '';
-      this.person.telefono = '';
-      this.person.contacto = '';
-      this.person.celularContacto = '';
-      this.person.cargo = '';
-      this.person.correoContacto = '';
+      this.person.nombre = "";
+      this.person.cc = "";
+      this.person.direccion = "";
+      this.person.ciudad = "";
+      this.person.departamento = "";
+      this.person.telefono = "";
+      this.person.contacto = "";
+      this.person.celularContacto = "";
+      this.person.cargo = "";
+      this.person.correoContacto = "";
     },
     close() {
       this.dialog = false;
+      this.dialogo = false;
       this.dialogItem2 = false;
       this.dialogItem3 = false;
       this.dialogCotizacion = false;
@@ -1060,43 +1580,84 @@ export default {
     /* metodos para el registro de una persona */
 
     traerDepartamentos() {
-      axios.get('https://labficat.herokuapp.com/api/ciudad/departamentos')
+      axios
+        .get("https://labficat.herokuapp.com/api/ciudad/departamentos")
         .then((response) => {
           console.log(response.data.departamentos);
-          this.departa = response.data.departamentos
+          this.departa = response.data.departamentos;
           console.log(this.departa);
-          console.log('hola');
+          console.log("hola");
         })
-        .catch((error) => {
-          console.log(error);
-        })
+        .catch((err) => {
+          console.log(err);
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
+        });
     },
     traerCiudades(ciudad) {
       console.log(ciudad);
-      axios.post('https://labficat.herokuapp.com/api/ciudad/nombreDepartamento', { departamento: this.departamento })
+      axios
+        .post("https://labficat.herokuapp.com/api/ciudad/nombreDepartamento", {
+          departamento: this.departamento,
+        })
         .then((response) => {
           console.log(response.data.ciudades);
-          this.ciudades = response.data.ciudades
+          this.ciudades = response.data.ciudades;
           console.log(this.ciudades);
         })
-        .catch((error) => {
-          console.log(error);
-        })
+        .catch((err) => {
+          console.log(err);
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
+        });
     },
     registrar() {
-      axios.post('https://labficat.herokuapp.com/api/usuario', {
-        tipoPersona: this.select,
-        nombre: this.nombre,
-        documento: this.documento,
-        direccion: this.direccion,
-        ciudad: this.ciudad,
-        contacto: this.contacto,
-        celularContacto: this.celularContacto,
-        telefono: this.telefono,
-        correo: this.email,
-        password: this.password,
-        rol: this.roll
-      })
+      axios
+        .post("https://labficat.herokuapp.com/api/usuario", {
+          tipoPersona: this.select,
+          nombre: this.nombre,
+          documento: this.documento,
+          direccion: this.direccion,
+          ciudad: this.ciudad,
+          contacto: this.contacto,
+          celularContacto: this.celularContacto,
+          telefono: this.telefono,
+          correo: this.email,
+          password: this.password,
+          rol: this.roll,
+        })
         .then((res) => {
           console.log(res.data);
           this.$swal({
@@ -1107,24 +1668,63 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          this.$swal({
-            icon: "error",
-            title: "Error al registrar el usuario",
-          });
-        })
+
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          } else {
+            this.$swal({
+              icon: "error",
+              title: "Error al registrar el usuario",
+            });
+          }
+        });
     },
     traerCalidad() {
-      axios.post('https://labficat.herokuapp.com/api/calidad/formato', {
-        nombre: 'Oferta de Servicios'
-      })
+      axios
+        .post("https://labficat.herokuapp.com/api/calidad/formato", {
+          nombre: "Oferta de Servicios",
+        })
         .then((res) => {
-          console.log(res.data.calidad)
-          this.formato = res.data.calidad
+          console.log(res.data.calidad);
+          this.formato = res.data.calidad;
         })
         .catch((err) => {
-          console.log(err)
-        })
-    }
+          console.log(err);
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
+        });
+    },
   },
   created() {
     this.traerClientes();
@@ -1134,10 +1734,10 @@ export default {
     this.traerCalidad();
   },
   destroyed() {
-    this.vaciarInformacion()
-    console.log('hola');
-  }
-}
+    this.vaciarInformacion();
+    console.log("hola");
+  },
+};
 </script>
 <style scoped>
 #border {

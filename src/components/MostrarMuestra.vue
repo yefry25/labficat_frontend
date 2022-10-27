@@ -15,7 +15,7 @@
             loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
               <v-row>
-                <div v-if="item.estado==1">
+                <div v-if="item.estado == 1">
                   <v-btn @click="infoMuestraEditar(item)" icon>
                     <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
                   </v-btn>
@@ -110,6 +110,24 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          if (
+              err.response.data.msg ==
+              "Token expiró, por favor inicie sesión nuevamente"
+            ) {
+              this.$swal({
+                icon: "error",
+                title: `${err.response.data.msg}`,
+                confirmButtonText: "Ir a inicio de sesión",
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  this.$router.push("/");
+                  this.$store.state.token = undefined;
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("elaborador");
+                }
+              });
+            }
         });
     },
     infoMuestraEditar(muestra) {
@@ -118,9 +136,9 @@ export default {
       console.log(this.$store.state.muestraEditar);
     },
     estadoMuestra(muestra) {
+      let header = { headers: { "x-token": this.$store.state.token } };
       if (muestra.estado == 1) {
-        let header = { headers: { "x-token": this.$store.state.token } };
-        axios.put(`https://labficat.herokuapp.com/api/muestra/desactivar/${muestra._id}`,header)
+        axios.put(`https://labficat.herokuapp.com/api/muestra/desactivar/${muestra._id}`, {}, header)
           .then((res) => {
             console.log(res);
             this.$swal({
@@ -131,14 +149,33 @@ export default {
           })
           .catch((err) => {
             console.log(err);
-            this.$swal({
+            
+            if (
+              err.response.data.msg ==
+              "Token expiró, por favor inicie sesión nuevamente"
+            ) {
+              this.$swal({
+                icon: "error",
+                title: `${err.response.data.msg}`,
+                confirmButtonText: "Ir a inicio de sesión",
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  this.$router.push("/");
+                  this.$store.state.token = undefined;
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("elaborador");
+                }
+              });
+            } else{
+              this.$swal({
               icon: "error",
               title: "Error al desactivar la orden de servicio",
             });
+            }
           })
       } else {
-        let header = { headers: { "x-token": this.$store.state.token } };
-        axios.put(`https://labficat.herokuapp.com/api/muestra/activar/${muestra._id}`,header)
+        axios.put(`https://labficat.herokuapp.com/api/muestra/activar/${muestra._id}`, {}, header)
           .then((res) => {
             console.log(res);
             this.$swal({
@@ -149,16 +186,36 @@ export default {
           })
           .catch((err) => {
             console.log(err);
-            this.$swal({
+            
+            if (
+              err.response.data.msg ==
+              "Token expiró, por favor inicie sesión nuevamente"
+            ) {
+              this.$swal({
+                icon: "error",
+                title: `${err.response.data.msg}`,
+                confirmButtonText: "Ir a inicio de sesión",
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  this.$router.push("/");
+                  this.$store.state.token = undefined;
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("elaborador");
+                }
+              });
+            } else{
+              this.$swal({
               icon: "error",
               title: "Error al activar la muestra",
             });
+            }
           })
       }
     },
     fecha(r) {
-      let fecha = r.split('T')[0].replace(/-/g, "/")
-      console.log(fecha);
+      /* let fecha = r.split('T')[0].replace(/-/g, "/")
+      console.log(fecha); */
       let d = new Date(r);
       return d.toLocaleDateString();
     },

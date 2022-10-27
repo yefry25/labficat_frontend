@@ -187,8 +187,26 @@ export default {
             title: "Ingreso exitoso",
           });
         })
-        .catch((error) => {
-          console.log(error);
+        .catch((err) => {
+          console.log(err);
+          if (
+              err.response.data.msg ==
+              "Token expiró, por favor inicie sesión nuevamente"
+            ) {
+              this.$swal({
+                icon: "error",
+                title: `${err.response.data.msg}`,
+                confirmButtonText: "Ir a inicio de sesión",
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  this.$router.push("/");
+                  this.$store.state.token = undefined;
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("elaborador");
+                }
+              });
+            }
         });
     },
   },

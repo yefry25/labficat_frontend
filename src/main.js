@@ -24,7 +24,7 @@ Vue.config.productionTip = false;
 const router = new VueRouter({
   //aqui se ponen las rutas
   routes,
-  mode: "history",
+  mode: "hash"
 });
 
 new Vue({

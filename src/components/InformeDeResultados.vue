@@ -48,13 +48,13 @@
       <v-col cols="2" class="text-center">
         <p class="parrafo font-weight-black">
           Código <br />
-          {{informe[0].codigo}}
+          {{ informe[0].codigo }}
           <br />
-          Aprobación <br /> 
-          {{informe[0].aprobacion}} <br >
+          Aprobación <br />
+          {{ informe[0].aprobacion }} <br />
           <br />
           Versión <br />
-          {{informe[0].version}}
+          {{ informe[0].version }}
         </p>
       </v-col>
     </v-row>
@@ -234,35 +234,34 @@
                 </v-btn>
               </template>
               <v-card>
-                    <v-card-title>
-                      Ensayos
-                      <v-divider class="mx-4" inset vertical></v-divider>
-                      <v-spacer></v-spacer>
-                      <v-text-field
-                        label="buscador"
-                        v-model="busqueda"
-                        single-line
-                        hide-details
-                      ></v-text-field>
-                    </v-card-title>
-                    <v-data-table :headers="headerOrden" :items="orden">
-                      <template v-slot:[`item.actions`]="{ item }">
-                        <v-btn color="black" @click="infoOrden(item)" icon>
-                          <font-awesome-icon
-                            style="font-size: 20px"
-                            icon="fa-solid fa-plus"
-                          />
-                        </v-btn>
-                      </template>
-                    </v-data-table>
+                <v-card-title>
+                  Ensayos
+                  <v-divider class="mx-4" inset vertical></v-divider>
+                  <v-spacer></v-spacer>
+                  <v-text-field
+                    label="buscador"
+                    v-model="busqueda"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+                </v-card-title>
+                <v-data-table :headers="headerOrden" :items="orden">
+                  <template v-slot:[`item.actions`]="{ item }">
+                    <v-btn color="black" @click="infoOrden(item)" icon>
+                      <font-awesome-icon
+                        style="font-size: 20px"
+                        icon="fa-solid fa-plus"
+                      />
+                    </v-btn>
+                  </template>
+                </v-data-table>
 
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="close">
-                        Cerrar
-                      </v-btn>
-                    </v-card-actions>
-                  
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="close">
+                    Cerrar
+                  </v-btn>
+                </v-card-actions>
               </v-card>
             </v-dialog>
           </v-card-title>
@@ -470,6 +469,24 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
         });
     },
     llenarInfo(user) {
@@ -494,6 +511,24 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
         });
     },
     llenarInfoMuestra(muestra) {
@@ -531,10 +566,30 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          this.$swal({
-            icon: "error",
-            title: "Error al registrar el ensayo",
-          });
+
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          } else {
+            this.$swal({
+              icon: "error",
+              title: "Error al registrar el ensayo",
+            });
+          }
         });
     },
     infoOrden(orden) {
@@ -586,11 +641,30 @@ export default {
           });
         })
         .catch((err) => {
-          this.$swal({
-            icon: "error",
-            title: "Error al cargar la información",
-          });
           console.log(err);
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          } else {
+            this.$swal({
+              icon: "error",
+              title: "Error al cargar la información",
+            });
+          }
         });
     },
     close() {
@@ -612,20 +686,57 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
         });
     },
     traerCalidad() {
-      axios.post('https://labficat.herokuapp.com/api/calidad/formato', {
-        nombre:'Informe de Resultados'
-      })
+      axios
+        .post("https://labficat.herokuapp.com/api/calidad/formato", {
+          nombre: "Informe de Resultados",
+        })
         .then((res) => {
-          console.log(res.data.calidad)
-          this.informe=res.data.calidad
+          console.log(res.data.calidad);
+          this.informe = res.data.calidad;
         })
         .catch((err) => {
-          console.log(err)
-        })
-    }
+          console.log(err);
+          if (
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
+        });
+    },
   },
   created() {
     this.traerClientes();
