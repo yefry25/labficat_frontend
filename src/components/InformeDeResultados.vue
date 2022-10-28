@@ -2,11 +2,8 @@
   <v-container fluid style="height: 100%">
     <v-row>
       <v-col cols="2">
-        <v-img
-          width="164"
-          height="162"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png"
-        >
+        <v-img width="164" height="162"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png">
         </v-img>
       </v-col>
       <v-col cols="5" class="texto">
@@ -73,26 +70,10 @@
             <p for="Name" class="label mb-0">Ciudad</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field
-              v-model="person.nombre"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.cc"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.direccion"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.ciudad"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
+            <v-text-field v-model="person.nombre" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.cc" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.direccion" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.ciudad" class="field px-0 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -105,26 +86,10 @@
             <p for="Name" class="label mb-0">Correo electrónico</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field
-              v-model="person.departamento"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.contacto"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.telefono"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.correo"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
+            <v-text-field v-model="person.departamento" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.contacto" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.telefono" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.correo" class="field px-0 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -144,27 +109,11 @@
             <p for="Name" class="label mb-0">Muestra recolectada por</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field
-              v-model="muestra.munRecoleccion"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="muestra.direccionTomaMuestra"
-              class="field px-0 py-0 my-0"
-              height="26"
-            >
+            <v-text-field v-model="muestra.munRecoleccion" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="muestra.direccionTomaMuestra" class="field px-0 py-0 my-0" height="26">
             </v-text-field>
-            <v-text-field
-              v-model="muestra.lugarTomaMuestra"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="muestra.muestraRecolectadaPor"
-              class="field px-0 py-0 my-0"
-              height="26"
-            >
+            <v-text-field v-model="muestra.lugarTomaMuestra" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="muestra.muestraRecolectadaPor" class="field px-0 py-0 my-0" height="26">
             </v-text-field>
           </v-col>
         </v-row>
@@ -178,27 +127,11 @@
             <p for="Name" class="label mb-0">Fecha y hora de recolección</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field
-              v-model="muestra.procedimientoMuestreo"
-              class="field px-0 py-0 my-0"
-              height="26"
-            >
+            <v-text-field v-model="muestra.procedimientoMuestreo" class="field px-0 py-0 my-0" height="26">
             </v-text-field>
-            <v-text-field
-              v-model="muestra.tipoMuestra"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="muestra.matrizMuestra"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="muestra.fechaRecoleccion"
-              class="field px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
+            <v-text-field v-model="muestra.tipoMuestra" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="muestra.matrizMuestra" class="field px-0 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="muestra.fechaRecoleccion" class="field px-0 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -212,24 +145,12 @@
       <v-col class="px-0 py-0">
         <v-card>
           <v-card-title>
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            >
+            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
             </v-text-field>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialogEnsayoNuevo" persistent max-width="2000px">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  v-bind="attrs"
-                  v-on="on"
-                >
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                   Nuevo Ensayo
                 </v-btn>
               </template>
@@ -238,20 +159,12 @@
                   Ensayos
                   <v-divider class="mx-4" inset vertical></v-divider>
                   <v-spacer></v-spacer>
-                  <v-text-field
-                    label="buscador"
-                    v-model="busqueda"
-                    single-line
-                    hide-details
-                  ></v-text-field>
+                  <v-text-field label="buscador" v-model="busqueda" single-line hide-details></v-text-field>
                 </v-card-title>
                 <v-data-table :headers="headerOrden" :items="orden">
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="infoOrden(item)" icon>
-                      <font-awesome-icon
-                        style="font-size: 20px"
-                        icon="fa-solid fa-plus"
-                      />
+                      <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-plus" />
                     </v-btn>
                   </template>
                 </v-data-table>
@@ -265,11 +178,7 @@
               </v-card>
             </v-dialog>
           </v-card-title>
-          <v-data-table
-            :headers="headersEnsayo"
-            :items="ensayosMostrar"
-            :search="search"
-          >
+          <v-data-table :headers="headersEnsayo" :items="ensayosMostrar" :search="search">
             <template v-slot:footer>
               <v-card class="d-flex justify-end"> </v-card>
             </template>
@@ -412,7 +321,6 @@ export default {
       { text: "item", value: "idMuestra.item", sortable: false },
       { text: "Acciones", value: "actions", sortable: false },
     ],
-
     headersEnsayo: [
       {
         text: "Fecha de análisis",
@@ -438,16 +346,6 @@ export default {
     ],
     ensayosMostrar: [],
   }),
-  watch: {
-    model(val) {
-      if (val != null) this.tab = 0;
-      else this.tab = null;
-    },
-    search() {
-      // Items have already been loaded
-      if (this.items.length > 0) return;
-    },
-  },
   computed: {
     buscar() {
       return this.usuarios.filter((user) => {
@@ -465,7 +363,7 @@ export default {
         .get("https://labficat.herokuapp.com/api/usuario")
         .then((res) => {
           this.usuarios = res.data.usuario;
-          console.log(this.usuarios);
+          
         })
         .catch((err) => {
           console.log(err);
@@ -485,109 +383,6 @@ export default {
                 localStorage.removeItem("token");
                 localStorage.removeItem("elaborador");
               }
-            });
-          }
-        });
-    },
-    llenarInfo(user) {
-      console.log(user);
-      this.person.id = user._id;
-      this.person.nombre = user.nombre;
-      this.person.cc = user.documento;
-      this.person.direccion = user.direccion;
-      this.person.ciudad = user.ciudad.Ciudad;
-      this.person.departamento = user.ciudad.departamento;
-      this.person.telefono = user.telefono;
-      this.person.contacto = user.contacto;
-      this.person.correo = user.correo;
-
-      axios
-        .post(`https://labficat.herokuapp.com/api/muestra/cliente`, {
-          solicitante: this.person.id,
-        })
-        .then((res) => {
-          console.log(res.data.muestra);
-          this.muestrasDelCliente = res.data.muestra;
-        })
-        .catch((err) => {
-          console.log(err);
-          if (
-            err.response.data.msg ==
-            "Token expiró, por favor inicie sesión nuevamente"
-          ) {
-            this.$swal({
-              icon: "error",
-              title: `${err.response.data.msg}`,
-              confirmButtonText: "Ir a inicio de sesión",
-            }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                this.$router.push("/");
-                this.$store.state.token = undefined;
-                localStorage.removeItem("token");
-                localStorage.removeItem("elaborador");
-              }
-            });
-          }
-        });
-    },
-    llenarInfoMuestra(muestra) {
-      (this.muestra.munRecoleccion = muestra.munRecoleccion.departamento),
-        (this.muestra.direccionTomaMuestra = muestra.direccionTomaMuestra),
-        (this.muestra.lugarTomaMuestra = muestra.lugarTomaMuestra),
-        (this.muestra.muestraRecolectadaPor = muestra.muestraRecolectadaPor),
-        (this.muestra.procedimientoMuestreo = muestra.procedimientoMuestreo),
-        (this.muestra.tipoMuestra = muestra.tipoMuestra.tipos),
-        (this.muestra.matrizMuestra = muestra.matrizMuestra),
-        (this.muestra.fechaRecoleccion = muestra.fechaRecoleccion);
-    },
-    ensayoNuevo() {
-      axios
-        .post("https://labficat.herokuapp.com/api/ensayo", {
-          ensayo: this.ensayos.ensayo,
-          metodo: this.ensayos.metodo,
-          tecnica: this.ensayos.tecnica,
-          valorMinimo: this.ensayos.valorMinimo,
-          valorMaximo: this.ensayos.valorMaximo,
-          costo: this.ensayos.costo,
-          descripcion: this.ensayos.descripcion,
-          limiteCuantificacion: this.ensayos.limiteCuantificacion,
-          responsables: {
-            titular: this.ensayos.titular,
-            suplente: this.ensayos.suplente,
-          },
-        })
-        .then((res) => {
-          console.log(res.data.ensayos);
-          this.$swal({
-            icon: "success",
-            title: "Ensayo registrado exitosamente",
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-
-          if (
-            err.response.data.msg ==
-            "Token expiró, por favor inicie sesión nuevamente"
-          ) {
-            this.$swal({
-              icon: "error",
-              title: `${err.response.data.msg}`,
-              confirmButtonText: "Ir a inicio de sesión",
-            }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                this.$router.push("/");
-                this.$store.state.token = undefined;
-                localStorage.removeItem("token");
-                localStorage.removeItem("elaborador");
-              }
-            });
-          } else {
-            this.$swal({
-              icon: "error",
-              title: "Error al registrar el ensayo",
             });
           }
         });
@@ -599,35 +394,27 @@ export default {
         )
         .then((res) => {
           console.log(res.data.informe);
+          this.$swal({
+            icon: "success",
+            title: "La información se cargo exitosamente ",
+          });
+
           this.person.nombre = res.data.informe.idMuestra.solicitante.nombre;
           this.person.cc = res.data.informe.idMuestra.solicitante.documento;
-          this.person.direccion =
-            res.data.informe.idMuestra.solicitante.direccion;
-          this.person.ciudad =
-            res.data.informe.idMuestra.solicitante.ciudad.Ciudad;
-          this.person.departamento =
-            res.data.informe.idMuestra.solicitante.ciudad.departamento;
-          this.person.contacto =
-            res.data.informe.idMuestra.solicitante.contacto;
-          this.person.telefono =
-            res.data.informe.idMuestra.solicitante.telefono;
+          this.person.direccion = res.data.informe.idMuestra.solicitante.direccion;
+          this.person.ciudad = res.data.informe.idMuestra.solicitante.ciudad.Ciudad;
+          this.person.departamento = res.data.informe.idMuestra.solicitante.ciudad.departamento;
+          this.person.contacto = res.data.informe.idMuestra.solicitante.contacto;
+          this.person.telefono = res.data.informe.idMuestra.solicitante.telefono;
           this.person.correo = res.data.informe.idMuestra.solicitante.correo;
-          this.muestra.munRecoleccion =
-            res.data.informe.idMuestra.munRecoleccion.Ciudad;
-          (this.muestra.direccionTomaMuestra =
-            res.data.informe.idMuestra.direccionTomaMuestra),
-            (this.muestra.lugarTomaMuestra =
-              res.data.informe.idMuestra.lugarTomaMuestra),
-            (this.muestra.muestraRecolectadaPor =
-              res.data.informe.idMuestra.muestraRecolectadaPor),
-            (this.muestra.procedimientoMuestreo =
-              res.data.informe.idMuestra.procedimientoMuestreo),
-            (this.muestra.tipoMuestra =
-              res.data.informe.idMuestra.tipoMuestra.tipos),
-            (this.muestra.matrizMuestra =
-              res.data.informe.idMuestra.matrizMuestra),
-            (this.muestra.fechaRecoleccion =
-              res.data.informe.idMuestra.fechaRecoleccion);
+          this.muestra.munRecoleccion = res.data.informe.idMuestra.munRecoleccion.Ciudad;
+          this.muestra.direccionTomaMuestra = res.data.informe.idMuestra.direccionTomaMuestra;
+          this.muestra.lugarTomaMuestra = res.data.informe.idMuestra.lugarTomaMuestra;
+          this.muestra.muestraRecolectadaPor = res.data.informe.idMuestra.muestraRecolectadaPor;
+          this.muestra.procedimientoMuestreo = res.data.informe.idMuestra.procedimientoMuestreo;
+          this.muestra.tipoMuestra = res.data.informe.idMuestra.tipoMuestra.tipos;
+          this.muestra.matrizMuestra = res.data.informe.idMuestra.matrizMuestra;
+          this.muestra.fechaRecoleccion = res.data.informe.idMuestra.fechaRecoleccion;
 
           for (let i = 0; i < res.data.informe.itemsorden.length; i++) {
             const element = res.data.informe.itemsorden[i];
@@ -635,36 +422,13 @@ export default {
             this.ensayosMostrar.push(element.idensayo);
           }
           console.log(this.ensayosMostrar);
-          this.$swal({
-            icon: "success",
-            title: "se a cargado exitosamente ",
-          });
         })
         .catch((err) => {
           console.log(err);
-          if (
-            err.response.data.msg ==
-            "Token expiró, por favor inicie sesión nuevamente"
-          ) {
-            this.$swal({
-              icon: "error",
-              title: `${err.response.data.msg}`,
-              confirmButtonText: "Ir a inicio de sesión",
-            }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                this.$router.push("/");
-                this.$store.state.token = undefined;
-                localStorage.removeItem("token");
-                localStorage.removeItem("elaborador");
-              }
-            });
-          } else {
-            this.$swal({
-              icon: "error",
-              title: "Error al cargar la información",
-            });
-          }
+          this.$swal({
+            icon: "error",
+            title: "Error al cargar la información",
+          });
         });
     },
     close() {
@@ -680,30 +444,11 @@ export default {
       axios
         .get(`https://labficat.herokuapp.com/api/orden`)
         .then((res) => {
-          console.log(res.data.orden);
           this.orden = res.data.orden;
-          console.log(this.orden);
         })
         .catch((err) => {
           console.log(err);
-          if (
-            err.response.data.msg ==
-            "Token expiró, por favor inicie sesión nuevamente"
-          ) {
-            this.$swal({
-              icon: "error",
-              title: `${err.response.data.msg}`,
-              confirmButtonText: "Ir a inicio de sesión",
-            }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                this.$router.push("/");
-                this.$store.state.token = undefined;
-                localStorage.removeItem("token");
-                localStorage.removeItem("elaborador");
-              }
-            });
-          }
+
         });
     },
     traerCalidad() {
@@ -712,29 +457,10 @@ export default {
           nombre: "Informe de Resultados",
         })
         .then((res) => {
-          console.log(res.data.calidad);
           this.informe = res.data.calidad;
         })
         .catch((err) => {
           console.log(err);
-          if (
-            err.response.data.msg ==
-            "Token expiró, por favor inicie sesión nuevamente"
-          ) {
-            this.$swal({
-              icon: "error",
-              title: `${err.response.data.msg}`,
-              confirmButtonText: "Ir a inicio de sesión",
-            }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                this.$router.push("/");
-                this.$store.state.token = undefined;
-                localStorage.removeItem("token");
-                localStorage.removeItem("elaborador");
-              }
-            });
-          }
         });
     },
   },

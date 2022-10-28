@@ -4,7 +4,7 @@
       <v-app-bar-nav-icon v-if="this.$store.state.token!=undefined" @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title class="font-weight-black black--text">LABFICAT</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="font-weight-black" icon @click="cerrarSesion">
+      <v-btn v-if="this.$store.state.token!=undefined" class="font-weight-black" icon @click="cerrarSesion">
         <!-- <v-list-item-title class="black--text">Salir</v-list-item-title> -->
         <font-awesome-icon style="font-size:30px; color: black" icon="fa-solid fa-right-from-bracket" />
       </v-btn>

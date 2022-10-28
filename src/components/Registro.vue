@@ -156,6 +156,7 @@ export default {
         });
     },
     registrar() {
+      let header = { headers: { "x-token": this.$store.state.token } };
       axios
         .post("https://labficat.herokuapp.com/api/usuario", {
           tipoPersona: this.select,
@@ -169,7 +170,7 @@ export default {
           correo: this.email,
           password: this.password,
           rol: this.rol,
-        })
+        },header)
         .then((res) => {
           console.log(res.data);
           this.$swal({

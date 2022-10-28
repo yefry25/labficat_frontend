@@ -17,7 +17,7 @@
                 <v-text-field v-model="password" :error-messages="errors" label="Contraseña" type="password" outlined
                   prepend-icon='mdi-lock' required></v-text-field>
               </validation-provider>
-              <span class="blue--text" @click="dialogRecuperar = true">¿Olvidaste la contraseña?</span> 
+              <span class="blue--text" @click="dialogRecuperar = true">¿Olvidaste la contraseña?</span>
 
               <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block @click="iniciar">
                 ingresar
@@ -147,10 +147,9 @@ export default {
           this.$swal({
             icon: "success",
             title: "Email enviado exitosamente",
-            
           });
-          this.$store.dispatch('setEmail',this.email)
-          console.log("email: "+this.$store.state.emailConfirmed);
+          this.$store.dispatch('setEmail', this.email)
+          console.log("email: " + this.$store.state.emailConfirmed);
         })
         .catch((err) => {
           console.log(err);
