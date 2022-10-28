@@ -4,44 +4,28 @@
       <v-col>
         <v-card class="mb-4">
           <v-card-title> Ordenes de servicio </v-card-title>
-          <v-data-table
-            :headers="encabezado"
-            :items="ordenes"
-            :loading="myLoading"
-            loading-text="Cargando... Por favor espera"
-          >
+          <v-data-table :headers="encabezado" :items="ordenes" :loading="myLoading"
+            loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
               <v-row>
                 <div v-if="item.estado == 1">
                   <v-btn @click="infoOrdenEditar(item)" icon>
-                    <font-awesome-icon
-                      style="font-size: 20px"
-                      icon="fa-solid fa-file-pen"
-                    />
+                    <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-file-pen" />
                   </v-btn>
                 </div>
                 <div v-if="item.estado == 0">
                   <v-btn disabled icon>
-                    <font-awesome-icon
-                      style="font-size: 20px"
-                      icon="fa-solid fa-file-pen"
-                    />
+                    <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-file-pen" />
                   </v-btn>
                 </div>
                 <div v-if="item.estado == 1">
                   <v-btn color="red" icon @click="estadoOrden(item)">
-                    <font-awesome-icon
-                      style="font-size: 20px"
-                      icon="fa-solid fa-ban"
-                    />
+                    <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-ban" />
                   </v-btn>
                 </div>
                 <div v-else>
                   <v-btn color="blue" icon @click="estadoOrden(item)">
-                    <font-awesome-icon
-                      style="font-size: 20px"
-                      icon="fa-regular fa-circle-check"
-                    />
+                    <font-awesome-icon style="font-size: 20px" icon="fa-regular fa-circle-check" />
                   </v-btn>
                 </div>
               </v-row>
@@ -71,66 +55,27 @@
         <v-card-title>
           <v-hover v-slot="{ hover }">
             <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
-              <font-awesome-icon
-                style="fontsize: 20px"
-                icon="fa-solid fa-xmark"
-              />
+              <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
             </v-btn>
           </v-hover>
           Editar orden de servicio
         </v-card-title>
         <validation-observer ref="observer" v-slot="{ invalid }">
           <form @submit.prevent="submit" class="py-7 px-7">
-            <validation-provider
-              v-slot="{ errors }"
-              name="resultado"
-              rules="required"
-            >
-              <v-text-field
-                v-model="resultado"
-                :error-messages="errors"
-                type="number"
-                label="Resultado"
-                outlined
-                required
-              ></v-text-field>
+            <validation-provider v-slot="{ errors }" name="resultado" rules="required">
+              <v-text-field v-model="resultado" :error-messages="errors" type="number" label="Resultado" outlined
+                required></v-text-field>
             </validation-provider>
-            <validation-provider
-              v-slot="{ errors }"
-              name="incertidumbre"
-              rules="required"
-            >
-              <v-text-field
-                v-model="incertidumbre"
-                :error-messages="errors"
-                type="number"
-                label="Incertidumbre"
-                outlined
-                required
-              ></v-text-field>
+            <validation-provider v-slot="{ errors }" name="incertidumbre" rules="required">
+              <v-text-field v-model="incertidumbre" :error-messages="errors" type="number" label="Incertidumbre"
+                outlined required></v-text-field>
             </validation-provider>
-            <validation-provider
-              v-slot="{ errors }"
-              name="observaciones"
-              rules="required"
-            >
-              <v-text-field
-                v-model="observacion"
-                :error-messages="errors"
-                label="Observaciones"
-                outlined
-                required
-              ></v-text-field>
+            <validation-provider v-slot="{ errors }" name="observaciones" rules="required">
+              <v-text-field v-model="observacion" :error-messages="errors" label="Observaciones" outlined required>
+              </v-text-field>
             </validation-provider>
-            <v-btn
-              color="primary"
-              class="mr-4"
-              type="submit"
-              :disabled="invalid"
-              rounded
-              @click="editarOrdenServicio"
-              block
-            >
+            <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded @click="editarOrdenServicio"
+              block>
               Actualizar orden de servicio
             </v-btn>
           </form>
@@ -328,7 +273,7 @@ export default {
           })
           .catch((err) => {
             console.log(err);
-            
+
             if (
               err.response.data.msg ==
               "Token expiró, por favor inicie sesión nuevamente"
@@ -346,11 +291,11 @@ export default {
                   localStorage.removeItem("elaborador");
                 }
               });
-            } else{
-                this.$swal({
-              icon: "error",
-              title: "Error al activar la orden de servicio",
-            });
+            } else {
+              this.$swal({
+                icon: "error",
+                title: "Error al activar la orden de servicio",
+              });
             }
           });
       }
@@ -370,4 +315,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

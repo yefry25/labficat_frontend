@@ -8,34 +8,28 @@
             <v-spacer></v-spacer>
             <v-btn class="primary" to="ensayo">Agregar ensayos</v-btn>
           </v-card-actions>
-          <v-data-table
-            :headers="headerEnsayo"
-            :items="ensayos"
-            :loading="myLoading"
-            loading-text="Cargando... Por favor espera"
-          >
+          <v-data-table :headers="headerEnsayo" :items="ensayos" :loading="myLoading"
+            loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
               <v-row>
-                <v-btn icon @click="editar(item)">
-                  <font-awesome-icon
-                    style="font-size: 20px"
-                    icon="fa-solid fa-file-pen"
-                  />
+                <div v-if="item.estado==1">
+                  <v-btn icon @click="editar(item)">
+                  <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-file-pen" />
                 </v-btn>
+                </div>
+                <div v-if="item.estado==0">
+                  <v-btn icon disabled>
+                  <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-file-pen" />
+                </v-btn>
+                </div>
                 <div v-if="item.estado == 1">
                   <v-btn color="red" icon @click="estadoEnsayo(item)">
-                    <font-awesome-icon
-                      style="font-size: 20px"
-                      icon="fa-solid fa-ban"
-                    />
+                    <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-ban" />
                   </v-btn>
                 </div>
                 <div v-else>
                   <v-btn color="blue" icon @click="estadoEnsayo(item)">
-                    <font-awesome-icon
-                      style="font-size: 20px"
-                      icon="fa-regular fa-circle-check"
-                    />
+                    <font-awesome-icon style="font-size: 20px" icon="fa-regular fa-circle-check" />
                   </v-btn>
                 </div>
               </v-row>
@@ -65,193 +59,65 @@
           <v-card>
             <v-card-title>
               <v-hover v-slot="{ hover }">
-                <v-btn
-                  icon
-                  @click="close"
-                  :style="{ color: hover ? 'red' : '' }"
-                >
-                  <font-awesome-icon
-                    style="fontsize: 20px"
-                    icon="fa-solid fa-xmark"
-                  />
+                <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                  <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
                 </v-btn>
               </v-hover>
               Editar ensayos
             </v-card-title>
             <validationObserver ref="observer" v-slot="{ invalid }">
               <form @submit.prevent="submit" class="py-7 px-7">
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="ensayo"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="ensayo"
-                    :error-messages="errors"
-                    label="Ensayo"
-                    outlined
-                    required
-                  ></v-text-field>
-                </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="metodo"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="metodo"
-                    :error-messages="errors"
-                    label="Metodo"
-                    outlined
-                    required
-                  >
+                <validation-provider v-slot="{ errors }" name="ensayo" rules="required">
+                  <v-text-field v-model="ensayo" :error-messages="errors" label="Ensayo" outlined required>
                   </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="tecnica"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="tecnica"
-                    :error-messages="errors"
-                    label="Técnica"
-                    type="text"
-                    outlined
-                    required
-                  >
+                <validation-provider v-slot="{ errors }" name="metodo" rules="required">
+                  <v-text-field v-model="metodo" :error-messages="errors" label="Metodo" outlined required>
                   </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="valor mínimo"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="valorMinimo"
-                    :error-messages="errors"
-                    label="Valor Mínimo"
-                    type="number"
-                    outlined
-                    required
-                  >
+                <validation-provider v-slot="{ errors }" name="tecnica" rules="required">
+                  <v-text-field v-model="tecnica" :error-messages="errors" label="Técnica" type="text" outlined
+                    required>
                   </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="valor maximo"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="valorMaximo"
-                    :error-messages="errors"
-                    label="Valor Máximo"
-                    type="number"
-                    outlined
-                    required
-                  >
+                <validation-provider v-slot="{ errors }" name="valor mínimo" rules="required">
+                  <v-text-field v-model="valorMinimo" :error-messages="errors" label="Valor Mínimo" type="number"
+                    outlined required>
                   </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="unidades"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="unidades"
-                    :error-messages="errors"
-                    label="Unidades"
-                    type="number"
-                    outlined
-                    required
-                  >
+                <validation-provider v-slot="{ errors }" name="valor maximo" rules="required">
+                  <v-text-field v-model="valorMaximo" :error-messages="errors" label="Valor Máximo" type="number"
+                    outlined required>
                   </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="costo"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="costo"
-                    :error-messages="errors"
-                    label="Costo"
-                    type="number"
-                    outlined
-                    required
-                  >
+                <validation-provider v-slot="{ errors }" name="unidades" rules="required">
+                  <v-text-field v-model="unidades" :error-messages="errors" label="Unidades" type="number" outlined
+                    required>
                   </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="descripcion"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="descripcion"
-                    :error-messages="errors"
-                    label="Descripción"
-                    outlined
-                    required
-                  >
+                <validation-provider v-slot="{ errors }" name="costo" rules="required">
+                  <v-text-field v-model="costo" :error-messages="errors" label="Costo" type="number" outlined required>
                   </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="limite cuantificación"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="limiteCuantificacion"
-                    :error-messages="errors"
-                    type="number"
-                    label="Límite cuantificación"
-                    outlined
-                    required
-                  >
+                <validation-provider v-slot="{ errors }" name="descripcion" rules="required">
+                  <v-text-field v-model="descripcion" :error-messages="errors" label="Descripción" outlined required>
                   </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="titular"
-                  rules="required"
-                >
-                  <v-autocomplete
-                    v-model="responsables.titular"
-                    :error-messages="errors"
-                    :items="usuarios"
-                    item-text="nombre"
-                    item-value="._id"
-                    dense
-                    filled
-                    label="Titular"
-                  ></v-autocomplete>
+                <validation-provider v-slot="{ errors }" name="limite cuantificación" rules="required">
+                  <v-text-field v-model="limiteCuantificacion" :error-messages="errors" type="number"
+                    label="Límite cuantificación" outlined required>
+                  </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="suplente"
-                  rules="required"
-                >
-                  <v-autocomplete
-                    v-model="responsables.suplente"
-                    :error-messages="errors"
-                    :items="usuarios"
-                    item-text="nombre"
-                    item-value="._id"
-                    dense
-                    filled
-                    label="Suplente"
-                  ></v-autocomplete>
+                <validation-provider v-slot="{ errors }" name="titular" rules="required">
+                  <v-autocomplete v-model="responsables.titular" :error-messages="errors" :items="usuarios"
+                    item-text="nombre" item-value="._id" dense filled label="Titular"></v-autocomplete>
                 </validation-provider>
-                <v-btn
-                  color="primary"
-                  class="mr-4"
-                  type="submit"
-                  :disabled="invalid"
-                  rounded
-                  block
-                  @click="editarEnsayo"
-                >
+                <validation-provider v-slot="{ errors }" name="suplente" rules="required">
+                  <v-autocomplete v-model="responsables.suplente" :error-messages="errors" :items="usuarios"
+                    item-text="nombre" item-value="._id" dense filled label="Suplente"></v-autocomplete>
+                </validation-provider>
+                <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block
+                  @click="editarEnsayo">
                   Editar ensayo
                 </v-btn>
               </form>
@@ -259,12 +125,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-hover v-slot="{ hover }">
-                <v-btn
-                  class="ml-5"
-                  text
-                  @click="close"
-                  :style="{ background: hover ? 'red' : '' }"
-                >
+                <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
                   Cerrar
                 </v-btn>
               </v-hover>
@@ -406,7 +267,7 @@ export default {
           this.traerEnsayos();
           this.$swal({
             icon: "success",
-            title: "Registro exitoso",
+            title: "Moficiación exitosa",
             text: `Ensayo modificado exitosamente`,
           });
           this.limpiarInfo();
@@ -467,23 +328,23 @@ export default {
         .catch((err) => {
           console.log(err);
           if (
-              err.response.data.msg ==
-              "Token expiró, por favor inicie sesión nuevamente"
-            ) {
-              this.$swal({
-                icon: "error",
-                title: `${err.response.data.msg}`,
-                confirmButtonText: "Ir a inicio de sesión",
-              }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                  this.$router.push("/");
-                  this.$store.state.token = undefined;
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("elaborador");
-                }
-              });
-            }
+            err.response.data.msg ==
+            "Token expiró, por favor inicie sesión nuevamente"
+          ) {
+            this.$swal({
+              icon: "error",
+              title: `${err.response.data.msg}`,
+              confirmButtonText: "Ir a inicio de sesión",
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.$router.push("/");
+                this.$store.state.token = undefined;
+                localStorage.removeItem("token");
+                localStorage.removeItem("elaborador");
+              }
+            });
+          }
         });
     },
     estadoEnsayo(ensayo) {
@@ -501,7 +362,7 @@ export default {
           })
           .catch((err) => {
             console.log(err);
-            
+
             if (
               err.response.data.msg ==
               "Token expiró, por favor inicie sesión nuevamente"
@@ -519,11 +380,11 @@ export default {
                   localStorage.removeItem("elaborador");
                 }
               });
-            } else{
-                this.$swal({
-              icon: "error",
-              title: "Error al desactivar el ensayo",
-            });
+            } else {
+              this.$swal({
+                icon: "error",
+                title: "Error al desactivar el ensayo",
+              });
             }
           });
       } else {
@@ -539,7 +400,7 @@ export default {
           })
           .catch((err) => {
             console.log(err);
-            
+
             if (
               err.response.data.msg ==
               "Token expiró, por favor inicie sesión nuevamente"
@@ -557,11 +418,11 @@ export default {
                   localStorage.removeItem("elaborador");
                 }
               });
-            } else{
-                this.$swal({
-              icon: "error",
-              title: "Error al activar el ensayo",
-            });
+            } else {
+              this.$swal({
+                icon: "error",
+                title: "Error al activar el ensayo",
+              });
             }
           });
       }

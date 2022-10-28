@@ -20,7 +20,7 @@
       </v-col>
       <v-col cols="3" class="texto">
         <h2 class="mt-0 text-decoration-underline">Informe de resultados</h2>
-        <h2 class="mt-2 red--text">XXXX-AAAA</h2>
+        <h2 class="mt-2 red--text">{{ codMuestra }}</h2>
         <v-row>
           <v-col cols="6">
             <p class="parrafo font-weight-black">
@@ -35,7 +35,7 @@
         </v-row>
         <v-row class="mx-0 my-0 px-0 py-0">
           <v-col class="px-0 py-0" cols="6">
-            <p class="mt-2 red--text">AAAA-MM-DD; hh:mm</p>
+            <p class="mt-2 red--text">{{ fecha(fechaRecepcionMuestra) }}</p>
           </v-col>
           <v-col class="px-0 py-0" cols="6">
             <p class="mt-2 red--text">AAAA-MM-DD; hh:mm</p>
@@ -161,19 +161,21 @@
                   <v-spacer></v-spacer>
                   <v-text-field label="buscador" v-model="busqueda" single-line hide-details></v-text-field>
                 </v-card-title>
-                <v-data-table :headers="headerOrden" :items="orden">
+                <v-data-table :headers="headerOrden" :items="orden" :loading="isLoading"
+            loading-text="Cargando... Por favor espera">
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="infoOrden(item)" icon>
                       <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-plus" />
                     </v-btn>
                   </template>
                 </v-data-table>
-
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
-                    Cerrar
-                  </v-btn>
+                  <v-hover v-slot="{ hover }">
+                    <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
+                      Cerrar
+                    </v-btn>
+                  </v-hover>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -221,25 +223,19 @@ extend("confirmed", {
 });
 export default {
   name: "PageInforme",
-  components: {
-    // ValidationProvider,
-    // ValidationObserver,
-  },
   data: () => ({
-    informe: "",
-    searchh: "",
-    busqueda: "",
-    dialogCliente: false,
-    dialogMuestra: false,
-    dialogEnsayoNuevo: false,
-    isLoading: false,
-    items: [],
-    model: null,
-    search: null,
-    tab: null,
-    usuarios: [],
-    orden: [],
-    person: {
+    informe: "", //si
+    busqueda: "", //si
+    dialogCliente: false, //si
+    dialogMuestra: false, //si
+    dialogEnsayoNuevo: false, //si
+    isLoading: true,
+    search: null, //si
+    usuarios: [],  //si
+    orden: [],  //si
+    codMuestra: 'XXXX-AAAA',
+    fechaRecepcionMuestra: 'AAAA-MM-DD; hh:mm',
+    person: {  //si
       nombre: "",
       cc: "",
       direccion: "",
@@ -250,7 +246,7 @@ export default {
       correo: "",
       id: "",
     },
-    muestra: {
+    muestra: {  //si
       munRecoleccion: "",
       direccionTomaMuestra: "",
       lugarTomaMuestra: "",
@@ -258,59 +254,9 @@ export default {
       procedimientoMuestreo: "",
       tipoMuestra: "",
       matrizMuestra: "",
-      fechaRecoleccion: new Date(
-        Date.now() - new Date().getTimezoneOffset() * 60000
-      )
-        .toISOString()
-        .substr(0, 10),
+      fechaRecoleccion: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
     },
-    headerMuestras: [
-      {
-        text: "Código de Muestra",
-        align: "start",
-        sortable: false,
-        value: "codMuestra",
-      },
-      {
-        text: "Municipio de recolección",
-        value: "munRecoleccion.departamento",
-      },
-      { text: "Dirección de toma de muestra", value: "direccionTomaMuestra" },
-      { text: "Lugar de toma de muestra", value: "lugarTomaMuestra" },
-      { text: "Muestra recolectada por", value: "muestraRecolectadaPor" },
-      { text: "Procedimiento de muestreo", value: "procedimientoMuestreo" },
-      { text: "Tipo de muestra", value: "tipoMuestra.tipos" },
-      { text: "Matriz de la muestra", value: "matrizMuestra" },
-      { text: "Fecha y hora de recolección", value: "fechaRecoleccion" },
-      { text: "Cotización", value: "cotizacion" },
-      { text: "Ítem de la cotización", value: "item" },
-      { text: "Observaciones*" },
-      { text: "Acciones", value: "actions" },
-    ],
-    muestrasDelCliente: [],
-    ensayos: {
-      ensayo: "",
-      metodo: "",
-      tecnica: "",
-      valorMinimo: "",
-      valorMaximo: "",
-      costo: null,
-      descripcion: "",
-      limiteCuantificacion: null,
-      titular: "",
-      suplente: "",
-    },
-    headerUsuarios: [
-      {
-        text: "Nombre",
-        align: "start",
-        sortable: false,
-        value: "nombre",
-      },
-      { text: "Rol", value: "rol", sortable: false },
-      { text: "Acciones", value: "actions", sortable: false },
-    ],
-    headerOrden: [
+    headerOrden: [  //si
       {
         text: "Codigo de muestra",
         align: "start",
@@ -321,7 +267,7 @@ export default {
       { text: "item", value: "idMuestra.item", sortable: false },
       { text: "Acciones", value: "actions", sortable: false },
     ],
-    headersEnsayo: [
+    headersEnsayo: [ //si
       {
         text: "Fecha de análisis",
         align: "start",
@@ -344,7 +290,7 @@ export default {
       },
       { text: "Unidades", value: "unidades", sortable: false },
     ],
-    ensayosMostrar: [],
+    ensayosMostrar: [],  //si
   }),
   computed: {
     buscar() {
@@ -363,7 +309,7 @@ export default {
         .get("https://labficat.herokuapp.com/api/usuario")
         .then((res) => {
           this.usuarios = res.data.usuario;
-          
+
         })
         .catch((err) => {
           console.log(err);
@@ -393,12 +339,13 @@ export default {
           `https://labficat.herokuapp.com/api/orden/informeDeResultados/${orden._id}`
         )
         .then((res) => {
-          console.log(res.data.informe);
+          
           this.$swal({
             icon: "success",
             title: "La información se cargo exitosamente ",
           });
-
+          this.codMuestra = res.data.informe.idMuestra.codMuestra;
+          this.fechaRecepcionMuestra = res.data.informe.idMuestra.createdAt
           this.person.nombre = res.data.informe.idMuestra.solicitante.nombre;
           this.person.cc = res.data.informe.idMuestra.solicitante.documento;
           this.person.direccion = res.data.informe.idMuestra.solicitante.direccion;
@@ -421,7 +368,6 @@ export default {
             console.log(element);
             this.ensayosMostrar.push(element.idensayo);
           }
-          console.log(this.ensayosMostrar);
         })
         .catch((err) => {
           console.log(err);
@@ -444,7 +390,16 @@ export default {
       axios
         .get(`https://labficat.herokuapp.com/api/orden`)
         .then((res) => {
-          this.orden = res.data.orden;
+
+          for (let i = 0; i < res.data.orden.length; i++) {
+            const element = res.data.orden[i];
+            if(element.estado == 1){
+              console.log(element);
+              this.orden.push(element);
+            }
+
+          }
+          this.isLoading= false;
         })
         .catch((err) => {
           console.log(err);
@@ -462,6 +417,16 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    fecha(r) {
+      /* let fecha = r.split('T')[0].replace(/-/g, "/")
+      console.log(fecha); */
+      let d = new Date(r);
+      return d.toLocaleDateString() + '-' + d.toLocaleTimeString();
+    },
+    fechaMuestra(f) {
+      let fecha = f.split('T')[0].replace(/-/g, "/")
+      return fecha
     },
   },
   created() {

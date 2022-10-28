@@ -248,8 +248,8 @@
             </v-dialog>
           </v-card-title>
           <v-data-table :headers="headers" :items="mostrarMuestras" :search="search">
-            <template v-slot:footer>
-              <v-card class="d-flex justify-end"> </v-card>
+            <template v-slot:[`item.fechaRecoleccion`]="{ item }">
+              <span>{{fecha(item.fechaRecoleccion)}}</span>
             </template>
           </v-data-table>
         </v-card>
@@ -422,7 +422,6 @@ export default {
       correo: "",
       id: "",
     },
-
     muestra: {
       ciudad: "",
       direccionTomaMuestra: "",
@@ -841,6 +840,10 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    fecha(r) {
+      let fecha = r.split('T')[0].replace(/-/g, "/")
+      return fecha;
     },
   },
   created() {

@@ -9,46 +9,26 @@
               <v-spacer></v-spacer>
               <v-btn color="primary" to="registro">Agregar nuevo usuario</v-btn>
             </v-card-title>
-            <v-data-table
-              :headers="encabezado"
-              :items="usuarios"
-              :loading="myLoading"
-              loading-text="Cargando... Por favor espera"
-            >
+            <v-data-table :headers="encabezado" :items="usuarios" :loading="myLoading"
+              loading-text="Cargando... Por favor espera">
               <template v-slot:[`item.actions`]="{ item }">
                 <v-row>
-                  <v-btn
-                    icon
-                    :style="{ color: hover ? 'black' : '' }"
-                    @click="actualizarInfoUsuario(item)"
-                  >
-                    <font-awesome-icon
-                      style="font-size: 20px"
-                      icon="fa-solid fa-user-pen"
-                    />
+                  <v-btn icon :style="{ color: hover ? 'black' : '' }" @click="actualizarInfoUsuario(item)">
+                    <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-user-pen" />
                   </v-btn>
                   <div v-if="item.estado == 1">
                     <v-btn color="red" icon @click="estadoUsuario(item)">
-                      <font-awesome-icon
-                        style="font-size: 20px"
-                        icon="fa-solid fa-user-large-slash"
-                      />
+                      <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-user-large-slash" />
                     </v-btn>
                   </div>
                   <div v-if="item.estado == 0" @click="estadoUsuario(item)">
                     <v-btn icon color="orange">
-                      <font-awesome-icon
-                        style="font-size: 20px"
-                        icon="fa-solid fa-earth-americas"
-                      />
+                      <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-earth-americas" />
                     </v-btn>
                   </div>
                   <div v-if="item.estado == 2" @click="estadoUsuario(item)">
                     <v-btn icon color="blue">
-                      <font-awesome-icon
-                        style="font-size: 20px"
-                        icon="fa-solid fa-user-large"
-                      />
+                      <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-user-large" />
                     </v-btn>
                   </div>
                 </v-row>
@@ -84,219 +64,72 @@
           <v-card outlined>
             <v-card-title>
               <v-hover v-slot="{ hover }">
-                <v-btn
-                  icon
-                  @click="close"
-                  :style="{ color: hover ? 'red' : '' }"
-                >
-                  <font-awesome-icon
-                    style="fontsize: 20px"
-                    icon="fa-solid fa-xmark"
-                  />
+                <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                  <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
                 </v-btn>
               </v-hover>
               Editar información del usuario
             </v-card-title>
             <validation-observer ref="observer" v-slot="{ invalid }">
               <form @submit.prevent="submit" class="py-7 px-7">
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="tipo de persona"
-                  rules="required"
-                >
-                  <v-select
-                    v-model="select"
-                    :items="items"
-                    :error-messages="errors"
-                    outlined
-                    label="Tipo de persona"
-                    data-vv-name="tipo de persona"
-                    required
-                  ></v-select>
+                <validation-provider v-slot="{ errors }" name="tipo de persona" rules="required">
+                  <v-select v-model="select" :items="items" :error-messages="errors" outlined label="Tipo de persona"
+                    data-vv-name="tipo de persona" required></v-select>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="nombre"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="persona.nombre"
-                    :error-messages="errors"
-                    label="Nombre"
-                    outlined
-                    required
-                  ></v-text-field>
+                <validation-provider v-slot="{ errors }" name="nombre" rules="required">
+                  <v-text-field v-model="persona.nombre" :error-messages="errors" label="Nombre" outlined required>
+                  </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="documento"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="persona.documento"
-                    :error-messages="errors"
-                    label="Documento"
-                    outlined
-                    required
-                  ></v-text-field>
+                <validation-provider v-slot="{ errors }" name="documento" rules="required">
+                  <v-text-field v-model="persona.documento" :error-messages="errors" label="Documento" outlined
+                    required></v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="dirección"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="persona.direccion"
-                    :error-messages="errors"
-                    label="Dirección"
-                    outlined
-                    required
-                  ></v-text-field>
+                <validation-provider v-slot="{ errors }" name="dirección" rules="required">
+                  <v-text-field v-model="persona.direccion" :error-messages="errors" label="Dirección" outlined
+                    required></v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="departamento"
-                  rules="required"
-                >
-                  <v-select
-                    v-model="persona.departamento"
-                    :items="departa"
-                    item-text="departamento"
-                    item-key="departa"
-                    item-value="_id"
-                    :error-messages="errors"
-                    outlined
-                    label="Departamento"
-                    data-vv-name="departamento"
-                    @change="traerCiudades(departa)"
-                    required
-                  ></v-select>
+                <validation-provider v-slot="{ errors }" name="departamento" rules="required">
+                  <v-select v-model="persona.departamento" :items="departa" item-text="departamento" item-key="departa"
+                    item-value="_id" :error-messages="errors" outlined label="Departamento" data-vv-name="departamento"
+                    @change="traerCiudades(departa)" required></v-select>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="ciudad"
-                  rules="required"
-                >
-                  <v-select
-                    v-model="persona.ciudad"
-                    :items="ciudades"
-                    item-text="Ciudad"
-                    item-key="ciudades"
-                    item-value="_id"
-                    :error-messages="errors"
-                    outlined
-                    label="Cuidad"
-                    data-vv-name="ciudad"
-                    required
-                  ></v-select>
+                <validation-provider v-slot="{ errors }" name="ciudad" rules="required">
+                  <v-select v-model="persona.ciudad" :items="ciudades" item-text="Ciudad" item-key="ciudades"
+                    item-value="_id" :error-messages="errors" outlined label="Cuidad" data-vv-name="ciudad" required>
+                  </v-select>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="contacto"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="persona.contacto"
-                    :error-messages="errors"
-                    label="Contacto"
-                    outlined
-                    required
-                  ></v-text-field>
+                <validation-provider v-slot="{ errors }" name="contacto" rules="required">
+                  <v-text-field v-model="persona.contacto" :error-messages="errors" label="Contacto" outlined required>
+                  </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="teléfono del contacto"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="persona.celularContacto"
-                    :error-messages="errors"
-                    label="Telefono contacto"
-                    outlined
-                    required
-                  ></v-text-field>
+                <validation-provider v-slot="{ errors }" name="teléfono del contacto" rules="required">
+                  <v-text-field v-model="persona.celularContacto" :error-messages="errors" label="Telefono contacto"
+                    outlined required></v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="teléfono"
-                  rules="required"
-                >
-                  <v-text-field
-                    v-model="persona.telefono"
-                    :error-messages="errors"
-                    label="Teléfono"
-                    outlined
-                    required
-                  ></v-text-field>
+                <validation-provider v-slot="{ errors }" name="teléfono" rules="required">
+                  <v-text-field v-model="persona.telefono" :error-messages="errors" label="Teléfono" outlined required>
+                  </v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Email"
-                  rules="required|email"
-                >
-                  <v-text-field
-                    v-model="persona.email"
-                    :error-messages="errors"
-                    label="E-mail"
-                    prepend-icon="mdi-email"
-                    outlined
-                    required
-                  ></v-text-field>
+                <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
+                  <v-text-field v-model="persona.email" :error-messages="errors" label="E-mail" prepend-icon="mdi-email"
+                    outlined required></v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="contraseña"
-                  vid="password"
-                  :rules="{ required: true, min: 8 }"
-                >
-                  <v-text-field
-                    v-model="persona.password"
-                    :error-messages="errors"
-                    label="Contraseña"
-                    type="password"
-                    outlined
-                    prepend-icon="mdi-lock"
-                    required
-                  ></v-text-field>
+                <validation-provider v-slot="{ errors }" name="contraseña" vid="password"
+                  :rules="{ required: true, min: 8 }">
+                  <v-text-field v-model="persona.password" :error-messages="errors" label="Contraseña" type="password"
+                    outlined prepend-icon="mdi-lock" required></v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="confirmar contraseña"
-                  rules="required|confirmed:password"
-                >
-                  <v-text-field
-                    v-model="persona.confirmation"
-                    :error-messages="errors"
-                    label="confirmar contraseña"
-                    outlined
-                    type="password"
-                    required
-                  ></v-text-field>
+                <validation-provider v-slot="{ errors }" name="confirmar contraseña"
+                  rules="required|confirmed:password">
+                  <v-text-field v-model="persona.confirmation" :error-messages="errors" label="confirmar contraseña"
+                    outlined type="password" required></v-text-field>
                 </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="rol"
-                  rules="required"
-                >
-                  <v-select
-                    v-model="persona.rol"
-                    :items="roles"
-                    :error-messages="errors"
-                    outlined
-                    label="Roles"
-                    data-vv-name="roles"
-                    required
-                  ></v-select>
+                <validation-provider v-slot="{ errors }" name="rol" rules="required">
+                  <v-select v-model="persona.rol" :items="roles" :error-messages="errors" outlined label="Roles"
+                    data-vv-name="roles" required></v-select>
                 </validation-provider>
-                <v-btn
-                  color="primary"
-                  class="mr-4"
-                  type="submit"
-                  :disabled="invalid"
-                  rounded
-                  block
-                  @click="actualizarUsuario"
-                >
+                <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block
+                  @click="actualizarUsuario">
                   Actualizar Usuario
                 </v-btn>
               </form>
@@ -304,12 +137,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-hover v-slot="{ hover }">
-                <v-btn
-                  class="ml-5"
-                  text
-                  @click="close"
-                  :style="{ background: hover ? 'red' : '' }"
-                >
+                <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
                   Cerrar
                 </v-btn>
               </v-hover>
@@ -447,44 +275,52 @@ export default {
     estadoUsuario(user) {
       let header = { headers: { "x-token": this.$store.state.token } };
       if (user.estado == 1) {
-        axios
-          .put(
-            `https://labficat.herokuapp.com/api/usuario/desactivar/${user._id}`,
-            {},
-            header
-          )
-          .then((res) => {
-            console.log(res.data.usuario);
-            this.traerUsuarios();
-          })
-          .catch((err) => {
-            console.log(err);
-            console.log(err.response.data.msg);
-
-            if (
-              err.response.data.msg ==
-              "Token expiró, por favor inicie sesión nuevamente"
-            ) {
-              this.$swal({
-                icon: "error",
-                title: `${err.response.data.msg}`,
-                confirmButtonText: "Ir a inicio de sesión",
-              }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                  this.$router.push("/");
-                  this.$store.state.token = undefined;
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("elaborador");
-                }
-              });
-            } else {
-              this.$swal({
-                icon: "error",
-                title: "Error al inactivar al usuario",
-              });
-            }
+        if (this.$store.state.elaborador.nombre == user.nombre) {
+          this.$swal({
+            icon: "error",
+            title: "No puede inactivar a el usuario que inició sesión",
           });
+        } else {
+          axios
+            .put(
+              `https://labficat.herokuapp.com/api/usuario/desactivar/${user._id}`,
+              {},
+              header
+            )
+            .then((res) => {
+              console.log(res.data.usuario);
+              this.traerUsuarios();
+            })
+            .catch((err) => {
+              console.log(err);
+              console.log(err.response.data.msg);
+              if (
+                err.response.data.msg ==
+                "Token expiró, por favor inicie sesión nuevamente"
+              ) {
+                this.$swal({
+                  icon: "error",
+                  title: `${err.response.data.msg}`,
+                  confirmButtonText: "Ir a inicio de sesión",
+                }).then((result) => {
+                  /* Read more about isConfirmed, isDenied below */
+                  if (result.isConfirmed) {
+                    this.$router.push("/");
+                    this.$store.state.token = undefined;
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("elaborador");
+                  }
+                });
+              } else {
+                this.$swal({
+                  icon: "error",
+                  title: "Error al inactivar al usuario",
+                });
+              }
+            });
+        }
+
+
       } else if (user.estado == 0) {
         axios
           .put(

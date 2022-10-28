@@ -2,11 +2,8 @@
   <v-container fluid style="height: 100%">
     <v-row>
       <v-col cols="2">
-        <v-img
-          width="164"
-          height="162"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png"
-        >
+        <v-img width="164" height="162"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png">
         </v-img>
       </v-col>
       <v-col cols="6" class="texto">
@@ -67,251 +64,86 @@
                           Usuarios
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
-                          <v-text-field
-                            label="Buscar por nombre o por rol"
-                            v-model="busqueda"
-                            single-line
-                            hide-details
-                          >
+                          <v-text-field label="Buscar por nombre o por rol" v-model="busqueda" single-line hide-details>
                           </v-text-field>
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
-                          <v-dialog
-                            v-model="dialogUser"
-                            max-width="1000px"
-                            persistent
-                          >
+                          <v-dialog v-model="dialogUser" max-width="1000px" persistent>
                             <template v-slot:activator="{ on, attrs }">
-                              <v-btn
-                                class="primary"
-                                v-bind="attrs"
-                                v-on="on"
-                                @click="traerDepartamentos"
-                                >Agregar usuario</v-btn
-                              >
+                              <v-btn class="primary" v-bind="attrs" v-on="on" @click="traerDepartamentos">Agregar
+                                usuario</v-btn>
                             </template>
                             <v-card outlined>
                               <v-card-title>
                                 <v-hover v-slot="{ hover }">
-                                  <v-btn
-                                    icon
-                                    @click="close"
-                                    :style="{ color: hover ? 'red' : '' }"
-                                  >
-                                    <font-awesome-icon
-                                      style="fontsize: 20px"
-                                      icon="fa-solid fa-xmark"
-                                    />
+                                  <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                                    <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
                                   </v-btn>
                                 </v-hover>
                                 Formulario registro de usuarios
                               </v-card-title>
-                              <validation-observer
-                                ref="observer"
-                                v-slot="{ invalid }"
-                              >
-                                <form
-                                  @submit.prevent="submit"
-                                  class="py-7 px-7"
-                                >
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="tipo de persona"
-                                    rules="required"
-                                  >
-                                    <v-select
-                                      v-model="select"
-                                      :items="items"
-                                      :error-messages="errors"
-                                      outlined
-                                      label="Tipo de persona"
-                                      data-vv-name="tipo de persona"
-                                      required
-                                    ></v-select>
+                              <validation-observer ref="observer" v-slot="{ invalid }">
+                                <form @submit.prevent="submit" class="py-7 px-7">
+                                  <validation-provider v-slot="{ errors }" name="tipo de persona" rules="required">
+                                    <v-select v-model="select" :items="items" :error-messages="errors" outlined
+                                      label="Tipo de persona" data-vv-name="tipo de persona" required></v-select>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="nombre"
-                                    rules="required"
-                                  >
-                                    <v-text-field
-                                      v-model="nombre"
-                                      :error-messages="errors"
-                                      label="Nombre"
-                                      outlined
-                                      required
-                                    ></v-text-field>
+                                  <validation-provider v-slot="{ errors }" name="nombre" rules="required">
+                                    <v-text-field v-model="nombre" :error-messages="errors" label="Nombre" outlined
+                                      required></v-text-field>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="documento"
-                                    rules="required"
-                                  >
-                                    <v-text-field
-                                      v-model="documento"
-                                      :error-messages="errors"
-                                      label="Documento"
-                                      outlined
-                                      required
-                                    ></v-text-field>
+                                  <validation-provider v-slot="{ errors }" name="documento" rules="required">
+                                    <v-text-field v-model="documento" :error-messages="errors" label="Documento"
+                                      outlined required></v-text-field>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="dirección"
-                                    rules="required"
-                                  >
-                                    <v-text-field
-                                      v-model="direccion"
-                                      :error-messages="errors"
-                                      label="Dirección"
-                                      outlined
-                                      required
-                                    ></v-text-field>
+                                  <validation-provider v-slot="{ errors }" name="dirección" rules="required">
+                                    <v-text-field v-model="direccion" :error-messages="errors" label="Dirección"
+                                      outlined required></v-text-field>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="departamento"
-                                    rules="required"
-                                  >
-                                    <v-select
-                                      v-model="departamento"
-                                      :items="departa"
-                                      item-text="departamento"
-                                      item-key="departa"
-                                      item-value="_id"
-                                      :error-messages="errors"
-                                      outlined
-                                      label="Departamento"
-                                      data-vv-name="departamento"
-                                      @change="traerCiudades(departa)"
-                                      required
-                                    ></v-select>
+                                  <validation-provider v-slot="{ errors }" name="departamento" rules="required">
+                                    <v-select v-model="departamento" :items="departa" item-text="departamento"
+                                      item-key="departa" item-value="_id" :error-messages="errors" outlined
+                                      label="Departamento" data-vv-name="departamento" @change="traerCiudades(departa)"
+                                      required></v-select>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="ciudad"
-                                    rules="required"
-                                  >
-                                    <v-select
-                                      v-model="ciudad"
-                                      :items="ciudades"
-                                      item-text="Ciudad"
-                                      item-key="ciudades"
-                                      item-value="_id"
-                                      :error-messages="errors"
-                                      outlined
-                                      label="Cuidad"
-                                      data-vv-name="ciudad"
-                                      required
-                                    ></v-select>
+                                  <validation-provider v-slot="{ errors }" name="ciudad" rules="required">
+                                    <v-select v-model="ciudad" :items="ciudades" item-text="Ciudad" item-key="ciudades"
+                                      item-value="_id" :error-messages="errors" outlined label="Cuidad"
+                                      data-vv-name="ciudad" required></v-select>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="contacto"
-                                    rules="required"
-                                  >
-                                    <v-text-field
-                                      v-model="contacto"
-                                      :error-messages="errors"
-                                      label="Contacto"
-                                      outlined
-                                      required
-                                    ></v-text-field>
+                                  <validation-provider v-slot="{ errors }" name="contacto" rules="required">
+                                    <v-text-field v-model="contacto" :error-messages="errors" label="Contacto" outlined
+                                      required></v-text-field>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="teléfono del contacto"
-                                    rules="required"
-                                  >
-                                    <v-text-field
-                                      v-model="celularContacto"
-                                      :error-messages="errors"
-                                      label="Telefono contacto"
-                                      outlined
-                                      required
-                                    ></v-text-field>
+                                  <validation-provider v-slot="{ errors }" name="teléfono del contacto"
+                                    rules="required">
+                                    <v-text-field v-model="celularContacto" :error-messages="errors"
+                                      label="Telefono contacto" outlined required></v-text-field>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="teléfono"
-                                    rules="required"
-                                  >
-                                    <v-text-field
-                                      v-model="telefono"
-                                      :error-messages="errors"
-                                      label="Teléfono"
-                                      outlined
-                                      required
-                                    ></v-text-field>
+                                  <validation-provider v-slot="{ errors }" name="teléfono" rules="required">
+                                    <v-text-field v-model="telefono" :error-messages="errors" label="Teléfono" outlined
+                                      required></v-text-field>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="Email"
-                                    rules="required|email"
-                                  >
-                                    <v-text-field
-                                      v-model="email"
-                                      :error-messages="errors"
-                                      label="E-mail"
-                                      prepend-icon="mdi-email"
-                                      outlined
-                                      required
-                                    ></v-text-field>
+                                  <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
+                                    <v-text-field v-model="email" :error-messages="errors" label="E-mail"
+                                      prepend-icon="mdi-email" outlined required></v-text-field>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="contraseña"
-                                    vid="password"
-                                    :rules="{ required: true, min: 8 }"
-                                  >
-                                    <v-text-field
-                                      v-model="password"
-                                      :error-messages="errors"
-                                      label="Contraseña"
-                                      type="password"
-                                      outlined
-                                      prepend-icon="mdi-lock"
-                                      required
-                                    ></v-text-field>
+                                  <validation-provider v-slot="{ errors }" name="contraseña" vid="password"
+                                    :rules="{ required: true, min: 8 }">
+                                    <v-text-field v-model="password" :error-messages="errors" label="Contraseña"
+                                      type="password" outlined prepend-icon="mdi-lock" required></v-text-field>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="confirmar contraseña"
-                                    rules="required|confirmed:password"
-                                  >
-                                    <v-text-field
-                                      v-model="confirmation"
-                                      :error-messages="errors"
-                                      label="confirmar contraseña"
-                                      outlined
-                                      type="password"
-                                      required
-                                    ></v-text-field>
+                                  <validation-provider v-slot="{ errors }" name="confirmar contraseña"
+                                    rules="required|confirmed:password">
+                                    <v-text-field v-model="confirmation" :error-messages="errors"
+                                      label="confirmar contraseña" outlined type="password" required></v-text-field>
                                   </validation-provider>
-                                  <validation-provider
-                                    v-slot="{ errors }"
-                                    name="rol"
-                                    rules="required"
-                                  >
-                                    <v-select
-                                      v-model="roll"
-                                      :items="roles"
-                                      :error-messages="errors"
-                                      outlined
-                                      label="Roles"
-                                      data-vv-name="roles"
-                                      required
-                                    ></v-select>
+                                  <validation-provider v-slot="{ errors }" name="rol" rules="required">
+                                    <v-select v-model="roll" :items="roles" :error-messages="errors" outlined
+                                      label="Roles" data-vv-name="roles" required></v-select>
                                   </validation-provider>
-                                  <v-btn
-                                    color="primary"
-                                    class="mr-4"
-                                    type="submit"
-                                    :disabled="invalid"
-                                    rounded
-                                    block
-                                    @click="registrar"
-                                  >
+                                  <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded block
+                                    @click="registrar">
                                     Registrar
                                   </v-btn>
                                 </form>
@@ -319,12 +151,7 @@
                               <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-hover v-slot="{ hover }">
-                                  <v-btn
-                                    class="ml-5"
-                                    text
-                                    @click="close"
-                                    :style="{ background: hover ? 'red' : '' }"
-                                  >
+                                  <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
                                     Cerrar
                                   </v-btn>
                                 </v-hover>
@@ -332,18 +159,11 @@
                             </v-card>
                           </v-dialog>
                         </v-card-title>
-                        <v-data-table
-                          :headers="headers"
-                          :items="buscar"
-                          :loading="myLoading"
-                          loading-text="Cargando... Por favor espera"
-                        >
+                        <v-data-table :headers="headers" :items="buscar" :loading="myLoading"
+                          loading-text="Cargando... Por favor espera">
                           <template v-slot:[`item.actions`]="{ item }">
                             <v-btn color="black" @click="llenarInfo(item)" icon>
-                              <font-awesome-icon
-                                style="font-size: 20px"
-                                icon="fa-solid fa-user-plus"
-                              />
+                              <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-user-plus" />
                             </v-btn>
                           </template>
                         </v-data-table>
@@ -353,12 +173,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-hover v-slot="{ hover }">
-                      <v-btn
-                        class="ml-5"
-                        text
-                        @click="close"
-                        :style="{ background: hover ? 'red' : '' }"
-                      >
+                      <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
                         Cerrar
                       </v-btn>
                     </v-hover>
@@ -375,61 +190,21 @@
           </v-col>
 
           <v-col cols="8" class="pl-0">
-            <v-text-field
-              v-model="person.nombre"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.direccion"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.departamento"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.contacto"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.celularContacto"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
+            <v-text-field v-model="person.nombre" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.direccion" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.departamento" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.contacto" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.celularContacto" class="field pl-1 py-0 my-0" height="26"></v-text-field>
 
-            <v-menu
-              v-model="menu1"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              transition="scale-transition"
-              offset-y
-              min-width="auto"
-            >
+            <v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
+              offset-y min-width="auto">
               <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="validezOferta"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  class="field px-0 py-0 my-0"
-                  height="26"
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
+                <v-text-field v-model="validezOferta" prepend-icon="mdi-calendar" readonly class="field px-0 py-0 my-0"
+                  height="26" v-bind="attrs" v-on="on"></v-text-field>
               </template>
-              <v-date-picker
-                v-model="validezOferta"
-                @input="menu1 = false"
-              ></v-date-picker>
+              <v-date-picker v-model="validezOferta" @input="menu1 = false"></v-date-picker>
             </v-menu>
-            <v-text-field
-              v-model="person.elaborador"
-              class="field pl-1 px-0 py-0 my-0"
-              height="26"
-            ></v-text-field>
+            <v-text-field v-model="person.elaborador" class="field pl-1 px-0 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -445,60 +220,20 @@
             <p for="Name" class="label mb-0">Cargo</p>
           </v-col>
           <v-col cols="8" class="pl-0">
-            <v-text-field
-              v-model="person.cc"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.ciudad"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.telefono"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.cargo"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-text-field
-              v-model="person.correoContacto"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
-            <v-menu
-              v-model="menu2"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              transition="scale-transition"
-              offset-y
-              min-width="auto"
-            >
+            <v-text-field v-model="person.cc" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.ciudad" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.telefono" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.cargo" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-text-field v-model="person.correoContacto" class="field pl-1 py-0 my-0" height="26"></v-text-field>
+            <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
+              offset-y min-width="auto">
               <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="entregaResultados"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  class="field px-0 py-0 my-0"
-                  height="26"
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
+                <v-text-field v-model="entregaResultados" prepend-icon="mdi-calendar" readonly
+                  class="field px-0 py-0 my-0" height="26" v-bind="attrs" v-on="on"></v-text-field>
               </template>
-              <v-date-picker
-                v-model="entregaResultados"
-                @input="menu2 = false"
-              ></v-date-picker>
+              <v-date-picker v-model="entregaResultados" @input="menu2 = false"></v-date-picker>
             </v-menu>
-            <v-text-field
-              v-model="person.cargoElaborador"
-              class="field pl-1 py-0 my-0"
-              height="26"
-            ></v-text-field>
+            <v-text-field v-model="person.cargoElaborador" class="field pl-1 py-0 my-0" height="26"></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -520,22 +255,11 @@
             Ensayos
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-text-field
-              label="buscador"
-              v-model="search"
-              single-line
-              hide-details
-            ></v-text-field>
+            <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  v-bind="attrs"
-                  v-on="on"
-                >
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                   Nuevo Item
                 </v-btn>
               </template>
@@ -543,35 +267,23 @@
                 <v-card-title>
                   ENSAYOS
                   <v-spacer></v-spacer>
-                  <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search"
-                    single-line
-                    hide-details
-                  >
+                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
                   </v-text-field>
                 </v-card-title>
-                <v-data-table
-                  :headers="encabezadoEnsayo"
-                  :items="ensayos1"
-                  :search="search"
-                  item-key="ensayos"
-                >
+                <v-data-table :headers="encabezadoEnsayo" :items="ensayos1" :search="search" item-key="ensayos">
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="ensayoCotizacion(item)" icon>
-                      <font-awesome-icon
-                        style="font-size: 20px"
-                        icon="fa-solid fa-plus"
-                      />
+                      <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-plus" />
                     </v-btn>
                   </template>
                 </v-data-table>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
-                    Cerrar
-                  </v-btn>
+                  <v-hover v-slot="{ hover }">
+                    <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
+                      Cerrar
+                    </v-btn>
+                  </v-hover>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -596,22 +308,11 @@
             Ensayos
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-text-field
-              label="buscador"
-              v-model="search"
-              single-line
-              hide-details
-            ></v-text-field>
+            <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialogItem2" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  v-bind="attrs"
-                  v-on="on"
-                >
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                   Nuevo Item
                 </v-btn>
               </template>
@@ -619,35 +320,23 @@
                 <v-card-title>
                   ENSAYOS
                   <v-spacer></v-spacer>
-                  <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search"
-                    single-line
-                    hide-details
-                  >
+                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
                   </v-text-field>
                 </v-card-title>
-                <v-data-table
-                  :headers="encabezadoEnsayo"
-                  :items="ensayos2"
-                  :search="search"
-                  item-key="ensayos"
-                >
+                <v-data-table :headers="encabezadoEnsayo" :items="ensayos2" :search="search" item-key="ensayos">
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="ensayoCotizacion2(item)" icon>
-                      <font-awesome-icon
-                        style="font-size: 20px"
-                        icon="fa-solid fa-plus"
-                      />
+                      <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-plus" />
                     </v-btn>
                   </template>
                 </v-data-table>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
-                    Cerrar
-                  </v-btn>
+                  <v-hover v-slot="{ hover }">
+                    <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
+                      Cerrar
+                    </v-btn>
+                  </v-hover>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -672,22 +361,11 @@
             Ensayos
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-text-field
-              label="buscador"
-              v-model="search"
-              single-line
-              hide-details
-            ></v-text-field>
+            <v-text-field label="buscador" v-model="search" single-line hide-details></v-text-field>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialogItem3" max-width="1000px" persistent>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  v-bind="attrs"
-                  v-on="on"
-                >
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                   Nuevo Item
                 </v-btn>
               </template>
@@ -695,35 +373,23 @@
                 <v-card-title>
                   ENSAYOS
                   <v-spacer></v-spacer>
-                  <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search"
-                    single-line
-                    hide-details
-                  >
+                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
                   </v-text-field>
                 </v-card-title>
-                <v-data-table
-                  :headers="encabezadoEnsayo"
-                  :items="ensayos3"
-                  :search="search"
-                  item-key="ensayos"
-                >
+                <v-data-table :headers="encabezadoEnsayo" :items="ensayos3" :search="search" item-key="ensayos">
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="ensayoCotizacion3(item)" icon>
-                      <font-awesome-icon
-                        style="font-size: 20px"
-                        icon="fa-solid fa-plus"
-                      />
+                      <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-plus" />
                     </v-btn>
                   </template>
                 </v-data-table>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
-                    Cerrar
-                  </v-btn>
+                  <v-hover v-slot="{ hover }">
+                    <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
+                      Cerrar
+                    </v-btn>
+                  </v-hover>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -737,29 +403,16 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-btn
-        class="ml-4 my-6 primary"
-        @click="cotizacion"
-        v-if="this.$store.state.cotizacionVer == false"
-      >
+      <v-btn class="ml-4 my-6 primary" @click="cotizacion" v-if="this.$store.state.cotizacionVer == false">
         subir cotización
       </v-btn>
       <v-btn class="ml-4 my-6" @click="modificarCotizacion" v-else>
         editar cotización
       </v-btn>
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="observacion"
-        class="pr-2 my-6 py-0"
-        label="Observaciones"
-      ></v-text-field>
+      <v-text-field v-model="observacion" class="pr-2 my-6 py-0" label="Observaciones"></v-text-field>
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="descuento"
-        class="pr-2 my-6 py-0"
-        type="number"
-        label="Descuento Global"
-      ></v-text-field>
+      <v-text-field v-model="descuento" class="pr-2 my-6 py-0" type="number" label="Descuento Global"></v-text-field>
     </v-row>
     <!-- <v-row>
       <v-col cols="8" class="py-0 px-0">
@@ -1075,21 +728,9 @@ export default {
       item1: {
         itemsEnsayo: [],
       },
-      fechaEmision: new Date(
-        Date.now() - new Date().getTimezoneOffset() * 60000
-      )
-        .toISOString()
-        .substr(0, 10),
-      validezOferta: new Date(
-        Date.now() - new Date().getTimezoneOffset() * 60000
-      )
-        .toISOString()
-        .substr(0, 10),
-      entregaResultados: new Date(
-        Date.now() - new Date().getTimezoneOffset() * 60000
-      )
-        .toISOString()
-        .substr(0, 10),
+      fechaEmision: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
+      validezOferta: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
+      entregaResultados: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
       menu2: false,
       menu1: false,
       dialogItem2: false,
@@ -1137,6 +778,7 @@ export default {
       dialogCotizacion: false,
 
       /* variables del registro de usuario */
+      
       dialogUser: false,
       select: null,
       nombre: "",
@@ -1506,9 +1148,21 @@ export default {
       axios
         .get("https://labficat.herokuapp.com/api/ensayo")
         .then((res) => {
-          this.ensayos1 = res.data.ensayos;
+
+          for (let i = 0; i < res.data.ensayos.length; i++) {
+            const element = res.data.ensayos[i];
+            if(element.estado==1){
+              console.log("hello guys: "+element);
+              
+              this.ensayos1.push(element);
+              this.ensayos2.push(element);
+              this.ensayos3.push(element);
+            }
+            
+          }
+          /* this.ensayos1 = res.data.ensayos;
           this.ensayos2 = res.data.ensayos;
-          this.ensayos3 = res.data.ensayos;
+          this.ensayos3 = res.data.ensayos; */
         })
         .catch((err) => {
           console.log(err);
@@ -1735,7 +1389,6 @@ export default {
   },
   destroyed() {
     this.vaciarInformacion();
-    console.log("hola");
   },
 };
 </script>
