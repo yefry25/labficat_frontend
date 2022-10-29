@@ -274,7 +274,6 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-
           if (
             err.response.data.msg ==
             "Token expiró, por favor inicie sesión nuevamente"

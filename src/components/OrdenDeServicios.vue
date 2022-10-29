@@ -48,7 +48,7 @@
       </v-col>
     </v-row>
 
-    <!--   segmento de cuadro de dialog -->
+    <!--   segmento de cuadro de dialog editar orden -->
 
     <v-dialog v-model="dialog" max-width="1000px" persistent>
       <v-card>
@@ -70,18 +70,53 @@
               <v-text-field v-model="incertidumbre" :error-messages="errors" type="number" label="Incertidumbre"
                 outlined required></v-text-field>
             </validation-provider>
-            <validation-provider v-slot="{ errors }" name="observaciones" rules="required">
-              <v-text-field v-model="observacion" :error-messages="errors" label="Observaciones" outlined required>
-              </v-text-field>
+            <validation-provider v-slot="{ errors }" name="estado" rules="required">
+              <v-text-field v-model="estado" :error-messages="errors" label="Estado"
+                outlined required></v-text-field>
             </validation-provider>
-            <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded @click="editarOrdenServicio"
-              block>
-              Actualizar orden de servicio
+            <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded @click="ensayoItems" block>
+              Enviar ensayo editado
             </v-btn>
           </form>
         </validation-observer>
       </v-card>
     </v-dialog>
+
+    <!-- segmento de cuadro de dialogo para selecionar el ensayo que se va a editar -->
+
+    <v-row>
+      <v-col>
+        <v-dialog v-model="dialogTabla" max-width="1000px" persistent>
+          <v-card>
+            <v-card-title>
+              <v-hover v-slot="{ hover }">
+                <v-btn icon @click="closeTabla" :style="{ color: hover ? 'red' : '' }">
+                  <font-awesome-icon style="fontsize: 26px" icon="fa-solid fa-xmark" />
+                </v-btn>
+              </v-hover>
+              Ensayos
+            </v-card-title>
+            <v-data-table :headers="headerItemOrden" :items="itemsOrden" :loading="myLoadingTabla"
+              loading-text="Cargando... Por favor espera">
+              <template v-slot:[`item.actions`]="{ item }">
+                <v-row>
+                  <v-btn @click="editarItemOrden(item)" icon>
+                    <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-file-pen" />
+                  </v-btn>
+                </v-row>
+              </template>
+              <template v-slot:footer>
+                <v-row>
+                  <v-text-field class="ml-5" v-model="observacion" label="Observaciones" required></v-text-field>
+                  <v-spacer></v-spacer>
+                  <v-btn class="primary mt-5 mr-7" @click="editarOrdenServicio">Editar orden de servicio</v-btn>
+                </v-row>
+              </template>
+            </v-data-table>
+          </v-card>
+        </v-dialog>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -117,9 +152,15 @@ export default {
   data() {
     return {
       myLoading: true,
+      myLoadingTabla: true,
       dialog: false,
+      dialogTabla: false,
+      idensayo: '',
+      responsable: '',
+      supervisor: '',
       resultado: "",
       incertidumbre: "",
+      estado: '',
       observacion: "",
       encabezado: [
         {
@@ -133,7 +174,23 @@ export default {
         { text: "Acciones", value: "actions", sortable: false },
       ],
       ordenes: [],
+      itemsOrden: [],
+      headerItemOrden: [
+        {
+          text: "Ensayo",
+          align: "start",
+          sortable: false,
+          value: "idensayo.ensayo",
+        },
+        { text: "Responsable", value: "responsable.nombre", sortable: false },
+        { text: "Supervisor", value: "supervisor.nombre", sortable: false },
+        { text: "Resultado", value: "resultado", sortable: false },
+        { text: "Incertidumbre", value: "incertidumbre", sortable: false },
+        { text: "Estado", value: "estado", sortable: false },
+        { text: "Acciones", value: "actions", sortable: false },
+      ],
       ordenEditar: {},
+      ensayosOrdenes: []
     };
   },
   methods: {
@@ -151,8 +208,11 @@ export default {
     },
     infoOrdenEditar(orden) {
       console.log(orden);
-      this.dialog = true;
+     
+      this.myLoadingTabla = false;
+      this.dialogTabla = true;
       this.ordenEditar = orden;
+      this.itemsOrden = orden.itemsorden
     },
     editarOrdenServicio() {
       let header = { headers: { "x-token": this.$store.state.token } };
@@ -160,12 +220,7 @@ export default {
         .put(
           `https://labficat.herokuapp.com/api/orden/completado/${this.ordenEditar._id}`,
           {
-            itemsorden: [
-              {
-                resultado: this.resultado,
-                incertidumbre: this.incertidumbre,
-              },
-            ],
+            itemsorden: this.ensayosOrdenes,
             observaciones: this.observacion,
           },
           header
@@ -206,6 +261,14 @@ export default {
             });
           }
         });
+    },
+    editarItemOrden(ensayo) {
+      this.idensayo = ensayo.idensayo._id;
+      this.responsable = ensayo.responsable._id;
+      this.supervisor = ensayo.supervisor._id;
+      this.estado = ensayo.estado;
+      console.log(ensayo);
+      this.dialog = true;
     },
     limpiarInfo() {
       this.resultado = "";
@@ -300,8 +363,30 @@ export default {
           });
       }
     },
+    ensayoItems() {
+      this.ensayosOrdenes.push({
+        idensayo: this.idensayo,
+        responsable: this.responsable,
+        supervisor: this.supervisor,
+        resultado: this.resultado,
+        incertidumbre: this.incertidumbre,
+        estado: this.estado
+      })
+      this.$swal({
+        icon: "success",
+        title: "Información guardada",
+      });
+      console.log(this.ensayosOrdenes);
+    },
     close() {
       this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+    closeTabla() {
+      this.dialogTabla = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
