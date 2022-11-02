@@ -74,7 +74,7 @@ export default {
                     console.log(res);
                     this.$swal({
                         icon: "success",
-                        title: "Cambio de contraseña exitoso, por favor diríjase al incio de sesión",
+                        title: "Cambio de contraseña exitoso, por favor diríjase al inicio de sesión",
                     });
                     this.$store.state.emailConfirmed = undefined;
                     localStorage.removeItem('email');

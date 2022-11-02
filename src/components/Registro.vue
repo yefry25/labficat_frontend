@@ -118,9 +118,10 @@ export default {
     items: ["Natural", "Jurídica"],
     roles: [
       "cliente",
-      "secretario",
+      "recepcionista",
       "administrador",
       "director",
+      "director tecnico",
       "especialista",
       "supervisor",
     ],

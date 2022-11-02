@@ -150,7 +150,7 @@
             <v-spacer></v-spacer>
             <v-dialog v-model="dialogEnsayoNuevo" persistent max-width="2000px">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" @click="limpiar">
                   Nuevo Ensayo
                 </v-btn>
               </template>
@@ -183,6 +183,9 @@
           <v-data-table :headers="headersEnsayo" :items="ensayosMostrar" :search="search">
             <template v-slot:footer>
               <v-card class="d-flex justify-end"> </v-card>
+            </template>
+            <template v-slot:no-data>
+              <h2>No hay información</h2>
             </template>
           </v-data-table>
         </v-card>
@@ -332,6 +335,12 @@ export default {
             });
           }
         });
+    },
+    limpiar(){
+      console.log("si: "+this.ensayosMostrar.length);
+      if(this.ensayosMostrar.length>0){
+        this.ensayosMostrar=[];
+      }
     },
     infoOrden(orden) {
       axios

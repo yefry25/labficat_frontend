@@ -19,42 +19,42 @@
             <v-list-item-title>Inicio</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="mostrarCotizacion">
+          <v-list-item to="mostrarCotizacion" v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='recepcionista'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-hand-holding-dollar" />
             </v-list-item-icon>
             <v-list-item-title>Cotizacion</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="mostrarMuestra">
+          <v-list-item to="mostrarMuestra" v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='especialista' || this.$store.state.elaborador.rol=='recepcionista'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-book" />
             </v-list-item-icon>
             <v-list-item-title>Muestra</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="ordenServicio">
+          <v-list-item to="ordenServicio" v-if="this.$store.state.elaborador.rol=='director'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-check-to-slot" />
             </v-list-item-icon>
             <v-list-item-title>orden de servicio</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="informeDeResultados">
+          <v-list-item to="informeDeResultados" v-if="this.$store.state.elaborador.rol=='director'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-table-list" />
             </v-list-item-icon>
             <v-list-item-title>informe de resultados</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="mostrarUsuarios">
+          <v-list-item to="mostrarUsuarios" v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='director tecnico' || this.$store.state.elaborador.rol=='recepcionista'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-user-pen" />
             </v-list-item-icon>
             <v-list-item-title>registro de usuarios</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="configuracion">
+          <v-list-item to="configuracion" v-if="this.$store.state.elaborador.rol=='director'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-users-gear" />
             </v-list-item-icon>

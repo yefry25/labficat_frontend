@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined>
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='recepcionista'">
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -20,7 +20,7 @@
         </v-card>
       </v-col>
       <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined>
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='especialista' || this.$store.state.elaborador.rol=='recepcionista'">
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -38,7 +38,7 @@
         </v-card>
       </v-col>
       <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined>
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director'">
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -56,7 +56,7 @@
         </v-card>
       </v-col>
       <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined>
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director'">
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -76,7 +76,7 @@
 
 
       <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined>
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='director tecnico' || this.$store.state.elaborador.rol=='recepcionista'">
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -94,7 +94,7 @@
         </v-card>
       </v-col>
       <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined>
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director'">
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -119,7 +119,9 @@
 import axios from "axios";
 export default {
   name: "pageInicio",
-  data: () => ({}),
+  data: () => ({
+    
+  }),
 
   methods: {
     ingreso() {
@@ -156,6 +158,9 @@ export default {
         });
     },
   },
+  created(){
+    
+  }
 };
 </script>
 
