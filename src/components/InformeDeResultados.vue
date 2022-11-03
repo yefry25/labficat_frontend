@@ -162,11 +162,18 @@
                   <v-text-field label="buscador" v-model="busqueda" single-line hide-details></v-text-field>
                 </v-card-title>
                 <v-data-table :headers="headerOrden" :items="orden" :loading="isLoading"
-            loading-text="Cargando... Por favor espera">
+                  loading-text="Cargando... Por favor espera">
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="black" @click="infoOrden(item)" icon>
                       <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-plus" />
                     </v-btn>
+                  </template>
+                  <template v-slot:[`item.estado`]="{ item }">
+                    <div v-if="item.estado == 1">
+                      <b>
+                        <span class="blue--text">Activo</span>
+                      </b>
+                    </div>
                   </template>
                 </v-data-table>
                 <v-card-actions>
@@ -267,6 +274,9 @@ export default {
         value: "idMuestra.codMuestra",
       },
       { text: "estado", value: "estado", sortable: false },
+      { text: "lugar toma muestra", value: "idMuestra.lugarTomaMuestra", sortable: false },
+
+      { text: "muestra recolectada por", value: "idMuestra.muestraRecolectadaPor", sortable: false },
       { text: "item", value: "idMuestra.item", sortable: false },
       { text: "Acciones", value: "actions", sortable: false },
     ],
@@ -336,10 +346,10 @@ export default {
           }
         });
     },
-    limpiar(){
-      console.log("si: "+this.ensayosMostrar.length);
-      if(this.ensayosMostrar.length>0){
-        this.ensayosMostrar=[];
+    limpiar() {
+      console.log("si: " + this.ensayosMostrar.length);
+      if (this.ensayosMostrar.length > 0) {
+        this.ensayosMostrar = [];
       }
     },
     infoOrden(orden) {
@@ -348,7 +358,7 @@ export default {
           `https://labficat.herokuapp.com/api/orden/informeDeResultados/${orden._id}`
         )
         .then((res) => {
-          
+
           this.$swal({
             icon: "success",
             title: "La información se cargo exitosamente ",
@@ -402,13 +412,13 @@ export default {
 
           for (let i = 0; i < res.data.orden.length; i++) {
             const element = res.data.orden[i];
-            if(element.estado == 1){
+            if (element.estado == 1) {
               console.log(element);
               this.orden.push(element);
             }
 
           }
-          this.isLoading= false;
+          this.isLoading = false;
         })
         .catch((err) => {
           console.log(err);

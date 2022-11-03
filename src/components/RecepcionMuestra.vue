@@ -144,7 +144,6 @@
                   </v-hover>
                   Formulario de muestras
                 </v-card-title>
-
                 <validationObserver ref="observer" v-slot="{ invalid }">
                   <form @submit.prevent="submit" class="py-7 px-7">
                     <validation-provider v-slot="{ errors }" name="departamento" rules="required">

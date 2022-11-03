@@ -30,7 +30,7 @@
                   :error-messages="errors" outlined label="Cuidad" data-vv-name="ciudad" required></v-select>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="contacto" rules="required">
-                <v-text-field v-model="contacto" :error-messages="errors" label="Contacto" outlined required>
+                <v-text-field v-model="contacto" :error-messages="errors" label="Nombre del contacto" outlined required>
                 </v-text-field>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="teléfono del contacto" rules="required">
@@ -38,7 +38,7 @@
                   required></v-text-field>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="teléfono" rules="required">
-                <v-text-field v-model="telefono" :error-messages="errors" label="Teléfono" outlined required>
+                <v-text-field v-model="telefono" :error-messages="errors" label="Teléfono del titular" outlined required>
                 </v-text-field>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
