@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
     cotizacionVer: false,
     muestraEditar: {},
     muestraVer: false,
+    color:localStorage.color
   },
   mutations: {
     setToken(state, value) {
@@ -37,6 +38,14 @@ export const store = new Vuex.Store({
         state.elaborador = l;
       }
     },
+    setColor(state, value) {
+      localStorage.color = value;
+      if (localStorage.color) {
+        state.color = localStorage.color;
+      } else {
+        state.color = value;
+      }
+    },
     setCotizacionEditar(state, value) {
       state.cotizacionEditar = value;
       state.cotizacionVer = true;
@@ -52,6 +61,9 @@ export const store = new Vuex.Store({
     },
     setElaborador(context, value) {
       context.commit("setElaborador", value);
+    },
+    setColor(context, value){
+      context.commit("setColor",value)
     },
     setCotizacionEditar(context, value) {
       context.commit("setCotizacionEditar", value);

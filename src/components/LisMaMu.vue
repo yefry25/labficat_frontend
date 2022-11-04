@@ -148,7 +148,7 @@ export default {
     },
     fecha(r) {
       let fecha = r.split("T")[0].replace(/-/g, "/");
-      console.log(fecha);
+      console.log(fecha.toISOString());
       let d = new Date(r);
       return d.toLocaleDateString();
     },

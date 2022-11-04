@@ -127,7 +127,9 @@ export default {
     },
     fecha(r) {
       let d = new Date(r);
-      return d.toLocaleDateString() + ' ' + '-' + ' ' + d.toLocaleTimeString()
+      let f = d.toISOString();
+      return f.split('T')[0].replace(/-/g, "/")
+      // return f.toISOString() + ' ' + '-' + ' ' + d.toLocaleTimeString()
     }
   },
   created() {

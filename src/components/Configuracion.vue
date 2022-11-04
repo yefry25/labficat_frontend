@@ -105,6 +105,33 @@
           </v-card-actions>
         </v-card>
       </v-col>
+
+      <v-col cols="6">
+        <v-card
+          class="borde mx-auto rounded-xl rounded-tr-0"
+          max-width="344"
+          outlined
+        >
+          <v-list-item three-line class="text-center">
+            <v-list-item-content>
+              <div class="text-overline mb-4">labficat</div>
+              <v-list-item-title class="text-h5 mb-1">
+                COLOR
+              </v-list-item-title>
+              <font-awesome-icon
+                class="mt-2"
+                icon="fa-solid fa-pen-to-square"
+                style="font-size: 25px"
+              />
+            </v-list-item-content>
+          </v-list-item>
+          <v-card-actions class="boton">
+            <v-btn class="primary" to="actualizar" outlined rounded text>
+              INGRESAR
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
     </v-row>
   </v-container>
 </template>

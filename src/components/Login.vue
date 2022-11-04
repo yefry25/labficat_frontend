@@ -164,6 +164,16 @@ export default {
         this.$router.push("/inicio");
       }
     },
+    traerColor(){
+      axios.get('https://labficat.herokuapp.com/api/color')
+      .then((res)=>{
+        console.log("color: "+res.data.color[0].color);
+        this.$store.dispatch("setColor", res.data.color[0].color)
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+    },
     close() {
       this.dialogRecuperar = false;
       this.$nextTick(() => {
@@ -174,6 +184,7 @@ export default {
   },
   created() {
     this.existeToken();
+    this.traerColor();
   }
 };
 </script>

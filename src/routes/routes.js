@@ -17,6 +17,7 @@ import mostrarEnsayo from '../components/MostrarEnsayos.vue'
 import lismamu from '../components/LisMaMu.vue'
 import prueba from '../components/Pruebas.vue'
 import cambiar from '../components/CambiarPassword.vue'
+import actualizar from '../components/Actualizacion.vue'
 
 export const routes = [
     {path: '/inicio', component: inicio},
@@ -37,5 +38,6 @@ export const routes = [
     {path:'/mostrarEnsayos',component: mostrarEnsayo},
     {path:'/lismamu' , component: lismamu},
     {path:'/pruebas', component:prueba},
-    {path:'/cambiarPrueba', component:cambiar}
+    {path:'/cambiarPrueba', component:cambiar},
+    {path:'/actualizar', component:actualizar}
 ]
