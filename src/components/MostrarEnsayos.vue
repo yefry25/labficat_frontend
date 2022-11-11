@@ -34,6 +34,9 @@
                 </div>
               </v-row>
             </template>
+            <template v-slot:[`item.costo`]="{ item }">
+              <span>{{ valores(item.costo) }}</span>
+            </template>
             <template v-slot:[`item.estado`]="{ item }">
               <div v-if="item.estado == 1">
                 <b>
@@ -45,7 +48,7 @@
                   <span class="red--text">Inactivo</span>
                 </b>
               </div>
-            </template>
+            </template> 
           </v-data-table>
         </v-card>
       </v-col>
@@ -440,6 +443,19 @@ export default {
           titular: "",
           suplente: "",
         });
+    },
+    valores(valor) {
+      const plata = valor;
+      const currency = (number) => {
+        return new Intl.NumberFormat('en-US',
+          {
+            style: 'currency',
+            currency: 'COP',
+            minimumFractionDigits: 0
+          }
+          ).format(number);
+      };
+      return currency(plata)
     },
     close() {
       this.dialogEditar = false;

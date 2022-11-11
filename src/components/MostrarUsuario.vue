@@ -111,18 +111,8 @@
                   </v-text-field>
                 </validation-provider>
                 <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
-                  <v-text-field v-model="persona.email" :error-messages="errors" label="E-mail" prepend-icon="mdi-email"
+                  <v-text-field v-model="persona.email" :error-messages="errors" label="E-mail" 
                     outlined required></v-text-field>
-                </validation-provider>
-                <validation-provider v-slot="{ errors }" name="contraseña" vid="password"
-                  :rules="{ required: true, min: 8 }">
-                  <v-text-field v-model="persona.password" :error-messages="errors" label="Contraseña" type="password"
-                    outlined prepend-icon="mdi-lock" required></v-text-field>
-                </validation-provider>
-                <validation-provider v-slot="{ errors }" name="confirmar contraseña"
-                  rules="required|confirmed:password">
-                  <v-text-field v-model="persona.confirmation" :error-messages="errors" label="confirmar contraseña"
-                    outlined type="password" required></v-text-field>
                 </validation-provider>
                 <validation-provider v-slot="{ errors }" name="rol" rules="required">
                   <v-select v-model="persona.rol" :items="roles" :error-messages="errors" outlined label="Roles"
@@ -225,8 +215,6 @@ export default {
         celularContacto: "",
         telefono: "",
         email: "",
-        password: "",
-        confirmation: "",
         rol: "",
       },
       items: ["Natural", "Jurídica"],
@@ -426,7 +414,6 @@ export default {
             celularContacto: this.persona.celularContacto,
             telefono: this.persona.telefono,
             correo: this.persona.email,
-            password: this.persona.password,
             rol: this.persona.rol,
           },
           header
@@ -459,7 +446,6 @@ export default {
       this.persona.celularContacto = "";
       this.persona.telefono = "";
       this.persona.email = "";
-      this.persona.password = "";
       this.persona.rol = "";
     },
     close() {

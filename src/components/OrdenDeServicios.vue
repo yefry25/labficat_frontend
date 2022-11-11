@@ -13,8 +13,9 @@
                     <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-file-pen" />
                   </v-btn>
                 </div>
+
                 <div v-if="item.estado == 0">
-                  <v-btn disabled icon>
+                  <v-btn @click="infoOrdenEditar(item)" icon>
                     <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-file-pen" />
                   </v-btn>
                 </div>
@@ -33,14 +34,35 @@
             <template v-slot:[`item.estado`]="{ item }">
               <div v-if="item.estado == 1">
                 <b>
-                  <span class="blue--text">Activo</span>
+                  <span class="green--text">Analizado</span>
                 </b>
               </div>
               <div v-else>
                 <b>
-                  <span class="red--text">Inactivo</span>
+                  <span class="red--text">En proceso</span>
                 </b>
               </div>
+            </template>
+            <template v-slot:[`item.idMuestra.cotizacion.entregaResultados`]="{ item }">
+              <v-chip v-if="semaforo(item.idMuestra.cotizacion.entregaResultados) <= 2 && semaforo(item.idMuestra.cotizacion.entregaResultados) > 0
+              && item.estado == 0" color="red">
+                {{ `${semaforo(item.idMuestra.cotizacion.entregaResultados)} días` }}</v-chip>
+              <v-chip v-if="semaforo(item.idMuestra.cotizacion.entregaResultados) == 0 && item.estado == 0" color="red">
+                {{ `${semaforo(item.idMuestra.cotizacion.entregaResultados)} días` }}</v-chip>
+              <v-chip color="yellow"
+                v-if="semaforo(item.idMuestra.cotizacion.entregaResultados) <= 5 && semaforo(item.idMuestra.cotizacion.entregaResultados) >= 3 && item.estado == 0">
+                {{ `${semaforo(item.idMuestra.cotizacion.entregaResultados)} días` }}</v-chip>
+
+              <v-chip v-if="semaforo(item.idMuestra.cotizacion.entregaResultados) > 5 && item.estado == 0" color="gray">
+                {{ `${semaforo(item.idMuestra.cotizacion.entregaResultados)} días` }}</v-chip>
+
+              <span v-if="semaforo(item.idMuestra.cotizacion.entregaResultados) < 0 && item.estado == 0"
+                class="red--text"><strong> Esta
+                  vencida hace
+                  {{ `${semaforo(item.idMuestra.cotizacion.entregaResultados) * -1} días` }} </strong></span>
+
+              <span v-if="item.estado == 1" class="green--text"><strong>{{ `Orden realizada exitosamente`
+              }}</strong></span>
             </template>
           </v-data-table>
           <v-card-actions> </v-card-actions>
@@ -71,8 +93,7 @@
                 outlined required></v-text-field>
             </validation-provider>
             <validation-provider v-slot="{ errors }" name="estado" rules="required">
-              <v-text-field v-model="estado" :error-messages="errors" label="Estado"
-                outlined required></v-text-field>
+              <v-text-field v-model="estado" :error-messages="errors" label="Estado" outlined required></v-text-field>
             </validation-provider>
             <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded @click="ensayoItems" block>
               Enviar ensayo editado
@@ -170,6 +191,7 @@ export default {
           value: "idMuestra.codMuestra",
         },
         { text: "observaciones", value: "observaciones", sortable: false },
+        { text: "Entrega de resultados", value: "idMuestra.cotizacion.entregaResultados", sortable: false },
         { text: "estado", value: "estado", sortable: false },
         { text: "Acciones", value: "actions", sortable: false },
       ],
@@ -187,6 +209,7 @@ export default {
         { text: "Resultado", value: "resultado", sortable: false },
         { text: "Incertidumbre", value: "incertidumbre", sortable: false },
         { text: "Estado", value: "estado", sortable: false },
+
         { text: "Acciones", value: "actions", sortable: false },
       ],
       ordenEditar: {},
@@ -208,11 +231,13 @@ export default {
     },
     infoOrdenEditar(orden) {
       console.log(orden);
-     
+
       this.myLoadingTabla = false;
       this.dialogTabla = true;
       this.ordenEditar = orden;
       this.itemsOrden = orden.itemsorden
+
+
     },
     editarOrdenServicio() {
       let header = { headers: { "x-token": this.$store.state.token } };
@@ -377,6 +402,17 @@ export default {
         title: "Información guardada",
       });
       console.log(this.ensayosOrdenes);
+    },
+    semaforo(fecha) {
+
+      let fechaReal = fecha.split('T')[0].replace(/-/g, "/");
+      let fechaActual = new Date().toLocaleDateString();
+      let fechaActualTotal = new Date(fechaActual);
+      let entregaTotal = new Date(fechaReal);
+      let fechaDefinitiva = Math.floor((entregaTotal.getTime() - fechaActualTotal.getTime()) / (1000 * 60 * 60 * 24));
+      /* let fechaRedondeada = Math.round(fechaDefinitiva) */
+      /* console.log("dias: " + fechaRedondeada); */
+      return fechaDefinitiva
     },
     close() {
       this.dialog = false;

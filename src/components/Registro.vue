@@ -26,7 +26,7 @@
                   @change="traerCiudades(departa)" required></v-select>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="ciudad" rules="required">
-                <v-select v-model="ciudad" :items="ciudades" item-text="Ciudad" item-key="ciudades" item-value="_id"
+                <v-select v-model="ciudad" :items="ciudades" item-text="Ciudad" item-value="_id"
                   :error-messages="errors" outlined label="Cuidad" data-vv-name="ciudad" required></v-select>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="contacto" rules="required">
@@ -42,17 +42,8 @@
                 </v-text-field>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
-                <v-text-field v-model="email" :error-messages="errors" label="E-mail" prepend-icon="mdi-email" outlined
+                <v-text-field v-model="email" :error-messages="errors" label="E-mail" outlined
                   required></v-text-field>
-              </validation-provider>
-              <validation-provider v-slot="{ errors }" name="contraseña" vid="password"
-                :rules="{ required: true, min: 8 }">
-                <v-text-field v-model="password" :error-messages="errors" label="Contraseña" type="password" outlined
-                  prepend-icon="mdi-lock" required></v-text-field>
-              </validation-provider>
-              <validation-provider v-slot="{ errors }" name="confirmar contraseña" rules="required|confirmed:password">
-                <v-text-field v-model="confirmation" :error-messages="errors" label="confirmar contraseña" outlined
-                  type="password" required></v-text-field>
               </validation-provider>
               <validation-provider v-slot="{ errors }" name="rol" rules="required">
                 <v-select v-model="rol" :items="roles" :error-messages="errors" outlined label="Roles"
@@ -112,8 +103,6 @@ export default {
     celularContacto: "",
     telefono: "",
     email: "",
-    password: "",
-    confirmation: "",
     rol: "",
     items: ["Natural", "Jurídica"],
     roles: [
@@ -157,6 +146,7 @@ export default {
         });
     },
     registrar() {
+      console.log("ciudad: "+this.ciudad);
       let header = { headers: { "x-token": this.$store.state.token } };
       axios
         .post("https://labficat.herokuapp.com/api/usuario", {
@@ -169,7 +159,6 @@ export default {
           celularContacto: this.celularContacto,
           telefono: this.telefono,
           correo: this.email,
-          password: this.password,
           rol: this.rol,
         },header)
         .then((res) => {
@@ -219,7 +208,6 @@ export default {
       this.celularContacto = "";
       this.telefono = "";
       this.email = "";
-      this.password = "";
       this.rol = "";
     },
   },

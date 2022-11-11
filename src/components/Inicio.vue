@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid>
-    <v-row>
+  <v-container fluid fill-height>
+    <v-row justify="center" align="center">
       <v-col cols="4">
         <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='recepcionista'">
           <v-list-item three-line class="text-center">

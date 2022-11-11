@@ -68,7 +68,7 @@
                           </v-text-field>
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
-                          <v-dialog v-model="dialogUser" max-width="1000px" persistent>
+                          <v-dialog v-model="dialogNuevoRegistro" max-width="1000px" persistent>
                             <template v-slot:activator="{ on, attrs }">
                               <v-btn class="primary" v-bind="attrs" v-on="on" @click="traerDepartamentos">Agregar
                                 usuario</v-btn>
@@ -76,7 +76,7 @@
                             <v-card outlined>
                               <v-card-title>
                                 <v-hover v-slot="{ hover }">
-                                  <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                                  <v-btn icon @click="{dialogNuevoRegistro = false}" :style="{ color: hover ? 'red' : '' }">
                                     <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
                                   </v-btn>
                                 </v-hover>
@@ -151,7 +151,7 @@
                               <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-hover v-slot="{ hover }">
-                                  <v-btn class="ml-5" text @click="close" :style="{ background: hover ? 'red' : '' }">
+                                  <v-btn class="ml-5" text @click="{dialogNuevoRegistro = false}" :style="{ background: hover ? 'red' : '' }">
                                     Cerrar
                                   </v-btn>
                                 </v-hover>
@@ -635,7 +635,8 @@ export default {
       formato: "",
       search: "",
       myLoading: true,
-      dialogo: false,
+      dialogo: false, 
+      dialogNuevoRegistro:false,
       encabezado: [
         {
           text: "Código de referencia",
@@ -722,7 +723,7 @@ export default {
       ],
       id: "",
       ensa: "",
-      descuento: null,
+      descuento: 0,
       observacion: "",
       limiteCuantificacion: null,
       item1: {
@@ -778,7 +779,7 @@ export default {
       dialogCotizacion: false,
 
       /* variables del registro de usuario */
-      
+
       dialogUser: false,
       select: null,
       nombre: "",
@@ -1151,14 +1152,14 @@ export default {
 
           for (let i = 0; i < res.data.ensayos.length; i++) {
             const element = res.data.ensayos[i];
-            if(element.estado==1){
-              console.log("hello guys: "+element);
-              
+            if (element.estado == 1) {
+              console.log("hello guys: " + element);
+
               this.ensayos1.push(element);
               this.ensayos2.push(element);
               this.ensayos3.push(element);
             }
-            
+
           }
           /* this.ensayos1 = res.data.ensayos;
           this.ensayos2 = res.data.ensayos;

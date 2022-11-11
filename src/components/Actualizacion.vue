@@ -24,11 +24,6 @@ export default {
         }
     },
     methods: {
-        /* colorGlobal() {
-            this.$store.dispatch("setColor", this.color)
-            console.log("color: " + this.$store.state.color);
-            console.log("color: "+this.color);
-        }, */
         actualizarColor() {
             let header = { headers: { "x-token": this.$store.state.token } };
             let codigo = "63655c32553ec6d83aac2b0e"
