@@ -93,7 +93,8 @@
                 outlined required></v-text-field>
             </validation-provider>
             <validation-provider v-slot="{ errors }" name="estado" rules="required">
-              <v-text-field v-model="estado" :error-messages="errors" label="Estado" outlined required></v-text-field>
+              <!-- <v-text-field v-model="estado" :error-messages="errors" label="Estado" outlined required></v-text-field> -->
+              <v-select :items="estadoArray" v-model="estado" :error-messages="errors" label="Estado" solo outlined required></v-select>
             </validation-provider>
             <v-btn color="primary" class="mr-4" type="submit" :disabled="invalid" rounded @click="ensayoItems" block>
               Enviar ensayo editado
@@ -181,7 +182,11 @@ export default {
       supervisor: '',
       resultado: "",
       incertidumbre: "",
-      estado: '',
+      estado:"",
+      estadoArray: [
+        "en proceso",
+        "analizada"
+      ],
       observacion: "",
       encabezado: [
         {
@@ -192,6 +197,7 @@ export default {
         },
         { text: "observaciones", value: "observaciones", sortable: false },
         { text: "Entrega de resultados", value: "idMuestra.cotizacion.entregaResultados", sortable: false },
+        
         { text: "estado", value: "estado", sortable: false },
         { text: "Acciones", value: "actions", sortable: false },
       ],
@@ -291,7 +297,7 @@ export default {
       this.idensayo = ensayo.idensayo._id;
       this.responsable = ensayo.responsable._id;
       this.supervisor = ensayo.supervisor._id;
-      this.estado = ensayo.estado;
+      /* this.estado = ensayo.estado; */
       console.log(ensayo);
       this.dialog = true;
     },

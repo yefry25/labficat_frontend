@@ -1,10 +1,10 @@
 <template>
   <v-container fluid style="padding: 0;">
     <v-app-bar color="primary" dark flat>
-      <v-app-bar-nav-icon v-if="this.$store.state.token!=undefined" @click="drawer = true"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="this.$store.state.token != undefined" @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title class="font-weight-black black--text">LABFICAT</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn v-if="this.$store.state.token!=undefined" class="font-weight-black" icon @click="cerrarSesion">
+      <v-btn v-if="this.$store.state.token != undefined" class="font-weight-black" icon @click="cerrarSesion">
         <!-- <v-list-item-title class="black--text">Salir</v-list-item-title> -->
         <font-awesome-icon style="font-size:30px; color: black" icon="fa-solid fa-right-from-bracket" />
       </v-btn>
@@ -12,6 +12,19 @@
     <v-navigation-drawer v-model="drawer" absolute temporary bottom dark expand-on-hover>
       <v-list nav dense>
         <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+          <v-list-item to="perfil">
+            <v-row class="my-5">
+              <v-col class="text-center">
+                <v-avatar size="100">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png"
+                    alt="imagen perfil">
+                </v-avatar>
+                <h5 class="mt-4">{{ this.$store.state.elaborador.nombre }}</h5>
+                <h5>{{ this.$store.state.elaborador.rol }}</h5>
+              </v-col>
+            </v-row>
+          </v-list-item>
           <v-list-item to="inicio">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
@@ -19,42 +32,45 @@
             <v-list-item-title>Inicio</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="mostrarCotizacion" v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='recepcionista'">
+          <v-list-item to="mostrarCotizacion"
+            v-if="this.$store.state.elaborador.rol == 'director' || this.$store.state.elaborador.rol == 'recepcionista'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-hand-holding-dollar" />
             </v-list-item-icon>
             <v-list-item-title>Cotizacion</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="mostrarMuestra" v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='especialista' || this.$store.state.elaborador.rol=='recepcionista'">
+          <v-list-item to="mostrarMuestra"
+            v-if="this.$store.state.elaborador.rol == 'director' || this.$store.state.elaborador.rol == 'especialista' || this.$store.state.elaborador.rol == 'recepcionista'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-book" />
             </v-list-item-icon>
             <v-list-item-title>Muestra</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="ordenServicio" v-if="this.$store.state.elaborador.rol=='director'">
+          <v-list-item to="ordenServicio" v-if="this.$store.state.elaborador.rol == 'director'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-check-to-slot" />
             </v-list-item-icon>
             <v-list-item-title>orden de servicio</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="informeDeResultados" v-if="this.$store.state.elaborador.rol=='director'">
+          <v-list-item to="informeDeResultados" v-if="this.$store.state.elaborador.rol == 'director'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-table-list" />
             </v-list-item-icon>
             <v-list-item-title>informe de resultados</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="mostrarUsuarios" v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='director tecnico' || this.$store.state.elaborador.rol=='recepcionista'">
+          <v-list-item to="mostrarUsuarios"
+            v-if="this.$store.state.elaborador.rol == 'director' || this.$store.state.elaborador.rol == 'director tecnico' || this.$store.state.elaborador.rol == 'recepcionista'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-user-pen" />
             </v-list-item-icon>
             <v-list-item-title>registro de usuarios</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="configuracion" v-if="this.$store.state.elaborador.rol=='director'">
+          <v-list-item to="configuracion" v-if="this.$store.state.elaborador.rol == 'director'">
             <v-list-item-icon>
               <font-awesome-icon icon="fa-solid fa-users-gear" />
             </v-list-item-icon>

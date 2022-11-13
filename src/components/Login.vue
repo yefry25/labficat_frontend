@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-row class="my-12 justify-center text-center white--text pa-4 text-center">
+  <v-container fluid >
+    <v-row class="my-12 text-center white--text pa-4" justify="center" align="center">
       <v-col cols="8">
         <v-card class="rounded-xl rounded-bl-0" outlined>
           <v-card-title class="primary" id="" style="text-align: center; justify-content: center;">

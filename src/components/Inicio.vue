@@ -74,7 +74,6 @@
         </v-card>
       </v-col>
 
-
       <v-col cols="4">
         <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='director tecnico' || this.$store.state.elaborador.rol=='recepcionista'">
           <v-list-item three-line class="text-center">
@@ -119,9 +118,11 @@
 import axios from "axios";
 export default {
   name: "pageInicio",
-  data: () => ({
-    
-  }),
+  data(){
+    return {
+      
+    }
+  },
 
   methods: {
     ingreso() {
