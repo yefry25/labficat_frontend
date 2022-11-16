@@ -43,7 +43,7 @@
                   <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
                 </v-btn>
               </v-hover>
-              Editar orden de servicio
+              escriba su correo electrónico registrado
             </v-card-title>
             <validation-observer ref="observer" v-slot="{ invalid }">
               <form @submit.prevent="submit" class="py-7 px-7">

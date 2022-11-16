@@ -112,7 +112,7 @@ export default {
                         title: "Cambio de contraseña exitoso, por favor diríjase al inicio de sesión",
                     });
                 })
-                .catch((err) => {
+                .catch((err) => { 
                     console.log(err);
                     this.$swal({
                         icon: "error",
