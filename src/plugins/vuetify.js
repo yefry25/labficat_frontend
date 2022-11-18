@@ -3,7 +3,6 @@ import Vuetify from "vuetify/lib/framework";
 
 Vue.use(Vuetify);
 
-
 let color = localStorage.getItem('color')
 if (color == undefined) {
   color = '#E65100'

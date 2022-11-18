@@ -2,6 +2,10 @@
   <v-container fluid>
     <v-row>
       <v-col>
+
+        <v-select :items="usu" label="Elije el rol que quieres ver" solo v-model="elegirUser" @change="traerUsuarios">
+        </v-select>
+
         <v-hover v-slot="{ hover }">
           <v-card>
             <v-card-title>
@@ -111,8 +115,8 @@
                   </v-text-field>
                 </validation-provider>
                 <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
-                  <v-text-field v-model="persona.email" :error-messages="errors" label="E-mail" 
-                    outlined required></v-text-field>
+                  <v-text-field v-model="persona.email" :error-messages="errors" label="E-mail" outlined required>
+                  </v-text-field>
                 </validation-provider>
                 <validation-provider v-slot="{ errors }" name="rol" rules="required">
                   <v-select v-model="persona.rol" :items="roles" :error-messages="errors" outlined label="Roles"
@@ -218,6 +222,16 @@ export default {
         rol: "",
       },
       items: ["Natural", "Jurídica"],
+      usu: [
+        "cliente",
+        "recepcionista",
+        "administrador",
+        "director",
+        "director tecnico",
+        "especialista",
+        "supervisor",
+      ],
+      elegirUser: ""
     };
   },
   methods: {
@@ -250,7 +264,10 @@ export default {
     },
     traerUsuarios() {
       axios
-        .get("https://labficat.herokuapp.com/api/usuario")
+        .post("https://labficat.herokuapp.com/api/usuario/roles",
+        {
+          rol:this.elegirUser
+        })
         .then((res) => {
           console.log(res.data.usuario);
           this.usuarios = res.data.usuario;
@@ -260,6 +277,20 @@ export default {
           console.log(err);
         });
     },
+    /* traerClientes() {
+      axios
+        .post("https://labficat.herokuapp.com/api/usuario/roles", {
+          rol: this.elegirUser
+        })
+        .then((res) => {
+          console.log(res.data.usuario);
+          this.usuarios = res.data.usuario;
+          this.myLoading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, */
     estadoUsuario(user) {
       let header = { headers: { "x-token": this.$store.state.token } };
       if (user.estado == 1) {
@@ -458,7 +489,6 @@ export default {
     },
   },
   created() {
-    this.traerUsuarios();
     this.traerDepartamentos();
     this.traerCiudades();
   },
