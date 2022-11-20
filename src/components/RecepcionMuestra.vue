@@ -570,7 +570,7 @@ export default {
             icon: "success",
             title: "Registro exitoso de la muestra",
           });
-          this.vaciarInformacion();
+          this.vaciarInformacion(); 
           this.overlay=false
         })
         .catch((err) => {

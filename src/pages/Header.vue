@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid style="padding: 0;">
+  <v-container fluid style="padding: 0;" v-if="this.$router.history.current['path']!=='/facturaMuestra' && this.$router.history.current['path']!=='/facturaCotizacion' && this.$router.history.current['path']!=='/facturaInforme'">
     <v-app-bar color="primary" dark flat>
       <v-app-bar-nav-icon v-if="this.$store.state.token != undefined" @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title class="font-weight-black black--text">LABFICAT</v-toolbar-title>

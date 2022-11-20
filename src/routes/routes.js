@@ -19,6 +19,9 @@ import prueba from '../components/Pruebas.vue'
 import cambiar from '../components/CambiarPassword.vue'
 import actualizar from '../components/Actualizacion.vue'
 import perfil from "../components/Perfil.vue"
+import facturaMuestra from "../components/FacturaMuestra.vue"
+import facturaCotizacion from "../components/FacturaCotizacion.vue"
+import facturaInforme from "../components/FacturaInforme.vue"
 
 export const routes = [
     {path: '/inicio', component: inicio},
@@ -41,5 +44,8 @@ export const routes = [
     {path:'/pruebas', component:prueba},
     {path:'/cambiarPrueba', component:cambiar},
     {path:'/actualizar', component:actualizar},
-    {path:'/perfil', component:perfil}
+    {path:'/perfil', component:perfil},
+    {path:'/facturaMuestra',component:facturaMuestra},
+    {path:'/facturaCotizacion', component : facturaCotizacion},
+    {path:'/facturaInforme', component: facturaInforme}
 ]

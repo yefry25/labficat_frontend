@@ -1,8 +1,8 @@
 <template>
   <v-container fluid fill-height>
     <v-row justify="center" align="center" >
-      <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='recepcionista'">
+      <v-col cols="4" v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='recepcionista'">
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined >
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -19,8 +19,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='especialista' || this.$store.state.elaborador.rol=='recepcionista'">
+      <v-col cols="4" v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='especialista' || this.$store.state.elaborador.rol=='recepcionista'">
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined >
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -37,8 +37,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director'">
+      <v-col cols="4" v-if="this.$store.state.elaborador.rol=='director'">
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined >
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -55,8 +55,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director'">
+      <v-col cols="4" v-if="this.$store.state.elaborador.rol=='director'">
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined >
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -74,8 +74,8 @@
         </v-card>
       </v-col>
 
-      <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='director tecnico' || this.$store.state.elaborador.rol=='recepcionista'">
+      <v-col cols="4" v-if="this.$store.state.elaborador.rol=='director' || this.$store.state.elaborador.rol=='director tecnico' || this.$store.state.elaborador.rol=='recepcionista'">
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined >
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
@@ -92,8 +92,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined v-if="this.$store.state.elaborador.rol=='director'">
+      <v-col cols="4" v-if="this.$store.state.elaborador.rol=='director'">
+        <v-card class="borde mx-auto rounded-xl rounded-tr-0" max-width="344" outlined >
           <v-list-item three-line class="text-center">
             <v-list-item-content>
               <div class="text-overline mb-4">labficat</div>
