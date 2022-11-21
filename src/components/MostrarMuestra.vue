@@ -16,6 +16,9 @@
             <template v-slot:[`item.actions`]="{ item }">
               <v-row>
                 <div v-if="item.estado == 1">
+                  <v-btn @click="facturaMuestra(item)" icon>
+                    <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-file-invoice" />
+                  </v-btn>
                   <v-btn @click="infoMuestraEditar(item)" icon>
                     <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
                   </v-btn>
@@ -212,6 +215,11 @@ export default {
             }
           })
       }
+    },
+    facturaMuestra(muestra){
+      this.$store.dispatch("setFacturaMuestra", muestra)
+      this.$router.push("/facturaMuestra")
+      console.log(this.$store.state.facturaMuestra);
     },
     fecha(r) {
       

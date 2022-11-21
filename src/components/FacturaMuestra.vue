@@ -206,7 +206,7 @@
 
                 </v-col>
             </v-row>
-            
+
         </v-col>
     </v-container>
 </template>
@@ -236,34 +236,18 @@ export default {
                 sortable: false,
                 value: "codMuestra",
             },
-            { text: "Municipio de recolección", value: "munRecoleccion" },
+            { text: "Municipio de recolección", value: "munRecoleccion.departamento" },
             { text: "Dirección de toma de muestra", value: "direccionTomaMuestra" },
             { text: "Lugar de toma de muestra", value: "lugarTomaMuestra" },
             { text: "Muestra recolectada por", value: "muestraRecolectadaPor" },
             { text: "Procedimiento de muestreo", value: "procedimientoMuestreo" },
-            { text: "Tipo de muestra", value: 'tipoMuestra' },
+            { text: "Tipo de muestra", value: 'tipoMuestra.tipos' },
             { text: "Matriz de la muestra", value: "matrizMuestra" },
             { text: "Fecha y hora de recolección", value: "fechaRecoleccion" },
             { text: "Ítem de la cotización", value: "item" },
             { text: "Observaciones", value: "observaciones" }
         ],
-        muestra: [
-            {
-                solicitante: "Jefferson Arley Becerra Carreño",
-                codMuestra: "0007-2022",
-                munRecoleccion: "SAN GIL",
-                direccionTomaMuestra: "finca pablito",
-                lugarTomaMuestra: "poso coca",
-                muestraRecolectadaPor: "la britani",
-                procedimientoMuestreo: "hgfd",
-                tipoMuestra: "pulverizada",
-                matrizMuestra: "5165",
-                fechaRecoleccion: "2022 - 11 - 18T00: 00: 00.000 + 00: 00",
-                cotizacion: "0007-2022V1",
-                item: "Item1",
-                observaciones: "Un texto es una composición de signos codificados en un sistema de escritura que forma una unidad de sentido."
-            }
-        ]
+        muestra: []
     }),
     methods: {
         traerCalidad() {
@@ -273,7 +257,6 @@ export default {
                     nombre: "Recepción de Muestras",
                 })
                 .then((res) => {
-                    console.log(res.data.calidad);
                     this.formato = res.data.calidad;
                 })
                 .catch((err) => {
@@ -281,7 +264,17 @@ export default {
                 });
         },
         traerMuestra() {
-
+            let dato = this.$store.state.facturaMuestra
+            this.muestra.push(dato)
+            console.log(this.muestra);
+            this.person.nombre = this.muestra[0].solicitante.nombre;
+            this.person.cc = this.muestra[0].solicitante.documento;
+            this.person.direccion = this.muestra[0].solicitante.direccion;
+            this.person.ciudad = this.muestra[0].solicitante.ciudad.Ciudad;
+            this.person.departamento = this.muestra[0].solicitante.ciudad.departamento;
+            this.person.telefono = this.muestra[0].solicitante.telefono;
+            this.person.contacto = this.muestra[0].solicitante.contacto;
+            this.person.correo = this.muestra[0].solicitante.correo;
         },
         fecha(r) {
             let fecha = r.split('T')[0].replace(/-/g, "/")
@@ -290,6 +283,7 @@ export default {
     },
     created() {
         this.traerCalidad();
+        this.traerMuestra();
     }
 }
 </script>

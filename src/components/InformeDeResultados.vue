@@ -161,6 +161,7 @@
             <v-spacer></v-spacer>
             <v-dialog v-model="dialogEnsayoNuevo" persistent max-width="2000px">
               <template v-slot:activator="{ on, attrs }">
+                <v-btn class="ml-2 mb-2" to="facturaInforme" icon><font-awesome-icon style="font-size: 30px" icon="fa-solid fa-file-invoice" /></v-btn>
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" @click="limpiar">
                   Nuevo Ensayo
                 </v-btn>
@@ -397,9 +398,10 @@ export default {
 
           for (let i = 0; i < res.data.informe.itemsorden.length; i++) {
             const element = res.data.informe.itemsorden[i];
-            console.log(element);
             this.ensayosMostrar.push(element.idensayo);
           }
+          this.$store.dispatch("setInformeResultado",res.data.informe);
+          console.log(this.$store.state.informeResultado);
         })
         .catch((err) => {
           console.log(err);
@@ -465,7 +467,6 @@ export default {
     this.traerClientes();
     this.traerMuestras();
     this.traerCalidad();
-    console.log("color:" +this.$store.state.color);
   },
 };
 </script>

@@ -488,7 +488,10 @@ export default {
                     limiteCuantificacion: "54",
                     costoEnsayo: "56654673"
                 }
-            ]
+            ],
+            item1:[],
+            item2:[],
+            item3:[],
         }
     },
     methods: {
@@ -523,6 +526,68 @@ export default {
                         });
                     }
                 });
+        },
+        infoCotizacionEditar() {
+
+            this.item1.itemsEnsayo =
+                this.$store.state.cotizacionEditar.items.item1.itemsEnsayo;
+            this.item2.itemsEnsayo =
+                this.$store.state.cotizacionEditar.items.item2.itemsEnsayo;
+            this.item3.itemsEnsayo =
+                this.$store.state.cotizacionEditar.items.item3.itemsEnsayo;
+            this.person.nombre =
+                this.$store.state.cotizacionEditar.idCliente.nombre;
+            this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento;
+            this.person.direccion =
+                this.$store.state.cotizacionEditar.idCliente.direccion;
+            this.person.ciudad =
+                this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad;
+            this.person.departamento =
+                this.$store.state.cotizacionEditar.idCliente.ciudad.departamento;
+            this.person.telefono =
+                this.$store.state.cotizacionEditar.idCliente.telefono;
+            this.person.contacto =
+                this.$store.state.cotizacionEditar.idCliente.contacto;
+            this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol;
+            this.person.celularContacto =
+                this.$store.state.cotizacionEditar.idCliente.celularContacto;
+            this.person.correoContacto =
+                this.$store.state.cotizacionEditar.idCliente.correo;
+            this.descuento = this.$store.state.cotizacionEditar.descuento;
+            this.observacion = this.$store.state.cotizacionEditar.observaciones;
+            this.numeroCotizacion =
+                this.$store.state.cotizacionEditar.numCotizacion;
+
+            for (
+                let i = 0;
+                i < this.$store.state.cotizacionEditar.items.item1.itemsEnsayo.length;
+                i++
+            ) {
+                const element =
+                    this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
+                this.primerItem.push(element.ensayo);
+            }
+
+            for (
+                let i = 0;
+                i < this.$store.state.cotizacionEditar.items.item2.itemsEnsayo.length;
+                i++
+            ) {
+                const element =
+                    this.$store.state.cotizacionEditar.items.item2.itemsEnsayo[i];
+                this.segundoItem.push(element.ensayo);
+            }
+
+            for (
+                let i = 0;
+                i < this.$store.state.cotizacionEditar.items.item3.itemsEnsayo.length;
+                i++
+            ) {
+                const element =
+                    this.$store.state.cotizacionEditar.items.item3.itemsEnsayo[i];
+                this.tercerItem.push(element.ensayo);
+            }
+
         },
     },
     created() {

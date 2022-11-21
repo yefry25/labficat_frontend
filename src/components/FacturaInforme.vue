@@ -50,7 +50,7 @@
                             <p class="mt-2 red--text">{{ fecha(fechaRecepcionMuestra) }}</p>
                         </v-col>
                         <v-col class="px-0 py-0" cols="6">
-                            <p class="mt-2 red--text">AAAA-MM-DD; hh:mm</p>
+                            <p class="mt-2 red--text">{{fecha(fechaInforme)}}</p>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -69,14 +69,14 @@
             </v-row>
             <v-row no-gutters
                 style="border-left: solid 1px black; border-right: solid 1px black; border-bottom: solid 1px black">
-                <h5 class="primary text-center white--text" style="width: 100%; ">
+                <h5 class="primary text-center white--text texto" style="width: 100%; ">
                     Datos del solicitante
                 </h5>
             </v-row>
             <v-row no-gutters>
                 <v-col cols="6" class="py-0 px-0">
                     <v-row>
-                        <v-col cols="4" class="text-center pr-0">
+                        <v-col cols="4" class="text-center pr-0 texto">
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black', borderBottom: 'solid 1px black' }"
                                 class="mb-0 ">Solicitante</p>
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black', borderBottom: 'solid 1px black' }"
@@ -86,7 +86,7 @@
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black' }"
                                 class="mb-0 ">Ciudad</p>
                         </v-col>
-                        <v-col cols="8" class="pl-0">
+                        <v-col cols="8" class="pl-0" style="font-size: 12px">
                             <p class=" pl-2 py-0 my-0" style="border-bottom: solid 1px black">{{ person.nombre }}</p>
                             <p class=" pl-2 py-0 my-0" style="border-bottom: solid 1px black">{{ person.cc }}</p>
                             <p class=" pl-2 py-0 my-0" style="border-bottom: solid 1px black">{{ person.direccion }}</p>
@@ -96,7 +96,7 @@
                 </v-col>
                 <v-col cols="6" class="py-0 px-0">
                     <v-row>
-                        <v-col cols="4" class="text-center pr-0">
+                        <v-col cols="4" class="text-center pr-0 texto">
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black', borderBottom: 'solid 1px black' }"
                                 class=" mb-0">Departamento</p>
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black', borderBottom: 'solid 1px black' }"
@@ -106,7 +106,7 @@
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black' }"
                                 class=" mb-0">Correo electrónico</p>
                         </v-col>
-                        <v-col cols="8" class="pl-0">
+                        <v-col cols="8" class="pl-0" style="font-size: 12px">
                             <p class="field pl-2 py-0 my-0"
                                 style="border-bottom: solid 1px black; border-right: solid 1px black">{{
                                         person.departamento
@@ -124,24 +124,24 @@
                 </v-col>
             </v-row>
             <v-row no-gutters style="border: solid 1px black">
-                <h5 class="primary text-center white--text" style="width: 100%;  ">
+                <h5 class="primary text-center white--text texto" style="width: 100%;  ">
                     Datos de la muestra
                 </h5>
             </v-row>
             <v-row no-gutters>
                 <v-col cols="6" class="py-0 px-0">
                     <v-row>
-                        <v-col cols="4" class="text-center pr-0">
+                        <v-col cols="4" class="text-center pr-0 texto">
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black', borderBottom: 'solid 1px black' }"
                                 class=" mb-0">Mun de recolección</p>
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black', borderBottom: 'solid 1px black' }"
                                 class=" mb-0">Dirección de toma</p>
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black', borderBottom: 'solid 1px black' }"
-                                class=" mb-0">Lugar de toma de muestra</p>
+                                class=" mb-0">Lugar toma muestra</p>
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black' }"
-                                class=" mb-0">Muestra recolectada por</p>
+                                class=" mb-0">Recolectada por</p>
                         </v-col>
-                        <v-col cols="8" class="pl-0">
+                        <v-col cols="8" class="pl-0" style="font-size: 12px">
                             <p class="field pl-2 py-0 my-0" style="border-bottom: solid 1px black;">{{
                                     muestra.munRecoleccion
                             }}</p>
@@ -157,7 +157,7 @@
                 </v-col>
                 <v-col cols="6" class="py-0 px-0">
                     <v-row>
-                        <v-col cols="4" class="text-center px-0">
+                        <v-col cols="4" class="text-center px-0 texto">
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black', borderBottom: 'solid 1px black' }"
                                 class=" mb-0">Procedimiento de muestreo</p>
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black', borderBottom: 'solid 1px black' }"
@@ -167,7 +167,7 @@
                             <p :style="{ background: color, color: 'white', borderRight: 'solid 1px black', borderLeft: 'solid 1px black' }"
                                 class=" mb-0">Fecha y hora recolección</p>
                         </v-col>
-                        <v-col cols="8" class="pl-0">
+                        <v-col cols="8" class="pl-0" style="font-size: 12px">
                             <p class="field pl-2 py-0 my-0"
                                 style="border-bottom: solid 1px black; border-right: solid 1px black">{{
                                         muestra.procedimientoMuestreo
@@ -188,11 +188,11 @@
                 </v-col>
             </v-row>
             <v-row no-gutters style="border: solid 1px black">
-                <h5 class="primary text-center white--text" style="width: 100%">
+                <h5 class="primary text-center white--text texto" style="width: 100%">
                     Análisis de la muestra
                 </h5>
             </v-row>
-            <v-row no-gutters>
+            <v-row no-gutters style="border-left: solid 1px black; border-right: solid 1px black">
                 <v-col class="px-0 py-0">
                     <v-data-table :headers="headersEnsayo" :items="ensayosMostrar">
                         <template v-slot:no-data>
@@ -202,25 +202,25 @@
                 </v-col>
             </v-row>
             <v-row no-gutters :style="{ background: color, border: 'solid 1px black' }">
-                <h5 class=" text-center white--text px-0 py-0" style="width: 100%">
+                <h5 class=" text-center white--text px-0 py-0 " style="width: 100%; font-size: 12px" >
                     Observaciones
                 </h5>
             </v-row>
-            <v-row no-gutters
-                style="border-right: solid 1px black; border-left: solid 1px black">
+            <v-row no-gutters style="border-right: solid 1px black; border-left: solid 1px black">
                 <v-col cols="12" class="pl-0 px-0 py-3 my-4">
                     <p class="field px-0 py-0 my-0"></p>
                 </v-col>
             </v-row>
             <v-row no-gutters style="border: solid 1px black">
-                <h5 class="primary text-center white--text px-0 py-0" style="width: 100%">
+                <h5 class="primary text-center white--text px-0 py-0 " style="width: 100%; font-size: 12px">
                     Descripción de los ensayos
                 </h5>
             </v-row>
             <v-row no-gutters>
                 <v-col>
                     <p class="text">
-                        <em><u><b>Contenido de Ceniza:</b></u></em> Los resultados expresados, corresponden a la cuantificación del contenido
+                        <em><u><b>Contenido de Ceniza:</b></u></em> Los resultados expresados, corresponden a la
+                        cuantificación del contenido
                         de cenizas sulfatadas, en 6,0000 g de muestra. Se pesaron tres repeticiones, sobre cada una se
                         determinó el contenido (3R). Se temperatura de calcinación fue de mínimo 600,0 °C, por 4 horas,
                         a presión atmosférica. El método de cuantificación se basó en: Instituto Colombiano de Normas
@@ -231,7 +231,8 @@
                         https://tienda.icontec.org/gp-productos-agricolas-panela-ntc1311-2009.html
                     </p>
                     <p class="text" style="border: solid 1px black">
-                        <em><u><b>Contenido de Humedad:</b></u></em> Los resultados expresados, corresponden a la cuantificación del contenido
+                        <em><u><b>Contenido de Humedad:</b></u></em> Los resultados expresados, corresponden a la
+                        cuantificación del contenido
                         de sustancias volátiles, expresado como humedad, en 10,0000 g de muestra. Se pesaron tres
                         repeticiones, sobre cada una se determinó el contenido (3R). Se temperatura de secado fue de
                         50,0 °C, por 72 horas, a presión atmosférica. El método de cuantificación se basó en: Instituto
@@ -244,7 +245,8 @@
                         https://tienda.icontec.org/gp-productos-agricolas-panela-ntc1311-2009.html
                     </p>
                     <p class="text" style=" border-bottom: solid 1px black">
-                        <em><u><b>° Brix:</b></u></em> Los resultados expresados, corresponden a la determinación de los °Brix mediante
+                        <em><u><b>° Brix:</b></u></em> Los resultados expresados, corresponden a la determinación de los
+                        °Brix mediante
                         refractómetro para sacarosa, en una solución de 0,5000 g de muestra, disueltos con 25,00 mL de
                         agua desionizada (la muestra se disuelve totalmente). Se pesaron tres repeticiones, sobre cada
                         una se determinaron los °Brix diez veces (3R x 10r). El método de cuantificación se basó en:
@@ -252,7 +254,8 @@
                         solids — Refractometric method. Disponible en: https://www.iso.org/standard/35851.html.
                     </p>
                     <p class="text" style=" border-bottom: solid 1px black">
-                        <em><u><b>Contenido de Grasas:</b></u></em> Los resultados expresados, corresponden a la determinación del contenido de
+                        <em><u><b>Contenido de Grasas:</b></u></em> Los resultados expresados, corresponden a la
+                        determinación del contenido de
                         grasa o materia extraída vía soxhlet usando éter de petróleo como solvente extractor. Se
                         emplearon 10,0000 g de muestra y 12 horas de recirculación del solvente extractor. Se pesaron
                         tres repeticiones, sobre cada una se determinó el contenido de grasas. El método de
@@ -262,7 +265,8 @@
                         https://tienda.icontec.org/gp-productos-agricolas-panela-ntc1311-2009.html
                     </p>
                     <p class="text" style=" border-bottom: solid 1px black">
-                        <em><u><b>Azúcares HPLC (Sacarosa, Glucosa, Fructosa):</b></u></em> Los resultados expresados, corresponden a la
+                        <em><u><b>Azúcares HPLC (Sacarosa, Glucosa, Fructosa):</b></u></em> Los resultados expresados,
+                        corresponden a la
                         cuantificación del contenido de azúcares individuales en 0,5000 g de muestra, extraídos con
                         25,00 mL de agua desionizada (la muestra se disuelve totalmente). Se pesaron tres repeticiones,
                         sobre cada una se determinó el contenido tres veces (3R x 3r). La construcción de la curva de
@@ -278,7 +282,8 @@
                         liquid chromatography. Recuperado de: https://www.iso.org/standard/50792.html.
                     </p>
                     <p class="text" style=" border-bottom: solid 1px black">
-                        <em><u><b>'Declaración:</b></u></em> Los resultados contenidos en este informe se refieren exclusivamente al ítem
+                        <em><u><b>'Declaración:</b></u></em> Los resultados contenidos en este informe se refieren
+                        exclusivamente al ítem
                         recibido en el laboratorio y las condiciones en que se realizaron los ensayos, expresando
                         fielmente el resultado de las mediciones realizadas. El SENA no se responsabiliza de los
                         perjuicios que puedan derivarse del uso inadecuado de la información aquí contenida ni del
@@ -288,7 +293,8 @@
                         corresponde únicamente a las secciones "Datos del solicitante" y "Datos de la muestra".
                     </p>
                     <p class="text" style=" border-bottom: solid 1px black">
-                        <em><u><b>'Resultado parcial:</b></u></em> Los resultados contenidos en este informe se emiten bajo el concepto de
+                        <em><u><b>'Resultado parcial:</b></u></em> Los resultados contenidos en este informe se emiten
+                        bajo el concepto de
                         informe de resultados parciales, por lo tanto, dicha información es únicamente de carácter
                         informativo y no se autoriza su uso para otro fin. El SENA no se responsabiliza de los
                         perjuicios que puedan derivarse del uso inadecuado de la información aquí contenida.
@@ -297,13 +303,13 @@
             </v-row>
             <v-row no-gutters>
                 <v-col cols="6" style=" border-left: solid 1px black ; border-bottom: solid 1px black;">
-                    <h5 class="primary text-center white--text px-0 py-0" style="width: 100%">
+                    <h5 class="primary text-center white--text px-0 py-0" style="width: 100%; font-size: 12px">
                         Descripción de los ensayos
                     </h5>
                 </v-col>
                 <v-col cols="6"
                     style="border-left: solid 1px black ; border-right: solid 1px black ; border-bottom: solid 1px black;">
-                    <h5 class="primary text-center white--text px-0 py-0" style="width: 100%">
+                    <h5 class="primary text-center white--text px-0 py-0" style="width: 100%; font-size: 12px">
                         Descripción de los ensayos
                     </h5>
                 </v-col>
@@ -331,7 +337,7 @@
             <v-row no-gutters
                 style="border-left: solid 1px black ; border-right: solid 1px black ; border-bottom: solid 1px black;">
                 <v-col cols="12">
-                    <h5 class="primary text-center white--text" style="width: 100%">
+                    <h5 class="primary text-center white--text" style="width: 100%; font-size: 12px">
                         Fin del resultado
                     </h5>
                 </v-col>
@@ -356,7 +362,8 @@ export default {
         orden: [],  //si
         codMuestra: 'XXXX-AAAA',
         fechaRecepcionMuestra: 'AAAA-MM-DD; hh:mm',
-        person: {  //si
+        fechaInforme: Date.now(),
+        person: {  
             nombre: "fdjfdjfd",
             cc: "rhere",
             direccion: "rururhv",
@@ -367,7 +374,7 @@ export default {
             correo: "rueehfd",
             id: "eruerueudfh",
         },
-        muestra: {  //si
+        muestra: { 
             munRecoleccion: "eruerudf",
             direccionTomaMuestra: "rueuewud",
             lugarTomaMuestra: "rueudhc",
@@ -377,21 +384,7 @@ export default {
             matrizMuestra: "fuewuewuc",
             fechaRecoleccion: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
         },
-        headerOrden: [  //si
-            {
-                text: "Codigo de muestra",
-                align: "start",
-                sortable: false,
-                value: "idMuestra.codMuestra",
-            },
-            { text: "estado", value: "estado", sortable: false },
-            { text: "lugar toma muestra", value: "idMuestra.lugarTomaMuestra", sortable: false },
-
-            { text: "muestra recolectada por", value: "idMuestra.muestraRecolectadaPor", sortable: false },
-            { text: "item", value: "idMuestra.item", sortable: false },
-            { text: "Acciones", value: "actions", sortable: false },
-        ],
-        headersEnsayo: [ //si
+        headersEnsayo: [ 
             {
                 text: "Fecha de análisis",
                 align: "start",
@@ -401,8 +394,8 @@ export default {
             { text: "Ensayo", value: "ensayo", sortable: false },
             { text: "Método", value: "metodo", sortable: false },
             { text: "Técnica", value: "tecnica", sortable: false },
-            { text: "Resultado", value: "protein", sortable: false },
-            { text: "Incertidumbre expandida", value: "iron", sortable: false },
+            { text: "Resultado", value: "resultado", sortable: false },
+            { text: "Incertidumbre expandida", value: "incertidumbre", sortable: false },
             {
                 text: "Valor Máximo NTC 1311:2009",
                 value: "valorMaximo",
@@ -415,56 +408,48 @@ export default {
             },
             { text: "Unidades", value: "unidades", sortable: false },
         ],
-        ensayosMostrar: [
-            {
-
-            }
-        ],  //si
+        ensayosMostrar: [], 
     }),
     methods: {
-        infoOrden(orden) {
-            axios
-                .get(
-                    `https://labficat.herokuapp.com/api/orden/informeDeResultados/${orden._id}`
-                )
-                .then((res) => {
+        infoOrden() {
+            const orden = this.$store.state.informeResultado;
+            
+            this.codMuestra = orden.idMuestra.codMuestra;
+            this.fechaRecepcionMuestra = orden.idMuestra.createdAt
+            this.person.nombre = orden.idMuestra.solicitante.nombre;
+            this.person.cc = orden.idMuestra.solicitante.documento;
+            this.person.direccion = orden.idMuestra.solicitante.direccion;
+            this.person.ciudad = orden.idMuestra.solicitante.ciudad.Ciudad;
+            this.person.departamento = orden.idMuestra.solicitante.ciudad.departamento;
+            this.person.contacto = orden.idMuestra.solicitante.contacto;
+            this.person.telefono = orden.idMuestra.solicitante.telefono;
+            this.person.correo = orden.idMuestra.solicitante.correo;
+            this.muestra.munRecoleccion = orden.idMuestra.munRecoleccion.Ciudad;
+            this.muestra.direccionTomaMuestra = orden.idMuestra.direccionTomaMuestra;
+            this.muestra.lugarTomaMuestra = orden.idMuestra.lugarTomaMuestra;
+            this.muestra.muestraRecolectadaPor = orden.idMuestra.muestraRecolectadaPor;
+            this.muestra.procedimientoMuestreo = orden.idMuestra.procedimientoMuestreo;
+            this.muestra.tipoMuestra = orden.idMuestra.tipoMuestra.tipos;
+            this.muestra.matrizMuestra = orden.idMuestra.matrizMuestra;
+            this.muestra.fechaRecoleccion = orden.idMuestra.fechaRecoleccion;
 
-                    this.$swal({
-                        icon: "success",
-                        title: "La información se cargo exitosamente ",
-                    });
-                    this.codMuestra = res.data.informe.idMuestra.codMuestra;
-                    this.fechaRecepcionMuestra = res.data.informe.idMuestra.createdAt
-                    this.person.nombre = res.data.informe.idMuestra.solicitante.nombre;
-                    this.person.cc = res.data.informe.idMuestra.solicitante.documento;
-                    this.person.direccion = res.data.informe.idMuestra.solicitante.direccion;
-                    this.person.ciudad = res.data.informe.idMuestra.solicitante.ciudad.Ciudad;
-                    this.person.departamento = res.data.informe.idMuestra.solicitante.ciudad.departamento;
-                    this.person.contacto = res.data.informe.idMuestra.solicitante.contacto;
-                    this.person.telefono = res.data.informe.idMuestra.solicitante.telefono;
-                    this.person.correo = res.data.informe.idMuestra.solicitante.correo;
-                    this.muestra.munRecoleccion = res.data.informe.idMuestra.munRecoleccion.Ciudad;
-                    this.muestra.direccionTomaMuestra = res.data.informe.idMuestra.direccionTomaMuestra;
-                    this.muestra.lugarTomaMuestra = res.data.informe.idMuestra.lugarTomaMuestra;
-                    this.muestra.muestraRecolectadaPor = res.data.informe.idMuestra.muestraRecolectadaPor;
-                    this.muestra.procedimientoMuestreo = res.data.informe.idMuestra.procedimientoMuestreo;
-                    this.muestra.tipoMuestra = res.data.informe.idMuestra.tipoMuestra.tipos;
-                    this.muestra.matrizMuestra = res.data.informe.idMuestra.matrizMuestra;
-                    this.muestra.fechaRecoleccion = res.data.informe.idMuestra.fechaRecoleccion;
 
-                    for (let i = 0; i < res.data.informe.itemsorden.length; i++) {
-                        const element = res.data.informe.itemsorden[i];
-                        console.log(element);
-                        this.ensayosMostrar.push(element.idensayo);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                    this.$swal({
-                        icon: "error",
-                        title: "Error al cargar la información",
-                    });
-                });
+            for (let i = 0; i < orden.itemsorden.length; i++) {
+                const element = orden.itemsorden[i];
+
+                let d = {
+                    ensayo:element.idensayo.ensayo,
+                    metodo:element.idensayo.metodo,
+                    tecnica:element.idensayo.tecnica,
+                    resultado:element.resultado,
+                    incertidumbre:element.incertidumbre,
+                    valorMaximo:element.idensayo.valorMaximo,
+                    valorMinimo:element.idensayo.valorMinimo,
+                    unidades:element.idensayo.unidades
+                }
+
+                this.ensayosMostrar.push(d);
+            }
         },
         traerCalidad() {
             this.color = this.$store.state.color
@@ -491,9 +476,8 @@ export default {
         },
     },
     created() {
-
         this.traerCalidad();
-
+        this.infoOrden();
     },
 };
 </script>
@@ -503,14 +487,8 @@ export default {
     font-size: 12px;
 }
 
-.label {
-
-    color: white;
-    border: solid 1px black;
-}
-
 .text {
-    font-size: 14px;
+    font-size: 12px;
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-bottom: 1px solid black;

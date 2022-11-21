@@ -15,6 +15,7 @@
             loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.actions`]="{ item }">
               <div v-if="item.estado == 1">
+
                 <v-btn @click="editarCotizacion(item)" icon>
                   <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
                 </v-btn>
@@ -34,6 +35,9 @@
                 </v-btn>
               </div>
               <div v-if="item.estado == 2">
+                <v-btn @click="facturaCotizacion(item)" icon>
+                  <font-awesome-icon style="font-size: 20px" icon="fa-solid fa-file-invoice" />
+                </v-btn>
                 <v-btn disabled icon>
                   <font-awesome-icon style="font-size:20px" icon="fa-solid fa-pencil" />
                 </v-btn>
@@ -310,6 +314,11 @@ export default {
         })
 
     },
+    facturaCotizacion(cotizacion) {
+      this.$store.dispatch("setFacturaCotizacion", cotizacion)
+      this.$router.push('/facturaCotizacion')
+      console.log(this.$store.state.facturaCotizacion);
+    },
     fecha(r) {
       let d = new Date(r);
       let f = d.toISOString();
@@ -325,7 +334,7 @@ export default {
             currency: 'COP',
             minimumFractionDigits: 0
           }
-          ).format(number);
+        ).format(number);
       };
       return currency(plata)
     }
