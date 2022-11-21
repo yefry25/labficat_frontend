@@ -809,12 +809,11 @@ export default {
       roll: "",
       items: ["Natural", "Jurídica"],
       roles: [
-        "cliente",
-        "secretario",
-        "administrador",
-        "director",
-        "especialista",
-        "supervisor",
+        "Cliente",
+        "Responsable de Laboratorio",
+        "Responsable de Gestión",
+        "Personal Técnico",
+        "Responsable de Calidad",
       ],
       departa: [],
       ciudades: [],
@@ -1119,7 +1118,7 @@ export default {
             this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
           this.primerItem.push(element.ensayo);
         }
-        
+
         for (
           let i = 0;
           i < this.$store.state.cotizacionEditar.items.item2.itemsEnsayo.length;

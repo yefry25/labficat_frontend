@@ -73,6 +73,11 @@
                     <v-col>
                       <v-card>
                         <v-card-title>
+                          <v-hover v-slot="{ hover }">
+                            <v-btn icon @click="close" :style="{ color: hover ? 'red' : '' }">
+                              <font-awesome-icon style="fontsize: 20px" icon="fa-solid fa-xmark" />
+                            </v-btn>
+                          </v-hover>
                           Usuarios
                           <v-divider class="mx-4" inset vertical></v-divider>
                           <v-spacer></v-spacer>
@@ -204,8 +209,8 @@
                       <v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40"
                         transition="scale-transition" offset-y min-width="auto" :error-messages="errors">
                         <template v-slot:activator="{ on, attrs }">
-                          <v-text-field v-model="muestra.fechaRecoleccion" prepend-icon="mdi-calendar" readonly
-                            class="field px-0 py-0 my-0" height="26" v-bind="attrs" v-on="on"></v-text-field>
+                          <v-text-field v-model="muestra.fechaRecoleccion" label="Fecha de recolección" readonly
+                            class="field px-0 pt-0 my-0" height="26" v-bind="attrs" v-on="on"></v-text-field>
                         </template>
                         <v-date-picker v-model="muestra.fechaRecoleccion" @input="menu1 = false"></v-date-picker>
                       </v-menu>
@@ -402,7 +407,7 @@ export default {
     ValidationObserver,
   },
   data: () => ({
-    overlay:false,
+    overlay: false,
     color: '',
     myLoading: true,
     dialog: false,
@@ -544,7 +549,7 @@ export default {
         });
     },
     ingresarMuestra() {
-      this.overlay=true;
+      this.overlay = true;
       let header = { headers: { "x-token": this.$store.state.token } };
       axios
         .post(
@@ -570,8 +575,8 @@ export default {
             icon: "success",
             title: "Registro exitoso de la muestra",
           });
-          this.vaciarInformacion(); 
-          this.overlay=false
+          this.vaciarInformacion();
+          this.overlay = false
         })
         .catch((err) => {
           console.log(err);

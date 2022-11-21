@@ -223,13 +223,11 @@ export default {
       },
       items: ["Natural", "Jurídica"],
       usu: [
-        "cliente",
-        "recepcionista",
-        "administrador",
-        "director",
-        "director tecnico",
-        "especialista",
-        "supervisor",
+        "Cliente",
+        "Responsable de Laboratorio",
+        "Responsable de Gestión",
+        "Personal Técnico",
+        "Responsable de Calidad",
       ],
       elegirUser: ""
     };
@@ -265,9 +263,9 @@ export default {
     traerUsuarios() {
       axios
         .post("https://labficat.herokuapp.com/api/usuario/roles",
-        {
-          rol:this.elegirUser
-        })
+          {
+            rol: this.elegirUser
+          })
         .then((res) => {
           console.log(res.data.usuario);
           this.usuarios = res.data.usuario;
