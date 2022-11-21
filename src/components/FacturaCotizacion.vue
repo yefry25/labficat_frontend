@@ -78,7 +78,7 @@
                             <p class=" parra pl-1 py-0 my-0">{{ person.departamento }}</p>
                             <p class=" parra pl-1 py-0 my-0">{{ person.contacto }}</p>
                             <p class=" parra pl-1 py-0 my-0">{{ person.celularContacto }}</p>
-                            <p class=" parra pl-1 py-0 my-0">{{ person.validezOferta }}</p>
+                            <p class=" parra pl-1 py-0 my-0">{{ fecha(person.validezOferta) }}</p>
                             <p class=" parra pl-1 py-0 my-0">{{ person.elaborador }}</p>
                         </v-col>
                     </v-row>
@@ -102,7 +102,7 @@
                             <p class="parra pl-1 py-0 my-0">{{ person.telefono }}</p>
                             <p class="parra pl-1 py-0 my-0">{{ person.cargo }}</p>
                             <p class="parra pl-1 py-0 my-0">{{ person.correoContacto }}</p>
-                            <p class="parra pl-1 py-0 my-0">{{ person.entregaResultados }}</p>
+                            <p class="parra pl-1 py-0 my-0">{{ fecha(person.entregaResultados) }}</p>
                             <p class="parra pl-1 py-0 my-0">{{ person.cargoElaborador }}</p>
                         </v-col>
                     </v-row>
@@ -132,7 +132,7 @@
                 </v-col>
                 <v-col cols="2" style="border-left: solid 1px black">
                     <h5 class="text-center">
-                        568583493
+                        {{this.$store.state.facturaCotizacion.items.item1.costo}}
                     </h5>
                 </v-col>
             </v-row>
@@ -155,7 +155,7 @@
                 </v-col>
                 <v-col cols="2" style="border-left: solid 1px black">
                     <h5 class="text-center">
-                        2222222
+                        {{this.$store.state.facturaCotizacion.items.item2.costo}}
                     </h5>
                 </v-col>
             </v-row>
@@ -166,7 +166,7 @@
             </v-row>
             <v-row no-gutters>
                 <v-col>
-                    <v-data-table :headers="encabezado" :items="tercerItem" hide-default-footer>
+                    <v-data-table :headers="encabezadoEnsayo" :items="tercerItem" hide-default-footer>
                     </v-data-table>
                 </v-col>
             </v-row>
@@ -178,7 +178,7 @@
                 </v-col>
                 <v-col cols="2" style="border-left: solid 1px black">
                     <h5 class="text-center">
-                        333333
+                        {{this.$store.state.facturaCotizacion.items.item3.costo}}
                     </h5>
                 </v-col>
             </v-row>
@@ -196,16 +196,14 @@
                 <v-col cols="2"
                     style="border-left: solid 1px black; border-right: solid 1px black; border-bottom: solid 1px black">
                     <h5 class="text-center">
-                        333333
+                        {{this.$store.state.facturaCotizacion.subTotal}}
                     </h5>
                 </v-col>
             </v-row>
-
-
             <v-row no-gutters>
                 <v-col cols="8" style="border-left: solid 1px black; border-bottom: solid 1px black">
-                    <h5 class="white--text py-2">
-                        O
+                    <h5 class=" py-2">
+                        {{this.$store.state.facturaCotizacion.observaciones}}
                     </h5>
                 </v-col>
                 <v-col cols="2" style="border-left: solid 1px black; border-bottom: solid 1px black">
@@ -218,11 +216,11 @@
                 </v-col>
                 <v-col cols="2"
                     style="border-left: solid 1px black; border-right: solid 1px black; border-bottom: solid 1px black">
-                    <h5 class="text-center white--text">
-                        S
+                    <h5 class="text-center ">
+                        {{this.$store.state.facturaCotizacion.iva}}
                     </h5>
-                    <h5 class=" text-center white--text" style="border-top:solid 1px black">
-                        s
+                    <h5 class=" text-center " style="border-top:solid 1px black">
+                        {{this.$store.state.facturaCotizacion.total}}
                     </h5>
                 </v-col>
             </v-row>
@@ -500,7 +498,7 @@ export default {
                 { text: "Método analítico", value: "metodo", sortable: false },
                 { text: "Unidades", value: "unidades", sortable: false },
                 { text: "Límite de cuantificación", value: "limiteCuantificacion", sortable: false },
-                { text: "Coto del ensayo", value: "costoEnsayo" }
+                { text: "Costo del ensayo", value: "costo" }
             ],
             ensayos1: [
                 {
@@ -549,46 +547,31 @@ export default {
                 });
         },
         infoCotizacionEditar() {
-
-            console.log(this.$store.state.facturaCotizacion.items.item1.itemsEnsayo);
-            this.item1.itemsEnsayo =
-                this.$store.state.facturaCotizacion.items.item1.itemsEnsayo;
-            this.item2.itemsEnsayo =
-                this.$store.state.facturaCotizacion.items.item2.itemsEnsayo;
-            this.item3.itemsEnsayo =
-                this.$store.state.facturaCotizacion.items.item3.itemsEnsayo;
-            this.person.nombre =
-                this.$store.state.facturaCotizacion.idCliente.nombre;
+            console.log(this.$store.state.facturaCotizacion);
+            this.person.nombre = this.$store.state.facturaCotizacion.idCliente.nombre;
             this.person.cc = this.$store.state.facturaCotizacion.idCliente.documento;
-            this.person.direccion =
-                this.$store.state.facturaCotizacion.idCliente.direccion;
-            this.person.ciudad =
-                this.$store.state.facturaCotizacion.idCliente.ciudad.Ciudad;
-            this.person.departamento =
-                this.$store.state.facturaCotizacion.idCliente.ciudad.departamento;
-            this.person.telefono =
-                this.$store.state.facturaCotizacion.idCliente.telefono;
-            this.person.contacto =
-                this.$store.state.facturaCotizacion.idCliente.contacto;
+            this.person.direccion = this.$store.state.facturaCotizacion.idCliente.direccion;
+            this.person.ciudad = this.$store.state.facturaCotizacion.idCliente.ciudad.Ciudad;
+            this.person.departamento = this.$store.state.facturaCotizacion.idCliente.ciudad.departamento;
+            this.person.telefono = this.$store.state.facturaCotizacion.idCliente.telefono;
+            this.person.contacto = this.$store.state.facturaCotizacion.idCliente.contacto;
             this.person.cargo = this.$store.state.facturaCotizacion.idCliente.rol;
-            this.person.celularContacto =
-                this.$store.state.facturaCotizacion.idCliente.celularContacto;
-            this.person.correoContacto =
-                this.$store.state.facturaCotizacion.idCliente.correo;
-            this.descuento = this.$store.state.facturaCotizacion.descuento;
+            this.person.celularContacto = this.$store.state.facturaCotizacion.idCliente.celularContacto;
+            this.person.correoContacto = this.$store.state.facturaCotizacion.idCliente.correo;
+            this.person.validezOferta = this.$store.state.facturaCotizacion.validezOferta; 
+            this.person.entregaResultados = this.$store.state.facturaCotizacion.entregaResultados;
             this.observacion = this.$store.state.facturaCotizacion.observaciones;
-            this.numeroCotizacion =
-                this.$store.state.facturaCotizacion.numCotizacion;
+            this.numeroCotizacion = this.$store.state.facturaCotizacion.numCotizacion;
 
-            for (
-                let i = 0;
-                i < this.$store.state.facturaCotizacion.items.item1.itemsEnsayo.length;
-                i++
-            ) {
-                const element =
-                    this.$store.state.facturaCotizacion.items.item1.itemsEnsayo[i];
+
+            for ( let i = 0; i < this.$store.state.facturaCotizacion.items.item1.itemsEnsayo.length; i++) {
+
+                const element = this.$store.state.facturaCotizacion.items.item1.itemsEnsayo[i];
+                console.log(element);
                 this.primerItem.push(element.ensayo);
             }
+
+
 
             for (
                 let i = 0;
@@ -610,6 +593,10 @@ export default {
                 this.tercerItem.push(element.ensayo);
             }
 
+        },
+        fecha(r) {
+            let fecha = r.split('T')[0].replace(/-/g, "/")
+            return fecha;
         },
     },
     created() {

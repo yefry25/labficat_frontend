@@ -1119,7 +1119,7 @@ export default {
             this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
           this.primerItem.push(element.ensayo);
         }
-
+        
         for (
           let i = 0;
           i < this.$store.state.cotizacionEditar.items.item2.itemsEnsayo.length;
