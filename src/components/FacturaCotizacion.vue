@@ -120,7 +120,7 @@
             </v-row>
             <v-row no-gutters>
                 <v-col>
-                    <v-data-table :headers="encabezadoEnsayo" :items="ensayos1" hide-default-footer>
+                    <v-data-table :headers="encabezadoEnsayo" :items="primerItem" hide-default-footer>
                     </v-data-table>
                 </v-col>
             </v-row>
@@ -143,7 +143,7 @@
             </v-row>
             <v-row no-gutters>
                 <v-col>
-                    <v-data-table :headers="encabezadoEnsayo" :items="ensayos1" hide-default-footer>
+                    <v-data-table :headers="encabezadoEnsayo" :items="segundoItem" hide-default-footer>
                     </v-data-table>
                 </v-col>
             </v-row>
@@ -166,7 +166,7 @@
             </v-row>
             <v-row no-gutters>
                 <v-col>
-                    <v-data-table :headers="encabezadoEnsayo" :items="ensayos1" hide-default-footer>
+                    <v-data-table :headers="encabezado" :items="tercerItem" hide-default-footer>
                     </v-data-table>
                 </v-col>
             </v-row>
@@ -465,6 +465,29 @@ export default {
                 elaborador: this.$store.state.elaborador.nombre,
                 cargoElaborador: this.$store.state.elaborador.rol,
             },
+            encabezado: [
+                {
+                    text: "Código de referencia",
+                    align: "start",
+                    sortable: false,
+                    value: "",
+                },
+                {
+                    text: "Descripción del ensayo",
+                    value: "descripcion",
+                    sortable: false,
+                },
+                { text: "unidades", value: "unidades", sortable: false },
+                { text: "Técnica analítica", value: "tecnica", sortable: false },
+                { text: "Método analítico", value: "metodo", sortable: false },
+                {
+                    text: "Límite de cuantificación",
+                    value: "limiteCuantificacion",
+                    sortable: false,
+                },
+                { text: "Costo del ensayo", value: "costo", sortable: false },
+                { text: "Acciones", value: "actions", sortable: false },
+            ],
             encabezadoEnsayo: [
                 {
                     text: "Código de referencia",
@@ -489,9 +512,9 @@ export default {
                     costoEnsayo: "56654673"
                 }
             ],
-            item1:[],
-            item2:[],
-            item3:[],
+            primerItem: [],
+            segundoItem: [],
+            tercerItem: []
         }
     },
     methods: {
@@ -502,11 +525,9 @@ export default {
                     nombre: "Oferta de Servicios",
                 })
                 .then((res) => {
-                    console.log(res.data.calidad);
                     this.formato = res.data.calidad;
                 })
                 .catch((err) => {
-                    console.log(err);
                     if (
                         err.response.data.msg ==
                         "Token expiró, por favor inicie sesión nuevamente"
@@ -529,62 +550,63 @@ export default {
         },
         infoCotizacionEditar() {
 
+            console.log(this.$store.state.facturaCotizacion.items.item1.itemsEnsayo);
             this.item1.itemsEnsayo =
-                this.$store.state.cotizacionEditar.items.item1.itemsEnsayo;
+                this.$store.state.facturaCotizacion.items.item1.itemsEnsayo;
             this.item2.itemsEnsayo =
-                this.$store.state.cotizacionEditar.items.item2.itemsEnsayo;
+                this.$store.state.facturaCotizacion.items.item2.itemsEnsayo;
             this.item3.itemsEnsayo =
-                this.$store.state.cotizacionEditar.items.item3.itemsEnsayo;
+                this.$store.state.facturaCotizacion.items.item3.itemsEnsayo;
             this.person.nombre =
-                this.$store.state.cotizacionEditar.idCliente.nombre;
-            this.person.cc = this.$store.state.cotizacionEditar.idCliente.documento;
+                this.$store.state.facturaCotizacion.idCliente.nombre;
+            this.person.cc = this.$store.state.facturaCotizacion.idCliente.documento;
             this.person.direccion =
-                this.$store.state.cotizacionEditar.idCliente.direccion;
+                this.$store.state.facturaCotizacion.idCliente.direccion;
             this.person.ciudad =
-                this.$store.state.cotizacionEditar.idCliente.ciudad.Ciudad;
+                this.$store.state.facturaCotizacion.idCliente.ciudad.Ciudad;
             this.person.departamento =
-                this.$store.state.cotizacionEditar.idCliente.ciudad.departamento;
+                this.$store.state.facturaCotizacion.idCliente.ciudad.departamento;
             this.person.telefono =
-                this.$store.state.cotizacionEditar.idCliente.telefono;
+                this.$store.state.facturaCotizacion.idCliente.telefono;
             this.person.contacto =
-                this.$store.state.cotizacionEditar.idCliente.contacto;
-            this.person.cargo = this.$store.state.cotizacionEditar.idCliente.rol;
+                this.$store.state.facturaCotizacion.idCliente.contacto;
+            this.person.cargo = this.$store.state.facturaCotizacion.idCliente.rol;
             this.person.celularContacto =
-                this.$store.state.cotizacionEditar.idCliente.celularContacto;
+                this.$store.state.facturaCotizacion.idCliente.celularContacto;
             this.person.correoContacto =
-                this.$store.state.cotizacionEditar.idCliente.correo;
-            this.descuento = this.$store.state.cotizacionEditar.descuento;
-            this.observacion = this.$store.state.cotizacionEditar.observaciones;
+                this.$store.state.facturaCotizacion.idCliente.correo;
+            this.descuento = this.$store.state.facturaCotizacion.descuento;
+            this.observacion = this.$store.state.facturaCotizacion.observaciones;
             this.numeroCotizacion =
-                this.$store.state.cotizacionEditar.numCotizacion;
+                this.$store.state.facturaCotizacion.numCotizacion;
 
             for (
                 let i = 0;
-                i < this.$store.state.cotizacionEditar.items.item1.itemsEnsayo.length;
+                i < this.$store.state.facturaCotizacion.items.item1.itemsEnsayo.length;
                 i++
             ) {
                 const element =
-                    this.$store.state.cotizacionEditar.items.item1.itemsEnsayo[i];
+                    this.$store.state.facturaCotizacion.items.item1.itemsEnsayo[i];
                 this.primerItem.push(element.ensayo);
             }
 
             for (
                 let i = 0;
-                i < this.$store.state.cotizacionEditar.items.item2.itemsEnsayo.length;
+                i < this.$store.state.facturaCotizacion.items.item2.itemsEnsayo.length;
                 i++
             ) {
                 const element =
-                    this.$store.state.cotizacionEditar.items.item2.itemsEnsayo[i];
+                    this.$store.state.facturaCotizacion.items.item2.itemsEnsayo[i];
                 this.segundoItem.push(element.ensayo);
             }
 
             for (
                 let i = 0;
-                i < this.$store.state.cotizacionEditar.items.item3.itemsEnsayo.length;
+                i < this.$store.state.facturaCotizacion.items.item3.itemsEnsayo.length;
                 i++
             ) {
                 const element =
-                    this.$store.state.cotizacionEditar.items.item3.itemsEnsayo[i];
+                    this.$store.state.facturaCotizacion.items.item3.itemsEnsayo[i];
                 this.tercerItem.push(element.ensayo);
             }
 
@@ -592,6 +614,7 @@ export default {
     },
     created() {
         this.traerCalidad();
+        this.infoCotizacionEditar();
     }
 }
 </script>
