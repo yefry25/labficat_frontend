@@ -54,6 +54,9 @@
                   </b>
                 </div>
               </template>
+              <template v-slot:no-data>
+                <h2>No hay información</h2>
+              </template>
             </v-data-table>
           </v-card>
         </v-hover>
@@ -202,12 +205,11 @@ export default {
       departa: [],
       ciudades: [],
       roles: [
-        "cliente",
-        "secretario",
-        "administrador",
-        "director",
-        "especialista",
-        "supervisor",
+        "Cliente",
+        "Responsable de Laboratorio",
+        "Responsable de Gestión",
+        "Personal Técnico",
+        "Responsable de Calidad",
       ],
       persona: {
         nombre: "",
@@ -452,7 +454,7 @@ export default {
           this.traerUsuarios();
           this.$swal({
             icon: "success",
-            title: "Usuario actualizado exitoso",
+            title: "Usuario actualizado exitosamente",
             text: `${res.data.modificar.nombre} actualizado exitosamente`,
           });
           this.limpiarInfo();

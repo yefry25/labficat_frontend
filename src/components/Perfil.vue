@@ -1,11 +1,14 @@
 <template>
     <v-container fluid>
+
         <v-row>
             <v-col>
                 <v-card class="mx-auto text-center" max-width="434" tile>
-                    <v-avatar size="100" class="my-5">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png"
-                            alt="imagen perfil">
+                    <v-file-input :rules="rules" accept="image/png, image/jpeg, image/bmp" placeholder="Pick an avatar"
+                        prepend-icon="mdi-camera" label="Avatar" hide-input v-model="foto" @change="subir()" class="">
+                    </v-file-input>
+                    <v-avatar size="150" class="my-5 ">
+                        <img :src="this.$store.state.elaborador.foto">
                     </v-avatar>
                     <v-card-text>
                         <h2 class="my-2">{{ this.$store.state.elaborador.nombre }}</h2>
@@ -95,7 +98,8 @@ export default {
             dialog: false,
             nuevaPassword: '',
             confirmarPassword: '',
-            passwordActual: ''
+            passwordActual: '',
+            foto: []
         }
     },
     methods: {
@@ -112,13 +116,41 @@ export default {
                         title: "Cambio de contraseña exitoso, por favor diríjase al inicio de sesión",
                     });
                 })
-                .catch((err) => { 
+                .catch((err) => {
                     console.log(err);
                     this.$swal({
                         icon: "error",
                         title: "Error al cambiar la contraseña",
                     });
                 })
+        },
+        subir() {
+            console.log(this.foto);
+            let fd = new FormData();
+            fd.append("archivo", this.foto);
+            let header = { headers: { "x-token": this.$store.state.token } };
+            console.log(fd);
+            axios
+                .post(
+                    `https://labficat.herokuapp.com/api/usuario/uploadinary/${this.$store.state.elaborador.id}`,
+                    fd,
+                    header
+                )
+                .then((response) => {
+                    console.log(response.data);
+                    this.$store.state.elaborador.foto = response.data.url; /* hacer esto con un state y un commit */
+                    this.$swal({
+                        icon: "success",
+                        title: "Imagen agregada con exito",
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$swal({
+                        icon: "error",
+                        title: "Error al cargar la foto de perfil",
+                    });
+                });
         },
         close() {
             this.dialog = false;
@@ -130,3 +162,15 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.avatar img {
+    position: relative;
+}
+
+.avatar .boton-avatar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+</style>

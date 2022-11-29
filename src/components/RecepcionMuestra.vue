@@ -284,7 +284,7 @@
     <v-col cols="12" class="py-0 px-0">
       <v-row>
         <v-col cols="12" class="text-center px-0">
-          <p for="Name" class="label mb-0">Observaciones</p>
+          <p for="Name" class="label mb-0 primary">Observaciones</p>
         </v-col>
         <v-col cols="12" class="pl-0 px-0">
           <v-text-field class="field px-0 py-0 my-0" height="26"></v-text-field>
@@ -370,8 +370,8 @@
     </v-row>
 
     <v-overlay :value="overlay">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
-    </v-overlay>
+        <v-progress-circular indeterminate size="64" color="primary"></v-progress-circular>
+      </v-overlay>
   </v-container>
 </template>
 <script>
@@ -580,7 +580,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-
+          this.overlay = false;
           if (
             err.response.data.msg ==
             "Token expiró, por favor inicie sesión nuevamente"
@@ -883,6 +883,10 @@ export default {
 };
 </script>
 <style scoped>
+.v-progress-circular {
+  margin: 1rem;
+}
+
 .texto {
   border: 1px solid black;
   text-align: center;

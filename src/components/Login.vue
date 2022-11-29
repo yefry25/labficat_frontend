@@ -27,7 +27,7 @@
         </v-card>
       </v-col>
       <v-overlay :value="overlay">
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
+        <v-progress-circular indeterminate size="64" color="primary"></v-progress-circular>
       </v-overlay>
     </v-row>
 
@@ -61,6 +61,7 @@
         </v-dialog>
       </v-col>
     </v-row>
+    <!-- <v-btn @click="html">html</v-btn> -->
   </v-container>
 </template>
 
@@ -100,6 +101,9 @@ export default {
   }),
 
   methods: {
+    html(){
+      window.open("localhost:8080/#/TablaHtml.vue")
+    },
     iniciar() {
       this.$refs.observer.validate()
       this.overlay = true
@@ -121,7 +125,8 @@ export default {
           this.elaborado = {
             nombre: response.data.usuario.nombre,
             rol: response.data.usuario.rol,
-            id: response.data.usuario._id
+            id: response.data.usuario._id,
+            foto:response.data.usuario.foto
           }
 
           this.$store.dispatch("setToken", response.data.token);

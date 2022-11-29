@@ -17,7 +17,7 @@
               <v-col class="text-center">
                 <v-avatar size="100">
                   <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png"
+                    :src="this.$store.state.elaborador.foto"
                     alt="imagen perfil">
                 </v-avatar>
                 <h5 class="mt-4">{{ this.$store.state.elaborador.nombre }}</h5>

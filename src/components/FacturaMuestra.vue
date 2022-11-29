@@ -107,7 +107,7 @@
                     Datos de la Muestra
                 </h5>
             </v-row>
-            <v-row no-gutters>
+            <v-row no-gutters style="border-left: 1px solid black; border-right: 1px solid black">
                 <v-col>
                     <v-card>
                         <v-data-table :headers="headers" :items="muestra">

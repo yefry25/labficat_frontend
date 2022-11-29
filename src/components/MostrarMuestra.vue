@@ -51,6 +51,9 @@
                 </b>
               </div>
             </template>
+            <template v-slot:no-data>
+              <h2>No hay información</h2>
+            </template>
           </v-data-table>
         </v-card>
       </v-col>

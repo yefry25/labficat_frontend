@@ -22,6 +22,7 @@ import perfil from "../components/Perfil.vue"
 import facturaMuestra from "../components/FacturaMuestra.vue"
 import facturaCotizacion from "../components/FacturaCotizacion.vue"
 import facturaInforme from "../components/FacturaInforme.vue"
+import html from "../components/TablaHtml.vue"
 
 export const routes = [
     {path: '/inicio', component: inicio},
@@ -47,5 +48,6 @@ export const routes = [
     {path:'/perfil', component:perfil},
     {path:'/facturaMuestra',component:facturaMuestra},
     {path:'/facturaCotizacion', component : facturaCotizacion},
-    {path:'/facturaInforme', component: facturaInforme}
+    {path:'/facturaInforme', component: facturaInforme},
+    {path:'/html', component:html}
 ]

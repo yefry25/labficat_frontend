@@ -201,6 +201,7 @@ export default {
       this.nombre = "";
       this.documento = "";
       this.direccion = "";
+      this.departamento = "";
       this.ciudad = "";
       this.contacto = "";
       this.celularContacto = "";

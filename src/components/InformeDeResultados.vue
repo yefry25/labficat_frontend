@@ -302,8 +302,8 @@ export default {
       { text: "Ensayo", value: "ensayo", sortable: false },
       { text: "Método", value: "metodo", sortable: false },
       { text: "Técnica", value: "tecnica", sortable: false },
-      { text: "Resultado", value: "protein", sortable: false },
-      { text: "Incertidumbre expandida", value: "iron", sortable: false },
+      { text: "Resultado", value: "resultado", sortable: false },
+      { text: "Incertidumbre expandida", value: "incertidumbre", sortable: false },
       {
         text: "Valor Máximo NTC 1311:2009",
         value: "valorMaximo",
@@ -372,7 +372,6 @@ export default {
           `https://labficat.herokuapp.com/api/orden/informeDeResultados/${orden._id}`
         )
         .then((res) => {
-
           this.$swal({
             icon: "success",
             title: "La información se cargo exitosamente ",
@@ -398,10 +397,21 @@ export default {
 
           for (let i = 0; i < res.data.informe.itemsorden.length; i++) {
             const element = res.data.informe.itemsorden[i];
-            this.ensayosMostrar.push(element.idensayo);
+            /* this.ensayosMostrar.push(element.idensayo); */
+            this.ensayosMostrar.push({
+              ensayo:element.idensayo.ensayo,
+              metodo:element.idensayo.metodo,
+              tecnica:element.idensayo.tecnica,
+              resultado:element.resultado,
+              incertidumbre:element.incertidumbre,
+              valorMaximo:element.idensayo.valorMaximo,
+              valorMinimo:element.idensayo.valorMinimo,
+              unidades:element.idensayo.unidades
+            })
+            console.log(element);
           }
           this.$store.dispatch("setInformeResultado",res.data.informe);
-          console.log(this.$store.state.informeResultado);
+          /* console.log(this.$store.state.informeResultado); */
         })
         .catch((err) => {
           console.log(err);
@@ -424,16 +434,14 @@ export default {
       axios
         .get(`https://labficat.herokuapp.com/api/orden`)
         .then((res) => {
-
           for (let i = 0; i < res.data.orden.length; i++) {
             const element = res.data.orden[i];
             if (element.estado == 1) {
-              console.log(element);
               this.orden.push(element);
             }
-
           }
           this.isLoading = false;
+          console.log(this.orden);
         })
         .catch((err) => {
           console.log(err);
