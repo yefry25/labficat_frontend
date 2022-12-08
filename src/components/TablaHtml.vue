@@ -71,7 +71,7 @@ export default {
         }
     },
     created() {
-        this.colores()
+        this.colores() 
     }
 }
 </script>
