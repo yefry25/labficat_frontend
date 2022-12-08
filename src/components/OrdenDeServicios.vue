@@ -225,7 +225,7 @@ export default {
   methods: {
     traerOrdenes() {
       axios
-        .get("https://labficat.herokuapp.com/api/orden")
+        .get("https://labficat-backend.vercel.app/api/orden")
         .then((res) => {
           this.myLoading = false;
           this.ordenes = res.data.orden;
@@ -249,7 +249,7 @@ export default {
       let header = { headers: { "x-token": this.$store.state.token } };
       axios
         .put(
-          `https://labficat.herokuapp.com/api/orden/completado/${this.ordenEditar._id}`,
+          `https://labficat-backend.vercel.app/api/orden/completado/${this.ordenEditar._id}`,
           {
             itemsorden: this.ensayosOrdenes,
             observaciones: this.observacion,
@@ -311,7 +311,7 @@ export default {
       if (orden.estado == 1) {
         axios
           .put(
-            `https://labficat.herokuapp.com/api/orden/desactivar/${orden._id}`,
+            `https://labficat-backend.vercel.app/api/orden/desactivar/${orden._id}`,
             {},
             header
           )
@@ -353,7 +353,7 @@ export default {
       } else {
         axios
           .put(
-            `https://labficat.herokuapp.com/api/orden/activar/${orden._id}`,
+            `https://labficat-backend.vercel.app/api/orden/activar/${orden._id}`,
             {},
             header
           )

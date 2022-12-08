@@ -67,7 +67,7 @@ export default {
     methods: {
         cambiarPassword() {
             let header = { headers: { "reset": this.token } };
-            axios.put('https://labficat.herokuapp.com/api/usuario/nuevaPassword', {
+            axios.put('https://labficat-backend.vercel.app/api/usuario/nuevaPassword', {
                 nuevaPassword: this.nuevaPassword
             }, header)
                 .then((res) => {
@@ -88,7 +88,7 @@ export default {
                 })
         },
         traerUsuarioEmail() {
-            axios.post("https://labficat.herokuapp.com/api/usuario/email", { email: this.$store.state.emailConfirmed })
+            axios.post("https://labficat-backend.vercel.app/api/usuario/email", { email: this.$store.state.emailConfirmed })
                 .then((res) => {
                     console.log(res.data.user);
                     this.token = res.data.user.resetToken

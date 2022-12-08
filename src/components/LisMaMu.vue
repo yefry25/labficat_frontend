@@ -114,7 +114,7 @@ export default {
   methods: {
     traerListado() {
       axios
-        .get("https://labficat.herokuapp.com/api/muestra/lismamu")
+        .get("https://labficat-backend.vercel.app/api/muestra/lismamu")
         .then((res) => {
           console.log(res.data.muestra);
           this.lismamu = res.data.muestra;

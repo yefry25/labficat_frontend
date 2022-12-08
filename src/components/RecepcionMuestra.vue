@@ -501,7 +501,7 @@ export default {
   methods: {
     traerDepartamentos() {
       axios
-        .get("https://labficat.herokuapp.com/api/ciudad/departamentos")
+        .get("https://labficat-backend.vercel.app/api/ciudad/departamentos")
         .then((response) => {
           this.departa = response.data.departamentos;
         })
@@ -511,7 +511,7 @@ export default {
     },
     traerCiudades() {
       axios
-        .post("https://labficat.herokuapp.com/api/ciudad/nombreDepartamento", {
+        .post("https://labficat-backend.vercel.app/api/ciudad/nombreDepartamento", {
           departamento: this.departamento,
         })
         .then((response) => {
@@ -523,7 +523,7 @@ export default {
     },
     traerTipoMuestras() {
       axios
-        .get("https://labficat.herokuapp.com/api/tipoMuestra")
+        .get("https://labficat-backend.vercel.app/api/tipoMuestra")
         .then((res) => {
           this.tipoMuestras = res.data.timuestra;
         })
@@ -534,7 +534,7 @@ export default {
     traerClientes() {
       this.color = this.$store.state.color
       axios
-        .get("https://labficat.herokuapp.com/api/usuario")
+        .get("https://labficat-backend.vercel.app/api/usuario")
         .then((res) => {
           for (let i = 0; i < res.data.usuario.length; i++) {
             const element = res.data.usuario[i];
@@ -553,7 +553,7 @@ export default {
       let header = { headers: { "x-token": this.$store.state.token } };
       axios
         .post(
-          "https://labficat.herokuapp.com/api/muestra",
+          "https://labficat-backend.vercel.app/api/muestra",
           {
             solicitante: this.person.id,
             munRecoleccion: this.muestra.ciudad,
@@ -610,7 +610,7 @@ export default {
       let header = { headers: { "x-token": this.$store.state.token } };
       axios
         .put(
-          `https://labficat.herokuapp.com/api/muestra/${this.$store.state.muestraEditar._id}`,
+          `https://labficat-backend.vercel.app/api/muestra/${this.$store.state.muestraEditar._id}`,
           {
             solicitante: this.person.id,
             munRecoleccion: this.muestra.ciudad,
@@ -705,7 +705,7 @@ export default {
         this.person.correo = this.$store.state.muestraEditar.solicitante.correo;
 
         axios
-          .post("https://labficat.herokuapp.com/api/cotizacion/cliente", {
+          .post("https://labficat-backend.vercel.app/api/cotizacion/cliente", {
             idCliente: this.person.id,
           })
           .then((res) => {
@@ -717,7 +717,7 @@ export default {
             console.log(err);
           });
         axios
-          .post("https://labficat.herokuapp.com/api/muestra/cliente", {
+          .post("https://labficat-backend.vercel.app/api/muestra/cliente", {
             solicitante: this.person.id,
           })
           .then((res) => {
@@ -761,7 +761,7 @@ export default {
       this.person.contacto = user.contacto;
       this.person.correo = user.correo;
       axios
-        .post("https://labficat.herokuapp.com/api/cotizacion/cliente", {
+        .post("https://labficat-backend.vercel.app/api/cotizacion/cliente", {
           idCliente: this.person.id,
         })
         .then((res) => {
@@ -774,7 +774,7 @@ export default {
         });
 
       axios
-        .post("https://labficat.herokuapp.com/api/muestra/cliente", {
+        .post("https://labficat-backend.vercel.app/api/muestra/cliente", {
           solicitante: this.person.id,
         })
         .then((res) => {
@@ -788,7 +788,7 @@ export default {
     itemCotizacion(cotizacion) {
       axios
         .get(
-          `https://labficat.herokuapp.com/api/cotizacion/idCotizacion/${cotizacion}`
+          `https://labficat-backend.vercel.app/api/cotizacion/idCotizacion/${cotizacion}`
         )
         .then((res) => {
           console.log(res.data.cotizacion);
@@ -806,7 +806,7 @@ export default {
     },
     comprobarCotizaciones() {
       axios
-        .post("https://labficat.herokuapp.com/api/cotizacion/cliente", {
+        .post("https://labficat-backend.vercel.app/api/cotizacion/cliente", {
           idCliente: this.person.id,
         })
         .then((res) => {
@@ -856,7 +856,7 @@ export default {
     },
     traerCalidad() {
       axios
-        .post("https://labficat.herokuapp.com/api/calidad/formato", {
+        .post("https://labficat-backend.vercel.app/api/calidad/formato", {
           nombre: "Recepción de Muestras",
         })
         .then((res) => {

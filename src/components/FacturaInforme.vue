@@ -454,7 +454,7 @@ export default {
         traerCalidad() {
             this.color = this.$store.state.color
             axios
-                .post("https://labficat.herokuapp.com/api/calidad/formato", {
+                .post("https://labficat-backend.vercel.app/api/calidad/formato", {
                     nombre: "Informe de Resultados",
                 })
                 .then((res) => {

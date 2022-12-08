@@ -178,7 +178,7 @@ export default {
   methods: {
     traerCotizaciones() {
       axios
-        .get("https://labficat.herokuapp.com/api/cotizacion")
+        .get("https://labficat-backend.vercel.app/api/cotizacion")
         .then((res) => {
           console.log(res.data.cotizacion);
           this.myLoading = false
@@ -213,7 +213,7 @@ export default {
     },
     aceptarCotizacion(cotizacion) {
       let header = { headers: { "x-token": this.$store.state.token } };
-      axios.put(`https://labficat.herokuapp.com/api/cotizacion/aceptar/${cotizacion._id}`, {}, header)
+      axios.put(`https://labficat-backend.vercel.app/api/cotizacion/aceptar/${cotizacion._id}`, {}, header)
         .then((res) => {
           console.log(res);
           this.traerCotizaciones();
@@ -251,7 +251,7 @@ export default {
     rechazarCotizacion() {
       let header = { headers: { "x-token": this.$store.state.token } };
 
-      axios.put(`https://labficat.herokuapp.com/api/cotizacion/observacion/${this.cotizacionRechazar._id}`, {
+      axios.put(`https://labficat-backend.vercel.app/api/cotizacion/observacion/${this.cotizacionRechazar._id}`, {
         observacionRechazo: this.observacionRechazo
       }, header)
         .then((res) => {
@@ -283,7 +283,7 @@ export default {
           }
         })
 
-      axios.put(`https://labficat.herokuapp.com/api/cotizacion/rechazar/${this.cotizacionRechazar._id}`, {}, header)
+      axios.put(`https://labficat-backend.vercel.app/api/cotizacion/rechazar/${this.cotizacionRechazar._id}`, {}, header)
         .then((res) => {
           console.log(res);
           setTimeout(() => {

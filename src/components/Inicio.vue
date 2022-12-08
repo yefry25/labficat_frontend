@@ -145,7 +145,7 @@ export default {
   methods: {
     ingreso() {
       axios
-        .post("https://labficat.herokuapp.com/api/cotizacion")
+        .post("https://labficat-backend.vercel.app/api/cotizacion")
         .then((response) => {
           console.log(response);
           this.$router.push("/cotizacion");

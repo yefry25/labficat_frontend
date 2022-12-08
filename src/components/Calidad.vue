@@ -181,7 +181,7 @@ export default {
   methods: {
     traerCalidad() {
       axios
-        .get("https://labficat.herokuapp.com/api/calidad")
+        .get("https://labficat-backend.vercel.app/api/calidad")
         .then((res) => {
           console.log(res.data.calidad);
           this.formatos = res.data.calidad;
@@ -211,7 +211,7 @@ export default {
     },
     agregarCalidad() {
       axios
-        .post("https://labficat.herokuapp.com/api/calidad/insertar", {
+        .post("https://labficat-backend.vercel.app/api/calidad/insertar", {
           formato: this.formato,
           codigo: this.codigo,
           aprobacion: this.aprobacion,
@@ -265,7 +265,7 @@ export default {
     editarCalidad() {
       axios
         .put(
-          `https://labficat.herokuapp.com/api/calidad/modificar/${this.formatoEditar._id}`,
+          `https://labficat-backend.vercel.app/api/calidad/modificar/${this.formatoEditar._id}`,
           {
             formato: this.formato,
             codigo: this.codigo,

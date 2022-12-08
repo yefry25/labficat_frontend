@@ -114,7 +114,7 @@ export default {
   methods: {
     ingresarEnsayo() {
       let header = { headers: { "x-token": this.$store.state.token } };
-      axios.post('https://labficat.herokuapp.com/api/ensayo', {
+      axios.post('https://labficat-backend.vercel.app/api/ensayo', {
         ensayo: this.ensayo,
         metodo: this.metodo,
         tecnica: this.tecnica,
@@ -164,7 +164,7 @@ export default {
         })
     },
     traerUsuarios() {
-      axios.get('https://labficat.herokuapp.com/api/usuario')
+      axios.get('https://labficat-backend.vercel.app/api/usuario')
         .then((res) => {
           this.usuarios = res.data.usuario;
           console.log(this.usuarios);

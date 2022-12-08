@@ -4,12 +4,21 @@
         <v-row>
             <v-col>
                 <v-card class="mx-auto text-center" max-width="434" tile>
-                    <v-file-input :rules="rules" accept="image/png, image/jpeg, image/bmp" placeholder="Pick an avatar"
-                        prepend-icon="mdi-camera" label="Avatar" hide-input v-model="foto" @change="subir()" class="">
-                    </v-file-input>
-                    <v-avatar size="150" class="my-5 ">
-                        <img :src="this.$store.state.elaborador.foto">
-                    </v-avatar>
+
+                    <div class="relative">
+                        <v-avatar size="150" class="my-5 ">
+                            <img :src="this.$store.state.elaborador.foto">
+                        </v-avatar>
+                        <div class="absolute">
+                            <v-btn icon class="white">
+                                <v-file-input :rules="rules" accept="image/png, image/jpeg, image/bmp"
+                                    placeholder="Pick an avatar" prepend-icon="mdi-camera" label="Avatar" hide-input
+                                    v-model="foto" @change="subir()" class="ml-2 mt-1" style="margin-top:0; padding-top:0;">
+                                </v-file-input>
+                            </v-btn>
+                        </div>
+                    </div>
+
                     <v-card-text>
                         <h2 class="my-2">{{ this.$store.state.elaborador.nombre }}</h2>
                         <h3 class="my-2">{{ this.$store.state.elaborador.rol }}</h3>
@@ -105,7 +114,7 @@ export default {
     methods: {
         cambiarPassword() {
             let header = { headers: { "x-token": this.$store.state.token } };
-            axios.put(`https://labficat.herokuapp.com/api/usuario/modificar/password/${this.$store.state.elaborador.id}`, {
+            axios.put(`https://labficat-backend.vercel.app/api/usuario/modificar/password/${this.$store.state.elaborador.id}`, {
                 passwordActual: this.passwordActual,
                 password: this.nuevaPassword
             }, header)
@@ -132,7 +141,7 @@ export default {
             console.log(fd);
             axios
                 .post(
-                    `https://labficat.herokuapp.com/api/usuario/uploadinary/${this.$store.state.elaborador.id}`,
+                    `https://labficat-backend.vercel.app/api/usuario/uploadinary/${this.$store.state.elaborador.id}`,
                     fd,
                     header
                 )
@@ -172,5 +181,18 @@ export default {
     position: absolute;
     top: 0px;
     left: 0px;
+}
+
+.relative {
+    position: relative;
+    background-color: antiquewhite;
+}
+
+.absolute {
+    position: absolute;
+    top: 10%;
+    left: 35%;
+    width: auto;
+    height: auto;
 }
 </style>

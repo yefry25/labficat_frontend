@@ -27,17 +27,21 @@ export default {
         actualizarColor() {
             let header = { headers: { "x-token": this.$store.state.token } };
             let codigo = "63655c32553ec6d83aac2b0e"
-            axios.put(`https://labficat.herokuapp.com/api/color/modificar/${codigo}`, {
+            axios.put(`https://labficat-backend.vercel.app/api/color/modificar/${codigo}`, {
                 color: this.color
             }, header)
                 .then((res) => {
                     console.log(res.data.modificar.color);
                     this.traerColor();
+                    this.$swal({
+                        icon: "success",
+                        title: "Cambio de color exitoso, por favor refresca la página para ver los cambios",
+                    });
                 })
                 .catch((err) => {
 
                     console.log(err);
-                    
+
                     if (
                         err.response.data.msg ==
                         "Token expiró, por favor inicie sesión nuevamente"
@@ -64,7 +68,7 @@ export default {
                 })
         },
         traerColor() {
-            axios.get('https://labficat.herokuapp.com/api/color')
+            axios.get('https://labficat-backend.vercel.app/api/color')
                 .then((res) => {
                     console.log("color: " + res.data.color[0].color);
                     this.$store.dispatch("setColor", res.data.color[0].color)

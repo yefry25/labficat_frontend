@@ -222,7 +222,7 @@ export default {
   methods: {
     traerEnsayos() {
       axios
-        .get("https://labficat.herokuapp.com/api/ensayo")
+        .get("https://labficat-backend.vercel.app/api/ensayo")
         .then((res) => {
           this.ensayos = res.data.ensayos;
           this.myLoading = false;
@@ -253,7 +253,7 @@ export default {
       let header = { headers: { "x-token": this.$store.state.token } };
       axios
         .put(
-          `https://labficat.herokuapp.com/api/ensayo/${this.idEnsayo}`,
+          `https://labficat-backend.vercel.app/api/ensayo/${this.idEnsayo}`,
           {
             ensayo: this.ensayo,
             metodo: this.metodo,
@@ -325,7 +325,7 @@ export default {
     },
     traerUsuarios() {
       axios
-        .get("https://labficat.herokuapp.com/api/usuario")
+        .get("https://labficat-backend.vercel.app/api/usuario")
         .then((res) => {
           this.usuarios = res.data.usuario;
           console.log(this.usuarios);
@@ -357,7 +357,7 @@ export default {
       if (ensayo.estado == 1) {
         axios
           .put(
-            `https://labficat.herokuapp.com/api/ensayo/desactivar/${ensayo._id}`,
+            `https://labficat-backend.vercel.app/api/ensayo/desactivar/${ensayo._id}`,
             {},
             header
           )
@@ -395,7 +395,7 @@ export default {
       } else {
         axios
           .put(
-            `https://labficat.herokuapp.com/api/ensayo/activar/${ensayo._id}`,
+            `https://labficat-backend.vercel.app/api/ensayo/activar/${ensayo._id}`,
             {},
             header
           )

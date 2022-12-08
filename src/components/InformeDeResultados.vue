@@ -333,7 +333,7 @@ export default {
     traerClientes() {
       this.color = this.$store.state.color
       axios
-        .get("https://labficat.herokuapp.com/api/usuario")
+        .get("https://labficat-backend.vercel.app/api/usuario")
         .then((res) => {
           this.usuarios = res.data.usuario;
 
@@ -369,7 +369,7 @@ export default {
     infoOrden(orden) {
       axios
         .get(
-          `https://labficat.herokuapp.com/api/orden/informeDeResultados/${orden._id}`
+          `https://labficat-backend.vercel.app/api/orden/informeDeResultados/${orden._id}`
         )
         .then((res) => {
           this.$swal({
@@ -432,7 +432,7 @@ export default {
     },
     traerMuestras() {
       axios
-        .get(`https://labficat.herokuapp.com/api/orden`)
+        .get(`https://labficat-backend.vercel.app/api/orden`)
         .then((res) => {
           for (let i = 0; i < res.data.orden.length; i++) {
             const element = res.data.orden[i];
@@ -450,7 +450,7 @@ export default {
     },
     traerCalidad() {
       axios
-        .post("https://labficat.herokuapp.com/api/calidad/formato", {
+        .post("https://labficat-backend.vercel.app/api/calidad/formato", {
           nombre: "Informe de Resultados",
         })
         .then((res) => {

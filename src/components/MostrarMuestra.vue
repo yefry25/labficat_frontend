@@ -109,7 +109,7 @@ export default {
   methods: {
     traerMuestra() {
       axios
-        .get("https://labficat.herokuapp.com/api/muestra")
+        .get("https://labficat-backend.vercel.app/api/muestra")
         .then((res) => {
           this.muestras = res.data.muestra;
           this.myLoading = false
@@ -144,7 +144,7 @@ export default {
     estadoMuestra(muestra) {
       let header = { headers: { "x-token": this.$store.state.token } };
       if (muestra.estado == 1) {
-        axios.put(`https://labficat.herokuapp.com/api/muestra/desactivar/${muestra._id}`, {}, header)
+        axios.put(`https://labficat-backend.vercel.app/api/muestra/desactivar/${muestra._id}`, {}, header)
           .then((res) => {
             console.log(res);
             this.$swal({
@@ -181,7 +181,7 @@ export default {
             }
           })
       } else {
-        axios.put(`https://labficat.herokuapp.com/api/muestra/activar/${muestra._id}`, {}, header)
+        axios.put(`https://labficat-backend.vercel.app/api/muestra/activar/${muestra._id}`, {}, header)
           .then((res) => {
             console.log(res);
             this.$swal({

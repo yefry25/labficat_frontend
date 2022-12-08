@@ -237,7 +237,7 @@ export default {
   methods: {
     traerDepartamentos() {
       axios
-        .get("https://labficat.herokuapp.com/api/ciudad/departamentos")
+        .get("https://labficat-backend.vercel.app/api/ciudad/departamentos")
         .then((response) => {
           console.log(response.data.departamentos);
           this.departa = response.data.departamentos;
@@ -250,7 +250,7 @@ export default {
     traerCiudades(ciudad) {
       console.log(ciudad);
       axios
-        .post("https://labficat.herokuapp.com/api/ciudad/nombreDepartamento", {
+        .post("https://labficat-backend.vercel.app/api/ciudad/nombreDepartamento", {
           departamento: this.persona.departamento,
         })
         .then((response) => {
@@ -264,7 +264,7 @@ export default {
     },
     traerUsuarios() {
       axios
-        .post("https://labficat.herokuapp.com/api/usuario/roles",
+        .post("https://labficat-backend.vercel.app/api/usuario/roles",
           {
             rol: this.elegirUser
           })
@@ -302,7 +302,7 @@ export default {
         } else {
           axios
             .put(
-              `https://labficat.herokuapp.com/api/usuario/desactivar/${user._id}`,
+              `https://labficat-backend.vercel.app/api/usuario/desactivar/${user._id}`,
               {},
               header
             )
@@ -343,7 +343,7 @@ export default {
       } else if (user.estado == 0) {
         axios
           .put(
-            `https://labficat.herokuapp.com/api/usuario/vacaciones/${user._id}`,
+            `https://labficat-backend.vercel.app/api/usuario/vacaciones/${user._id}`,
             {},
             header
           )
@@ -382,7 +382,7 @@ export default {
       } else if (user.estado == 2) {
         axios
           .put(
-            `https://labficat.herokuapp.com/api/usuario/activar/${user._id}`,
+            `https://labficat-backend.vercel.app/api/usuario/activar/${user._id}`,
             {},
             header
           )
@@ -434,7 +434,7 @@ export default {
       let header = { headers: { "x-token": this.$store.state.token } };
       axios
         .put(
-          `https://labficat.herokuapp.com/api/usuario/modificar/${this.idPersona}`,
+          `https://labficat-backend.vercel.app/api/usuario/modificar/${this.idPersona}`,
           {
             tipoPersona: this.select,
             nombre: this.persona.nombre,

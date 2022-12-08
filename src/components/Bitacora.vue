@@ -6,8 +6,8 @@
           <v-card-actions>
             <h2>Bitacora</h2>
           </v-card-actions>
-          <v-data-table :headers="encabezadoBitacora" :items="bitacora" :loading="myLoading"
-            loading-text="Cargando... Por favor espera">
+          <v-data-table :headers="encabezadoBitacora" :items="bitacora" :loading="myLoading" :sort-by="['createdAt']"
+            :sort-desc="[true]" loading-text="Cargando... Por favor espera">
             <template v-slot:[`item.createdAt`]="{ item }">
               <span>{{ fecha(item.createdAt) }}</span>
             </template>
@@ -28,10 +28,10 @@ export default {
         {
           text: "Usuario",
           align: "start",
-          sortable: false,
+          sortable: true,
           value: "usuario.nombre",
         },
-        { text: "Mensaje", value: "mensaje", sortable: false },
+        { text: "Mensaje", value: "mensaje", sortable: true },
         { text: "Fecha y hora", value: "createdAt", sortable: true },
       ],
       bitacora: []
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     traerBitacora() {
-      axios.get('https://labficat.herokuapp.com/api/bitacora')
+      axios.get('https://labficat-backend.vercel.app/api/bitacora')
         .then((res) => {
           this.bitacora = res.data.bitacoras
           this.myLoading = false;

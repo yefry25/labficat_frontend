@@ -165,6 +165,18 @@ export default {
         })
       this.traerConsecutivos()
     },
+    anoNuevo() {
+      let anoNuevo = new Date('2022/11/29').toLocaleDateString();
+      let diaActual = new Date().toLocaleDateString();
+      if (anoNuevo == diaActual) {
+        this.$swal({
+          icon: 'warning',
+          title: 'Año nuevo, nuevos consecutivos. Actualiza los consecutivos!!',
+          width: 600,
+          confirmButtonText: 'Ok',
+        })
+      }
+    },
     close() {
       this.dialog = false;
       this.$nextTick(() => {
@@ -175,6 +187,7 @@ export default {
   },
   created() {
     this.traerConsecutivos();
+    this.anoNuevo();
   },
 };
 </script>

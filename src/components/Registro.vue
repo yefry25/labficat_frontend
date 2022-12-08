@@ -118,7 +118,7 @@ export default {
   methods: {
     traerDepartamentos() {
       axios
-        .get("https://labficat.herokuapp.com/api/ciudad/departamentos")
+        .get("https://labficat-backend.vercel.app/api/ciudad/departamentos")
         .then((response) => {
           console.log(response.data.departamentos);
           this.departa = response.data.departamentos;
@@ -131,7 +131,7 @@ export default {
     traerCiudades(ciudad) {
       console.log(ciudad);
       axios
-        .post("https://labficat.herokuapp.com/api/ciudad/nombreDepartamento", {
+        .post("https://labficat-backend.vercel.app/api/ciudad/nombreDepartamento", {
           departamento: this.departamento,
         })
         .then((response) => {
@@ -147,7 +147,7 @@ export default {
       console.log("ciudad: "+this.ciudad);
       let header = { headers: { "x-token": this.$store.state.token } };
       axios
-        .post("https://labficat.herokuapp.com/api/usuario", {
+        .post("https://labficat-backend.vercel.app/api/usuario", {
           tipoPersona: this.select,
           nombre: this.nombre,
           documento: this.documento,

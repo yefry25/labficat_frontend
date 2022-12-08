@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid >
+  <v-container fluid>
     <v-row class="my-12 text-center white--text pa-4" justify="center" align="center">
       <v-col cols="8">
         <v-card class="rounded-xl rounded-bl-0" outlined>
@@ -101,96 +101,96 @@ export default {
   }),
 
   methods: {
-    html(){
+    html() {
       window.open("localhost:8080/#/TablaHtml.vue")
     },
     iniciar() {
       this.$refs.observer.validate()
       this.overlay = true
       axios
-        .post("https://labficat.herokuapp.com/api/usuario/login", {
+        .post("https://labficat-backend.vercel.app/api/usuario/login", {
           correo: this.email,
           password: this.password,
         })
         .then((response) => {
-          console.log(response.data.usuario);
-          this.$router.push("/inicio");
-          this.$swal({
-            icon: "success",
-            title: "Inicio de sesión exitoso",
-            text: ` Bienvenido ${response.data.usuario.nombre}`,
-          });
-          this.overlay = false
+            console.log(response.data.usuario);
+            this.$router.push("/inicio");
+            this.$swal({
+              icon: "success",
+              title: "Inicio de sesión exitoso",
+              text: ` Bienvenido ${response.data.usuario.nombre}`,
+            });
+            this.overlay = false
 
-          this.elaborado = {
-            nombre: response.data.usuario.nombre,
-            rol: response.data.usuario.rol,
-            id: response.data.usuario._id,
-            foto:response.data.usuario.foto
-          }
+            this.elaborado = {
+              nombre: response.data.usuario.nombre,
+              rol: response.data.usuario.rol,
+              id: response.data.usuario._id,
+              foto: response.data.usuario.foto
+            }
 
-          this.$store.dispatch("setToken", response.data.token);
-          this.$store.dispatch('setElaborador', this.elaborado)
-          console.log(this.$store.state.elaborador);
-        })
-        .catch((error) => {
-          this.overlay = false
-          console.log(error);
-          this.$swal({
-            icon: "error",
-            title: "Error al iniciar sesión",
-            text: `${error.response.data.msg}`
-          });
+            this.$store.dispatch("setToken", response.data.token);
+            this.$store.dispatch('setElaborador', this.elaborado)
+            console.log(this.$store.state.elaborador);
+          })
+      .catch((error) => {
+        this.overlay = false
+        console.log(error);
+        this.$swal({
+          icon: "error",
+          title: "Error al iniciar sesión",
+          text: `${error.response.data.msg}`
         });
-    },
-    enviarEmail() {
-      axios.put('https://labficat.herokuapp.com/api/usuario/recuperarPassword', {
-        correo: this.email
+      });
+  },
+  enviarEmail() {
+    axios.put('https://labficat-backend.vercel.app/usuario/recuperarPassword', {
+      correo: this.email
+    })
+      .then((res) => {
+        console.log(res);
+        this.$swal({
+          icon: "success",
+          title: "Email enviado exitosamente",
+        });
+        this.$store.dispatch('setEmail', this.email)
+        console.log("email: " + this.$store.state.emailConfirmed);
       })
-        .then((res) => {
-          console.log(res);
-          this.$swal({
-            icon: "success",
-            title: "Email enviado exitosamente",
-          });
-          this.$store.dispatch('setEmail', this.email)
-          console.log("email: " + this.$store.state.emailConfirmed);
-        })
-        .catch((err) => {
-          console.log(err);
-          this.$swal({
-            icon: "error",
-            title: "Error al enviar el correo",
-          });
-        })
-    },
-    existeToken() {
-      if (localStorage.token) {
-        this.$router.push("/inicio");
-      }
-    },
-    traerColor(){
-      axios.get('https://labficat.herokuapp.com/api/color')
-      .then((res)=>{
-        console.log("color: "+res.data.color[0].color);
+      .catch((err) => {
+        console.log(err);
+        this.$swal({
+          icon: "error",
+          title: "Error al enviar el correo",
+        });
+      })
+  },
+  existeToken() {
+    if (localStorage.token) {
+      this.$router.push("/inicio");
+    }
+  },
+  traerColor() {
+    axios.get('https://labficat-backend.vercel.app/api/color')
+      .then((res) => {
+        console.log("color: " + res.data.color[0].color);
         this.$store.dispatch("setColor", res.data.color[0].color)
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err);
       })
-    },
-    close() {
-      this.dialogRecuperar = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
   },
-  created() {
-    this.existeToken();
-    this.traerColor();
-  }
+  close() {
+    this.dialogRecuperar = false;
+    this.$nextTick(() => {
+      this.editedItem = Object.assign({}, this.defaultItem);
+      this.editedIndex = -1;
+    });
+  },
+},
+created() {
+  this.existeToken();
+  this.traerColor();
+}
 };
 </script>
 <style scoped>
